@@ -286,10 +286,10 @@ public final class StringHelper {
      * Trims all strings in the set and reduces consecutive white spaces to only one space.
      */
     public static Set<String> removeExtraSpace(Set<String> strSet) {
-        if (strSet == null) {
-            return null;
-        }
         Set<String> result = new TreeSet<>();
+        if (strSet == null) {
+            return result;
+        }
         for (String s : strSet) {
             result.add(removeExtraSpace(s));
         }
