@@ -85,10 +85,10 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
     private void testGetFeedbackSessionsListForInstructor() {
         List<FeedbackSessionAttributes> finalFsa = new ArrayList<>();
-        Collection<FeedbackSessionAttributes> allFsa = dataBundle.feedbackSessions.values();
+        Collection<FeedbackSessionAttributes> allFsa = dataBundle.getFeedbackSessions().values();
 
-        String courseId = dataBundle.courses.get("typicalCourse1").getId();
-        String instructorGoogleId = dataBundle.instructors.get("instructor1OfCourse1").googleId;
+        String courseId = dataBundle.getCourses().get("typicalCourse1").getId();
+        String instructorGoogleId = dataBundle.getInstructors().get("instructor1OfCourse1").googleId;
 
         for (FeedbackSessionAttributes fsa : allFsa) {
             if (fsa.getCourseId().equals(courseId)) {
@@ -103,8 +103,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
     private void testIsFeedbackSessionHasQuestionForStudents() throws Exception {
         // no need to removeAndRestoreTypicalDataInDatastore() as the previous test does not change the db
 
-        FeedbackSessionAttributes sessionWithStudents = dataBundle.feedbackSessions.get("gracePeriodSession");
-        FeedbackSessionAttributes sessionWithoutStudents = dataBundle.feedbackSessions.get("closedSession");
+        FeedbackSessionAttributes sessionWithStudents = dataBundle.getFeedbackSessions().get("gracePeriodSession");
+        FeedbackSessionAttributes sessionWithoutStudents = dataBundle.getFeedbackSessions().get("closedSession");
 
         ______TS("non-existent session/courseId");
 
@@ -224,7 +224,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         assertEquals(0, sessionList.size());
 
         ______TS("case : 1 published session with mail unsent");
-        FeedbackSessionAttributes session = dataBundle.feedbackSessions.get("session1InCourse1");
+        FeedbackSessionAttributes session = dataBundle.getFeedbackSessions().get("session1InCourse1");
         session.setTimeZone(0);
         session.setStartTime(TimeHelper.getDateOffsetToCurrentTime(-2));
         session.setEndTime(TimeHelper.getDateOffsetToCurrentTime(-1));
@@ -307,9 +307,9 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         ______TS("Test copy");
 
-        FeedbackSessionAttributes session1InCourse1 = dataBundle.feedbackSessions.get("session1InCourse1");
-        InstructorAttributes instructor2OfCourse1 = dataBundle.instructors.get("instructor2OfCourse1");
-        CourseAttributes typicalCourse2 = dataBundle.courses.get("typicalCourse2");
+        FeedbackSessionAttributes session1InCourse1 = dataBundle.getFeedbackSessions().get("session1InCourse1");
+        InstructorAttributes instructor2OfCourse1 = dataBundle.getInstructors().get("instructor2OfCourse1");
+        CourseAttributes typicalCourse2 = dataBundle.getCourses().get("typicalCourse2");
         FeedbackSessionAttributes copiedSession = fsLogic.copyFeedbackSession(
                 "Copied Session", typicalCourse2.getId(),
                 session1InCourse1.getFeedbackSessionName(),
@@ -364,14 +364,14 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         Map<String, FeedbackSessionDetailsBundle> detailsMap = new HashMap<>();
 
-        String instrGoogleId = newDataBundle.instructors.get("instructor1OfCourse1").googleId;
+        String instrGoogleId = newDataBundle.getInstructors().get("instructor1OfCourse1").googleId;
         List<FeedbackSessionDetailsBundle> detailsList = fsLogic.getFeedbackSessionDetailsForInstructor(instrGoogleId);
 
         List<String> expectedSessions = new ArrayList<>();
-        expectedSessions.add(newDataBundle.feedbackSessions.get("standard.session").toString());
-        expectedSessions.add(newDataBundle.feedbackSessions.get("no.responses.session").toString());
-        expectedSessions.add(newDataBundle.feedbackSessions.get("no.recipients.session").toString());
-        expectedSessions.add(newDataBundle.feedbackSessions.get("private.session").toString());
+        expectedSessions.add(newDataBundle.getFeedbackSessions().get("standard.session").toString());
+        expectedSessions.add(newDataBundle.getFeedbackSessions().get("no.responses.session").toString());
+        expectedSessions.add(newDataBundle.getFeedbackSessions().get("no.recipients.session").toString());
+        expectedSessions.add(newDataBundle.getFeedbackSessions().get("private.session").toString());
 
         StringBuilder actualSessionsBuilder = new StringBuilder();
         for (FeedbackSessionDetailsBundle details : detailsList) {
@@ -388,8 +388,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         AssertHelper.assertContains(expectedSessions, actualSessions);
 
         FeedbackSessionStats stats =
-                detailsMap.get(newDataBundle.feedbackSessions.get("standard.session").getFeedbackSessionName() + "%"
-                               + newDataBundle.feedbackSessions.get("standard.session").getCourseId()).stats;
+                detailsMap.get(newDataBundle.getFeedbackSessions().get("standard.session").getFeedbackSessionName() + "%"
+                               + newDataBundle.getFeedbackSessions().get("standard.session").getCourseId()).stats;
 
         // 2 instructors, 6 students = 8
         assertEquals(8, stats.expectedTotal);
@@ -397,8 +397,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         assertEquals(6, stats.submittedTotal);
 
         ______TS("No recipients session");
-        stats = detailsMap.get(newDataBundle.feedbackSessions.get("no.recipients.session").getFeedbackSessionName() + "%"
-                               + newDataBundle.feedbackSessions.get("no.recipients.session").getCourseId()).stats;
+        stats = detailsMap.get(newDataBundle.getFeedbackSessions().get("no.recipients.session").getFeedbackSessionName() + "%"
+                               + newDataBundle.getFeedbackSessions().get("no.recipients.session").getCourseId()).stats;
 
         // 2 instructors, 6 students = 8
         assertEquals(8, stats.expectedTotal);
@@ -406,8 +406,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         assertEquals(1, stats.submittedTotal);
 
         ______TS("No responses session");
-        stats = detailsMap.get(newDataBundle.feedbackSessions.get("no.responses.session").getFeedbackSessionName() + "%"
-                               + newDataBundle.feedbackSessions.get("no.responses.session").getCourseId()).stats;
+        stats = detailsMap.get(newDataBundle.getFeedbackSessions().get("no.responses.session").getFeedbackSessionName() + "%"
+                               + newDataBundle.getFeedbackSessions().get("no.responses.session").getCourseId()).stats;
 
         // 1 instructors, 1 students = 2
         assertEquals(2, stats.expectedTotal);
@@ -415,15 +415,15 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         assertEquals(0, stats.submittedTotal);
 
         ______TS("private session with questions");
-        stats = detailsMap.get(newDataBundle.feedbackSessions.get("private.session").getFeedbackSessionName() + "%"
-                               + newDataBundle.feedbackSessions.get("private.session").getCourseId()).stats;
+        stats = detailsMap.get(newDataBundle.getFeedbackSessions().get("private.session").getFeedbackSessionName() + "%"
+                               + newDataBundle.getFeedbackSessions().get("private.session").getCourseId()).stats;
         assertEquals(1, stats.expectedTotal);
         // For private sessions, we mark as completed only when creator has finished all questions.
         assertEquals(0, stats.submittedTotal);
 
         ______TS("change private session to non-private");
         FeedbackSessionAttributes privateSession =
-                newDataBundle.feedbackSessions.get("private.session");
+                newDataBundle.getFeedbackSessions().get("private.session");
         privateSession.setSessionVisibleFromTime(privateSession.getStartTime());
         privateSession.setEndTime(TimeHelper.convertToDate("2015-04-01 10:00 PM UTC"));
         privateSession.setFeedbackSessionType(FeedbackSessionType.STANDARD);
@@ -431,10 +431,10 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         // Re-read details
         detailsList = fsLogic.getFeedbackSessionDetailsForInstructor(
-                newDataBundle.instructors.get("instructor1OfCourse1").googleId);
+                newDataBundle.getInstructors().get("instructor1OfCourse1").googleId);
         for (FeedbackSessionDetailsBundle details : detailsList) {
             if (details.feedbackSession.getFeedbackSessionName().equals(
-                    newDataBundle.feedbackSessions.get("private.session").getFeedbackSessionName())) {
+                    newDataBundle.getFeedbackSessions().get("private.session").getFeedbackSessionName())) {
                 stats = details.stats;
                 break;
             }
@@ -447,11 +447,11 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         ______TS("private session without questions");
 
         expectedSessions.clear();
-        expectedSessions.add(newDataBundle.feedbackSessions.get("private.session.noquestions").toString());
-        expectedSessions.add(newDataBundle.feedbackSessions.get("private.session.done").toString());
+        expectedSessions.add(newDataBundle.getFeedbackSessions().get("private.session.noquestions").toString());
+        expectedSessions.add(newDataBundle.getFeedbackSessions().get("private.session.done").toString());
 
         detailsList = fsLogic.getFeedbackSessionDetailsForInstructor(
-                newDataBundle.instructors.get("instructor2OfCourse1").googleId);
+                newDataBundle.getInstructors().get("instructor2OfCourse1").googleId);
 
         detailsMap.clear();
         actualSessionsBuilder = new StringBuilder();
@@ -465,9 +465,9 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         AssertHelper.assertContains(expectedSessions, actualSessions);
 
-        stats = detailsMap.get(newDataBundle.feedbackSessions.get("private.session.noquestions")
+        stats = detailsMap.get(newDataBundle.getFeedbackSessions().get("private.session.noquestions")
                                                              .getFeedbackSessionName()
-                + "%" + newDataBundle.feedbackSessions.get("private.session.noquestions")
+                + "%" + newDataBundle.getFeedbackSessions().get("private.session.noquestions")
                                                       .getCourseId()).stats;
 
         assertEquals(0, stats.expectedTotal);
@@ -475,8 +475,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         ______TS("completed private session");
 
-        stats = detailsMap.get(newDataBundle.feedbackSessions.get("private.session.done").getFeedbackSessionName() + "%"
-                + newDataBundle.feedbackSessions.get("private.session.done").getCourseId()).stats;
+        stats = detailsMap.get(newDataBundle.getFeedbackSessions().get("private.session.done").getFeedbackSessionName() + "%"
+                + newDataBundle.getFeedbackSessions().get("private.session.done").getCourseId()).stats;
 
         assertEquals(1, stats.expectedTotal);
         assertEquals(1, stats.submittedTotal);
@@ -484,10 +484,10 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         ______TS("private session with questions with no recipients");
 
         expectedSessions.clear();
-        expectedSessions.add(newDataBundle.feedbackSessions.get("private.session.norecipients").toString());
+        expectedSessions.add(newDataBundle.getFeedbackSessions().get("private.session.norecipients").toString());
 
         detailsList = fsLogic.getFeedbackSessionDetailsForInstructor(
-                newDataBundle.instructors.get("instructor1OfCourse3").googleId);
+                newDataBundle.getInstructors().get("instructor1OfCourse3").googleId);
 
         detailsMap.clear();
         actualSessions = "";
@@ -500,9 +500,9 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         }
         actualSessions = actualSessionsBuilder.toString();
         AssertHelper.assertContains(expectedSessions, actualSessions);
-        stats = detailsMap.get(newDataBundle.feedbackSessions.get("private.session.norecipients")
+        stats = detailsMap.get(newDataBundle.getFeedbackSessions().get("private.session.norecipients")
                                                              .getFeedbackSessionName()
-                + "%" + newDataBundle.feedbackSessions.get("private.session.norecipients")
+                + "%" + newDataBundle.getFeedbackSessions().get("private.session.norecipients")
                                                       .getCourseId()).stats;
 
         assertEquals(0, stats.expectedTotal);
@@ -535,9 +535,9 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         // Student can see sessions 1 and 2. Session 3 has no questions. Session 4 is not yet visible for students.
         String expected =
-                dataBundle.feedbackSessions.get("session1InCourse1").toString() + Const.EOL
-                + dataBundle.feedbackSessions.get("session2InCourse1").toString() + Const.EOL
-                + dataBundle.feedbackSessions.get("gracePeriodSession").toString() + Const.EOL;
+                dataBundle.getFeedbackSessions().get("session1InCourse1").toString() + Const.EOL
+                + dataBundle.getFeedbackSessions().get("session2InCourse1").toString() + Const.EOL
+                + dataBundle.getFeedbackSessions().get("gracePeriodSession").toString() + Const.EOL;
 
         for (FeedbackSessionAttributes session : actualSessions) {
             AssertHelper.assertContains(session.toString(), expected);
@@ -558,12 +558,12 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         // Instructors should be able to see all sessions for the course
         expected =
-                dataBundle.feedbackSessions.get("session1InCourse1").toString() + Const.EOL
-                + dataBundle.feedbackSessions.get("session2InCourse1").toString() + Const.EOL
-                + dataBundle.feedbackSessions.get("empty.session").toString() + Const.EOL
-                + dataBundle.feedbackSessions.get("awaiting.session").toString() + Const.EOL
-                + dataBundle.feedbackSessions.get("closedSession").toString() + Const.EOL
-                + dataBundle.feedbackSessions.get("gracePeriodSession").toString() + Const.EOL;
+                dataBundle.getFeedbackSessions().get("session1InCourse1").toString() + Const.EOL
+                + dataBundle.getFeedbackSessions().get("session2InCourse1").toString() + Const.EOL
+                + dataBundle.getFeedbackSessions().get("empty.session").toString() + Const.EOL
+                + dataBundle.getFeedbackSessions().get("awaiting.session").toString() + Const.EOL
+                + dataBundle.getFeedbackSessions().get("closedSession").toString() + Const.EOL
+                + dataBundle.getFeedbackSessions().get("gracePeriodSession").toString() + Const.EOL;
 
         for (FeedbackSessionAttributes session : actualSessions) {
             AssertHelper.assertContains(session.toString(), expected);
@@ -574,7 +574,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         actualSessions = fsLogic.getFeedbackSessionsForUserInCourse("idOfTypicalCourse2", "instructor2@course2.tmt");
 
         assertEquals(actualSessions.get(0).toString(),
-                dataBundle.feedbackSessions.get("session2InCourse2").toString());
+                dataBundle.getFeedbackSessions().get("session2InCourse2").toString());
         assertEquals(1, actualSessions.size());
 
         ______TS("Private session viewing");
@@ -582,12 +582,12 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         // This is the creator for the private session.
         // We have already tested above that other instructors cannot see it.
         actualSessions = fsLogic.getFeedbackSessionsForUserInCourse("idOfTypicalCourse2", "instructor1@course2.tmt");
-        AssertHelper.assertContains(dataBundle.feedbackSessions.get("session1InCourse2").toString(),
+        AssertHelper.assertContains(dataBundle.getFeedbackSessions().get("session1InCourse2").toString(),
                 actualSessions.toString());
 
         ______TS("Feedback session without questions for students but with visible responses are visible");
         actualSessions = fsLogic.getFeedbackSessionsForUserInCourse("idOfArchivedCourse", "student1InCourse1@gmail.tmt");
-        AssertHelper.assertContains(dataBundle.feedbackSessions.get("archiveCourse.session1").toString(),
+        AssertHelper.assertContains(dataBundle.getFeedbackSessions().get("archiveCourse.session1").toString(),
                 actualSessions.toString());
     }
 
@@ -601,7 +601,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         // We just test this once.
         assertEquals(actual.feedbackSession.toString(),
-                dataBundle.feedbackSessions.get("session1InCourse1").toString());
+                dataBundle.getFeedbackSessions().get("session1InCourse1").toString());
 
         // There should be 3 questions for students to do in session 1.
         // Other questions are set for instructors.
@@ -703,7 +703,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
                         "Instructor feedback session", "idOfTypicalCourse2", "instructor1@course2.tmt");
 
         // We just test this once.
-        assertEquals(dataBundle.feedbackSessions.get("session2InCourse2").toString(),
+        assertEquals(dataBundle.getFeedbackSessions().get("session2InCourse2").toString(),
                 actual.feedbackSession.toString());
 
         // There should be 2 question for students to do in session 1.
@@ -764,11 +764,11 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         ______TS("standard session with varied visibilities");
 
         FeedbackSessionAttributes session =
-                responseBundle.feedbackSessions.get("standard.session");
+                responseBundle.getFeedbackSessions().get("standard.session");
 
         /*** Test result bundle for student1 ***/
         StudentAttributes student =
-                responseBundle.students.get("student1InCourse1");
+                responseBundle.getStudents().get("student1InCourse1");
         FeedbackSessionResultsBundle results =
                 fsLogic.getFeedbackSessionResultsForStudent(session.getFeedbackSessionName(),
                         session.getCourseId(), student.email);
@@ -898,7 +898,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         /*** Test result bundle for instructor1 within a course ***/
         InstructorAttributes instructor =
-                responseBundle.instructors.get("instructor1OfCourse1");
+                responseBundle.getInstructors().get("instructor1OfCourse1");
         results = fsLogic.getFeedbackSessionResultsForInstructor(
                 session.getFeedbackSessionName(),
                 session.getCourseId(), instructor.email);
@@ -919,16 +919,16 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         String student6AnonName = getStudentAnonName(responseBundle, "student6InCourse1");
         String instructor1AnonEmail = FeedbackSessionResultsBundle.getAnonEmail(
                                           FeedbackParticipantType.INSTRUCTORS,
-                                          responseBundle.instructors.get("instructor1OfCourse1").name);
+                                          responseBundle.getInstructors().get("instructor1OfCourse1").name);
         String instructor1AnonName = FeedbackSessionResultsBundle.getAnonName(
                                           FeedbackParticipantType.INSTRUCTORS,
-                                          responseBundle.instructors.get("instructor1OfCourse1").name);
+                                          responseBundle.getInstructors().get("instructor1OfCourse1").name);
         String instructor2AnonEmail = FeedbackSessionResultsBundle.getAnonEmail(
                                           FeedbackParticipantType.INSTRUCTORS,
-                                          responseBundle.instructors.get("instructor2OfCourse1").name);
+                                          responseBundle.getInstructors().get("instructor2OfCourse1").name);
         String instructor2AnonName = FeedbackSessionResultsBundle.getAnonName(
                                           FeedbackParticipantType.INSTRUCTORS,
-                                          responseBundle.instructors.get("instructor2OfCourse1").name);
+                                          responseBundle.getInstructors().get("instructor2OfCourse1").name);
         Collections.addAll(expectedStrings,
                 "%GENERAL%=%NOBODY%",
                 "FSRTest.student1InCourse1@gmail.tmt=student1 In Course1</td></div>'\"",
@@ -1050,10 +1050,10 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         ______TS("private session");
 
-        session = responseBundle.feedbackSessions.get("private.session");
+        session = responseBundle.getFeedbackSessions().get("private.session");
 
         /*** Test result bundle for student1 ***/
-        student = responseBundle.students.get("student1InCourse1");
+        student = responseBundle.getStudents().get("student1InCourse1");
         results = fsLogic.getFeedbackSessionResultsForStudent(session.getFeedbackSessionName(),
                         session.getCourseId(), student.email);
 
@@ -1066,7 +1066,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         /*** Test result bundle for instructor1 ***/
 
         instructor =
-                responseBundle.instructors.get("instructor1OfCourse1");
+                responseBundle.getInstructors().get("instructor1OfCourse1");
         results = fsLogic.getFeedbackSessionResultsForInstructor(
                 session.getFeedbackSessionName(),
                 session.getCourseId(), instructor.email);
@@ -1082,7 +1082,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
                 "FSRTest.student1InCourse1@gmail.tmt=student1 In Course1",
                 "Team 1.2=Team 1.2",
                 FeedbackSessionResultsBundle.getAnonEmail(FeedbackParticipantType.TEAMS,
-                                                responseBundle.students.get("student3InCourse1").team),
+                                                responseBundle.getStudents().get("student3InCourse1").team),
                 "FSRTest.instr1@course1.tmt=Instructor1 Course1");
         AssertHelper.assertContains(expectedStrings, mapString);
         assertEquals(4, results.emailNameTable.size());
@@ -1094,7 +1094,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
                 "FSRTest.student1InCourse1@gmail.tmt=Team 1.1</td></div>'\"",
                 "Team 1.2=",
                 FeedbackSessionResultsBundle.getAnonEmail(FeedbackParticipantType.TEAMS,
-                                                responseBundle.students.get("student3InCourse1").team),
+                                                responseBundle.getStudents().get("student3InCourse1").team),
                 "FSRTest.instr1@course1.tmt=Instructors");
         AssertHelper.assertContains(expectedStrings, mapString);
         assertEquals(4, results.emailTeamNameTable.size());
@@ -1126,8 +1126,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         ______TS("typical case: get all results");
 
-        FeedbackSessionAttributes session = dataBundle.feedbackSessions.get("session1InCourse1");
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor1OfCourse1");
+        FeedbackSessionAttributes session = dataBundle.getFeedbackSessions().get("session1InCourse1");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor1OfCourse1");
 
         String export = fsLogic.getFeedbackSessionResultsSummaryAsCsv(
                 session.getFeedbackSessionName(), session.getCourseId(), instructor.email, null, true, true);
@@ -1212,8 +1212,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         ______TS("typical case: get all results with unchecked isMissingResponsesShown");
 
-        session = dataBundle.feedbackSessions.get("session1InCourse1");
-        instructor = dataBundle.instructors.get("instructor1OfCourse1");
+        session = dataBundle.getFeedbackSessions().get("session1InCourse1");
+        instructor = dataBundle.getInstructors().get("instructor1OfCourse1");
 
         export = fsLogic.getFeedbackSessionResultsSummaryAsCsv(
                 session.getFeedbackSessionName(), session.getCourseId(), instructor.email, null, false, true);
@@ -1265,7 +1265,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         assertEquals(StringUtils.join(expected, Const.EOL), export);
 
         ______TS("typical case: get results for single question");
-        final int questionNum = dataBundle.feedbackQuestions.get("qn2InSession1InCourse1").getQuestionNumber();
+        final int questionNum = dataBundle.getFeedbackQuestions().get("qn2InSession1InCourse1").getQuestionNumber();
         final String questionId = fqLogic.getFeedbackQuestion(session.getFeedbackSessionName(),
                 session.getCourseId(), questionNum).getId();
 
@@ -1296,8 +1296,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         DataBundle newDataBundle = loadDataBundle("/FeedbackSessionQuestionTypeTest.json");
         removeAndRestoreDataBundle(newDataBundle);
-        session = newDataBundle.feedbackSessions.get("mcqSession");
-        instructor = newDataBundle.instructors.get("instructor1OfCourse1");
+        session = newDataBundle.getFeedbackSessions().get("mcqSession");
+        instructor = newDataBundle.getInstructors().get("instructor1OfCourse1");
 
         export = fsLogic.getFeedbackSessionResultsSummaryAsCsv(
                 session.getFeedbackSessionName(), session.getCourseId(), instructor.email, null, true, true);
@@ -1360,8 +1360,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         ______TS("MSQ results");
 
-        session = newDataBundle.feedbackSessions.get("msqSession");
-        instructor = newDataBundle.instructors.get("instructor1OfCourse1");
+        session = newDataBundle.getFeedbackSessions().get("msqSession");
+        instructor = newDataBundle.getInstructors().get("instructor1OfCourse1");
 
         export = fsLogic.getFeedbackSessionResultsSummaryAsCsv(
                 session.getFeedbackSessionName(), session.getCourseId(), instructor.email, null, true, true);
@@ -1428,8 +1428,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         ______TS("NUMSCALE results");
 
-        session = newDataBundle.feedbackSessions.get("numscaleSession");
-        instructor = newDataBundle.instructors.get("instructor1OfCourse1");
+        session = newDataBundle.getFeedbackSessions().get("numscaleSession");
+        instructor = newDataBundle.getInstructors().get("instructor1OfCourse1");
 
         export = fsLogic.getFeedbackSessionResultsSummaryAsCsv(
                 session.getFeedbackSessionName(), session.getCourseId(), instructor.email, null, true, true);
@@ -1476,8 +1476,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         ______TS("CONSTSUM results");
 
-        session = newDataBundle.feedbackSessions.get("constSumSession");
-        instructor = newDataBundle.instructors.get("instructor1OfCourse1");
+        session = newDataBundle.getFeedbackSessions().get("constSumSession");
+        instructor = newDataBundle.getInstructors().get("instructor1OfCourse1");
 
         export = fsLogic.getFeedbackSessionResultsSummaryAsCsv(
                 session.getFeedbackSessionName(), session.getCourseId(), instructor.email, null, true, true);
@@ -1544,7 +1544,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         ______TS("Instructor without privilege to view responses");
 
-        instructor = newDataBundle.instructors.get("instructor2OfCourse1");
+        instructor = newDataBundle.getInstructors().get("instructor2OfCourse1");
 
         export = fsLogic.getFeedbackSessionResultsSummaryAsCsv(
                 session.getFeedbackSessionName(), session.getCourseId(), instructor.email, null, true, true);
@@ -1583,8 +1583,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         ______TS("CONTRIB results");
 
-        session = newDataBundle.feedbackSessions.get("contribSession");
-        instructor = newDataBundle.instructors.get("instructor1OfCourse1");
+        session = newDataBundle.getFeedbackSessions().get("contribSession");
+        instructor = newDataBundle.getInstructors().get("instructor1OfCourse1");
 
         export = fsLogic.getFeedbackSessionResultsSummaryAsCsv(
                 session.getFeedbackSessionName(), session.getCourseId(), instructor.email, null, true, true);
@@ -1638,8 +1638,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         ______TS("CONTRIB summary visibility variations");
 
         // instructor not allowed to see student
-        session = newDataBundle.feedbackSessions.get("contribSessionStudentAnonymised");
-        instructor = newDataBundle.instructors.get("instructor1OfCourse1");
+        session = newDataBundle.getFeedbackSessions().get("contribSessionStudentAnonymised");
+        instructor = newDataBundle.getInstructors().get("instructor1OfCourse1");
 
         String student1AnonName = getStudentAnonName(newDataBundle, "student1InCourse1");
         String student2AnonName = getStudentAnonName(newDataBundle, "student2InCourse1");
@@ -1685,8 +1685,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         assertEquals(StringUtils.join(expected, Const.EOL), export);
 
         // instructor not allowed to view student responses in section
-        session = newDataBundle.feedbackSessions.get("contribSessionInstructorSectionRestricted");
-        instructor = newDataBundle.instructors.get("instructor1OfCourseWithSections");
+        session = newDataBundle.getFeedbackSessions().get("contribSessionInstructorSectionRestricted");
+        instructor = newDataBundle.getInstructors().get("instructor1OfCourseWithSections");
 
         export = fsLogic.getFeedbackSessionResultsSummaryAsCsv(
                 session.getFeedbackSessionName(), session.getCourseId(), instructor.email, null, true, true);
@@ -1725,8 +1725,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         ______TS("RUBRIC results");
 
-        session = newDataBundle.feedbackSessions.get("rubricSession");
-        instructor = newDataBundle.instructors.get("instructor1OfCourse1");
+        session = newDataBundle.getFeedbackSessions().get("rubricSession");
+        instructor = newDataBundle.getInstructors().get("instructor1OfCourse1");
 
         export = fsLogic.getFeedbackSessionResultsSummaryAsCsv(
                 session.getFeedbackSessionName(), session.getCourseId(), instructor.email, null, true, true);
@@ -1824,8 +1824,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         ______TS("RANK results");
 
-        session = newDataBundle.feedbackSessions.get("rankSession");
-        instructor = newDataBundle.instructors.get("instructor1OfCourse1");
+        session = newDataBundle.getFeedbackSessions().get("rankSession");
+        instructor = newDataBundle.getInstructors().get("instructor1OfCourse1");
 
         export = fsLogic.getFeedbackSessionResultsSummaryAsCsv(
                 session.getFeedbackSessionName(), session.getCourseId(), instructor.email, null, true, true);
@@ -1883,8 +1883,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         ______TS("MSQ results without statistics");
 
-        session = newDataBundle.feedbackSessions.get("msqSession");
-        instructor = newDataBundle.instructors.get("instructor1OfCourse1");
+        session = newDataBundle.getFeedbackSessions().get("msqSession");
+        instructor = newDataBundle.getInstructors().get("instructor1OfCourse1");
 
         export = fsLogic.getFeedbackSessionResultsSummaryAsCsv(
                 session.getFeedbackSessionName(), session.getCourseId(), instructor.email, null, true, false);
@@ -1906,32 +1906,32 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
     private String getStudentAnonEmail(DataBundle dataBundle, String studentKey) {
         return FeedbackSessionResultsBundle.getAnonEmail(FeedbackParticipantType.STUDENTS,
-                                                         dataBundle.students.get(studentKey).name);
+                                                         dataBundle.getStudents().get(studentKey).name);
     }
 
     private String getStudentAnonName(DataBundle dataBundle, String studentKey) {
         return FeedbackSessionResultsBundle.getAnonName(FeedbackParticipantType.STUDENTS,
-                                                        dataBundle.students.get(studentKey).name);
+                                                        dataBundle.getStudents().get(studentKey).name);
     }
 
     private void testIsFeedbackSessionViewableToStudents() {
         ______TS("Session with questions for students to answer");
-        FeedbackSessionAttributes session = dataBundle.feedbackSessions.get("session1InCourse1");
+        FeedbackSessionAttributes session = dataBundle.getFeedbackSessions().get("session1InCourse1");
         assertTrue(fsLogic.isFeedbackSessionViewableToStudents(session));
 
         ______TS("Session without questions for students, but with visible responses");
-        session = dataBundle.feedbackSessions.get("archiveCourse.session1");
+        session = dataBundle.getFeedbackSessions().get("archiveCourse.session1");
         assertTrue(fsLogic.isFeedbackSessionViewableToStudents(session));
 
-        session = dataBundle.feedbackSessions.get("session2InCourse2");
+        session = dataBundle.getFeedbackSessions().get("session2InCourse2");
         assertTrue(fsLogic.isFeedbackSessionViewableToStudents(session));
 
         ______TS("private session");
-        session = dataBundle.feedbackSessions.get("session1InCourse2");
+        session = dataBundle.getFeedbackSessions().get("session1InCourse2");
         assertFalse(fsLogic.isFeedbackSessionViewableToStudents(session));
 
         ______TS("empty session");
-        session = dataBundle.feedbackSessions.get("empty.session");
+        session = dataBundle.getFeedbackSessions().get("empty.session");
         assertFalse(fsLogic.isFeedbackSessionViewableToStudents(session));
     }
 
@@ -1960,7 +1960,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         }
 
         ______TS("success 1: all changeable values sent are null");
-        fsa = dataBundle.feedbackSessions.get("session1InCourse1");
+        fsa = dataBundle.getFeedbackSessions().get("session1InCourse1");
         fsa.setInstructions(null);
         fsa.setStartTime(null);
         fsa.setEndTime(null);
@@ -1976,7 +1976,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
     private void testPublishUnpublishFeedbackSession() throws Exception {
 
         ______TS("success: publish");
-        FeedbackSessionAttributes sessionUnderTest = dataBundle.feedbackSessions.get("session1InCourse1");
+        FeedbackSessionAttributes sessionUnderTest = dataBundle.getFeedbackSessions().get("session1InCourse1");
 
         // set as manual publish
 
@@ -2025,7 +2025,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         ______TS("failure: private session");
 
-        sessionUnderTest = dataBundle.feedbackSessions.get("session1InCourse2");
+        sessionUnderTest = dataBundle.getFeedbackSessions().get("session1InCourse2");
 
         try {
             fsLogic.publishFeedbackSession(sessionUnderTest);
@@ -2051,8 +2051,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         ______TS("success: empty session");
 
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("empty.session");
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor2OfCourse1");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("empty.session");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor2OfCourse1");
 
         assertTrue(fsLogic.isFeedbackSessionCompletedByInstructor(fs, instructor.email));
     }
@@ -2061,17 +2061,17 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
         ______TS("success: empty session");
 
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("empty.session");
-        StudentAttributes student = dataBundle.students.get("student2InCourse1");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("empty.session");
+        StudentAttributes student = dataBundle.getStudents().get("student2InCourse1");
 
         assertTrue(fsLogic.isFeedbackSessionCompletedByStudent(fs, student.email));
     }
 
     private void testIsFeedbackSessionFullyCompletedByStudent() throws Exception {
 
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("session1InCourse1");
-        StudentAttributes student1OfCourse1 = dataBundle.students.get("student1InCourse1");
-        StudentAttributes student3OfCourse1 = dataBundle.students.get("student3InCourse1");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("session1InCourse1");
+        StudentAttributes student1OfCourse1 = dataBundle.getStudents().get("student1InCourse1");
+        StudentAttributes student3OfCourse1 = dataBundle.getStudents().get("student3InCourse1");
 
         ______TS("failure: non-existent feedback session for student");
 
@@ -2109,7 +2109,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
     }
 
     private FeedbackQuestionAttributes getQuestionFromDatastore(String jsonId) {
-        FeedbackQuestionAttributes questionToGet = dataBundle.feedbackQuestions.get(jsonId);
+        FeedbackQuestionAttributes questionToGet = dataBundle.getFeedbackQuestions().get(jsonId);
         questionToGet = fqLogic.getFeedbackQuestion(
                 questionToGet.feedbackSessionName,
                 questionToGet.courseId,
@@ -2124,7 +2124,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
     }
 
     private FeedbackResponseAttributes getResponseFromDatastore(String jsonId, DataBundle bundle) {
-        FeedbackResponseAttributes response = bundle.feedbackResponses.get(jsonId);
+        FeedbackResponseAttributes response = bundle.getFeedbackResponses().get(jsonId);
 
         String questionId = null;
         try {
@@ -2141,7 +2141,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
     }
 
     private void unpublishAllSessions() throws InvalidParametersException, EntityDoesNotExistException {
-        for (FeedbackSessionAttributes fs : dataBundle.feedbackSessions.values()) {
+        for (FeedbackSessionAttributes fs : dataBundle.getFeedbackSessions().values()) {
             if (fs.isPublished()) {
                 fsLogic.unpublishFeedbackSession(fs);
             }

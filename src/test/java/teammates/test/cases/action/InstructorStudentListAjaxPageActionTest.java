@@ -21,7 +21,7 @@ public class InstructorStudentListAjaxPageActionTest extends BaseActionTest {
     @Override
     @Test
     public void testExecuteAndPostProcess() {
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor3OfCourse1");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor3OfCourse1");
         String instructorId = instructor.googleId;
 
         gaeSimulation.loginAsInstructor(instructorId);

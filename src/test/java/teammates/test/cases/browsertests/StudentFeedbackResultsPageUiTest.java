@@ -33,7 +33,7 @@ public class StudentFeedbackResultsPageUiTest extends BaseUiTestCase {
         logout();
 
         // Open Session
-        StudentAttributes unreg = testData.students.get("DropOut");
+        StudentAttributes unreg = testData.getStudents().get("DropOut");
         resultsPage = loginToStudentFeedbackResultsPage(unreg, "Open Session", StudentFeedbackResultsPage.class);
         resultsPage.verifyHtmlMainContent("/unregisteredStudentFeedbackResultsPageOpen.html");
 
@@ -144,9 +144,9 @@ public class StudentFeedbackResultsPageUiTest extends BaseUiTestCase {
 
     private StudentFeedbackResultsPage loginToStudentFeedbackResultsPage(String studentName, String fsName) {
         AppUrl editUrl = createUrl(Const.ActionURIs.STUDENT_FEEDBACK_RESULTS_PAGE)
-                                        .withUserId(testData.students.get(studentName).googleId)
-                                        .withCourseId(testData.feedbackSessions.get(fsName).getCourseId())
-                                        .withSessionName(testData.feedbackSessions.get(fsName).getFeedbackSessionName());
+                                        .withUserId(testData.getStudents().get(studentName).googleId)
+                                        .withCourseId(testData.getFeedbackSessions().get(fsName).getCourseId())
+                                        .withSessionName(testData.getFeedbackSessions().get(fsName).getFeedbackSessionName());
         return loginAdminToPage(editUrl, StudentFeedbackResultsPage.class);
     }
 
@@ -155,7 +155,7 @@ public class StudentFeedbackResultsPageUiTest extends BaseUiTestCase {
         AppUrl submitUrl = createUrl(Const.ActionURIs.STUDENT_FEEDBACK_RESULTS_PAGE)
                                             .withCourseId(s.course)
                                             .withStudentEmail(s.email)
-                                            .withSessionName(testData.feedbackSessions.get(fsDataId)
+                                            .withSessionName(testData.getFeedbackSessions().get(fsDataId)
                                                                                       .getFeedbackSessionName())
                                             .withRegistrationKey(BackDoor.getEncryptedKeyForStudent(s.course, s.email));
         return AppPage.getNewPageInstance(browser, submitUrl, typeOfPage);

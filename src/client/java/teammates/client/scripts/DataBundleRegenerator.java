@@ -41,10 +41,10 @@ public final class DataBundleRegenerator {
             }
             String jsonString = FileHelper.readFile(file.getCanonicalPath());
             DataBundle db = JsonUtils.fromJson(jsonString, DataBundle.class);
-            for (Map.Entry<String, FeedbackResponseAttributes> responseMap : db.feedbackResponses.entrySet()) {
+            for (Map.Entry<String, FeedbackResponseAttributes> responseMap : db.getFeedbackResponses().entrySet()) {
                 fixResponse(responseMap.getValue());
             }
-            for (Map.Entry<String, FeedbackQuestionAttributes> questionMap : db.feedbackQuestions.entrySet()) {
+            for (Map.Entry<String, FeedbackQuestionAttributes> questionMap : db.getFeedbackQuestions().entrySet()) {
                 fixQuestion(questionMap.getValue());
             }
             String regeneratedJsonString = JsonUtils.toJson(db).replace("+0000", "UTC");

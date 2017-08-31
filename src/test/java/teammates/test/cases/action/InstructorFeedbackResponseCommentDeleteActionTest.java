@@ -43,14 +43,14 @@ public class InstructorFeedbackResponseCommentDeleteActionTest extends BaseActio
         FeedbackResponseAttributes feedbackResponse = feedbackResponsesDb.getFeedbackResponse(feedbackQuestion.getId(),
                 giverEmail, receiverEmail);
 
-        FeedbackResponseCommentAttributes feedbackResponseComment = dataBundle.feedbackResponseComments
+        FeedbackResponseCommentAttributes feedbackResponseComment = dataBundle.getFeedbackResponseComments()
                 .get("comment1FromT1C1ToR1Q1S1C1");
 
         feedbackResponseComment = feedbackResponseCommentsDb.getFeedbackResponseComment(feedbackResponse.getId(),
                 feedbackResponseComment.giverEmail, feedbackResponseComment.createdAt);
         assertNotNull("response comment not found", feedbackResponseComment);
 
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor1OfCourse1");
         gaeSimulation.loginAsInstructor(instructor.googleId);
 
         ______TS("Unsuccessful case: not enough parameters");
@@ -120,7 +120,7 @@ public class InstructorFeedbackResponseCommentDeleteActionTest extends BaseActio
         giverEmail = "student2InCourse1@gmail.tmt";
         feedbackResponse = feedbackResponsesDb.getFeedbackResponse(feedbackQuestion.getId(), giverEmail,
                                                                    receiverEmail);
-        feedbackResponseComment = dataBundle.feedbackResponseComments.get("comment1FromT1C1ToR1Q2S1C1");
+        feedbackResponseComment = dataBundle.getFeedbackResponseComments().get("comment1FromT1C1ToR1Q2S1C1");
         feedbackResponseComment = feedbackResponseCommentsDb.getFeedbackResponseComment(feedbackResponse.getId(),
                 feedbackResponseComment.giverEmail, feedbackResponseComment.createdAt);
         assertNotNull("response comment not found", feedbackResponseComment);
@@ -157,9 +157,9 @@ public class InstructorFeedbackResponseCommentDeleteActionTest extends BaseActio
         final FeedbackResponseCommentsDb frcDb = new FeedbackResponseCommentsDb();
 
         int questionNumber = 2;
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("session1InCourse1");
-        FeedbackResponseCommentAttributes comment = dataBundle.feedbackResponseComments.get("comment1FromT1C1ToR1Q2S1C1");
-        FeedbackResponseAttributes response = dataBundle.feedbackResponses.get("response1ForQ2S1C1");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("session1InCourse1");
+        FeedbackResponseCommentAttributes comment = dataBundle.getFeedbackResponseComments().get("comment1FromT1C1ToR1Q2S1C1");
+        FeedbackResponseAttributes response = dataBundle.getFeedbackResponses().get("response1ForQ2S1C1");
 
         FeedbackQuestionAttributes question = fqDb.getFeedbackQuestion(
                 fs.getFeedbackSessionName(), fs.getCourseId(), questionNumber);

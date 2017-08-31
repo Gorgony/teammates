@@ -35,8 +35,8 @@ public class StudentFeedbackResultsPageDataTest extends BaseComponentTestCase {
     public void testAll() throws EntityDoesNotExistException {
         ______TS("typical success case");
 
-        AccountAttributes account = dataBundle.accounts.get("student1InCourse1");
-        StudentAttributes student = dataBundle.students.get("student1InCourse1");
+        AccountAttributes account = dataBundle.getAccounts().get("student1InCourse1");
+        StudentAttributes student = dataBundle.getStudents().get("student1InCourse1");
         assertNotNull(student);
         String dummyKey = "key123";
         student.key = dummyKey;
@@ -46,21 +46,21 @@ public class StudentFeedbackResultsPageDataTest extends BaseComponentTestCase {
 
         Map<FeedbackQuestionAttributes, List<FeedbackResponseAttributes>> questionsWithResponses = new LinkedHashMap<>();
 
-        FeedbackQuestionAttributes question1 = dataBundle.feedbackQuestions.get("qn1InSession1InCourse1");
+        FeedbackQuestionAttributes question1 = dataBundle.getFeedbackQuestions().get("qn1InSession1InCourse1");
         assertNotNull(question1);
-        FeedbackQuestionAttributes question2 = dataBundle.feedbackQuestions.get("qn2InSession1InCourse1");
+        FeedbackQuestionAttributes question2 = dataBundle.getFeedbackQuestions().get("qn2InSession1InCourse1");
         assertNotNull(question2);
 
         List<FeedbackResponseAttributes> responsesForQ1 = new ArrayList<>();
         List<FeedbackResponseAttributes> responsesForQ2 = new ArrayList<>();
 
         /* Question 1 with responses */
-        responsesForQ1.add(dataBundle.feedbackResponses.get("response1ForQ1S1C1"));
+        responsesForQ1.add(dataBundle.getFeedbackResponses().get("response1ForQ1S1C1"));
         questionsWithResponses.put(question1, responsesForQ1);
 
         /* Question 2 with responses */
-        responsesForQ2.add(dataBundle.feedbackResponses.get("response1ForQ2S1C1"));
-        responsesForQ2.add(dataBundle.feedbackResponses.get("response2ForQ2S1C1"));
+        responsesForQ2.add(dataBundle.getFeedbackResponses().get("response1ForQ2S1C1"));
+        responsesForQ2.add(dataBundle.getFeedbackResponses().get("response2ForQ2S1C1"));
         questionsWithResponses.put(question2, responsesForQ2);
 
         // need to obtain questionId and responseId as methods in FeedbackSessionResultsBundle require them
@@ -111,7 +111,7 @@ public class StudentFeedbackResultsPageDataTest extends BaseComponentTestCase {
 
         ______TS("student in unregistered course");
 
-        student = dataBundle.students.get("student1InUnregisteredCourse");
+        student = dataBundle.getStudents().get("student1InUnregisteredCourse");
 
         pageData = new StudentFeedbackResultsPageData(account, student, dummySessionToken);
         Map<FeedbackQuestionAttributes, List<FeedbackResponseAttributes>> questionsWithResponsesUnregistered =

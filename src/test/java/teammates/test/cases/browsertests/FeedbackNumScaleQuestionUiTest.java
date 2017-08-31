@@ -23,9 +23,9 @@ public class FeedbackNumScaleQuestionUiTest extends FeedbackQuestionUiTest {
         testData = loadDataBundle("/FeedbackNumScaleQuestionUiTest.json");
         removeAndRestoreDataBundle(testData);
 
-        instructorId = testData.accounts.get("instructor1").googleId;
-        courseId = testData.courses.get("course").getId();
-        feedbackSessionName = testData.feedbackSessions.get("openSession").getFeedbackSessionName();
+        instructorId = testData.getAccounts().get("instructor1").googleId;
+        courseId = testData.getCourses().get("course").getId();
+        feedbackSessionName = testData.getFeedbackSessions().get("openSession").getFeedbackSessionName();
     }
 
     @BeforeClass

@@ -335,7 +335,7 @@ public class FeedbackResponseCommentsLogicTest extends BaseLogicTest {
     private FeedbackResponseCommentAttributes restoreFrCommentFromDataBundle(String existingFrCommentInDataBundle) {
 
         FeedbackResponseCommentAttributes existingFrComment =
-                dataBundle.feedbackResponseComments.get(existingFrCommentInDataBundle);
+                dataBundle.getFeedbackResponseComments().get(existingFrCommentInDataBundle);
 
         FeedbackResponseCommentAttributes frComment = FeedbackResponseCommentAttributes
                 .builder(existingFrComment.courseId, existingFrComment.feedbackSessionName,
@@ -373,14 +373,14 @@ public class FeedbackResponseCommentsLogicTest extends BaseLogicTest {
     }
 
     private String getQuestionIdInDataBundle(String questionInDataBundle) {
-        FeedbackQuestionAttributes question = dataBundle.feedbackQuestions.get(questionInDataBundle);
+        FeedbackQuestionAttributes question = dataBundle.getFeedbackQuestions().get(questionInDataBundle);
         question = fqLogic.getFeedbackQuestion(
                                    question.feedbackSessionName, question.courseId, question.questionNumber);
         return question.getId();
     }
 
     private String getResponseIdInDataBundle(String responseInDataBundle, String questionInDataBundle) {
-        FeedbackResponseAttributes response = dataBundle.feedbackResponses.get(responseInDataBundle);
+        FeedbackResponseAttributes response = dataBundle.getFeedbackResponses().get(responseInDataBundle);
         response = frLogic.getFeedbackResponse(
                                    getQuestionIdInDataBundle(questionInDataBundle),
                                    response.giver,

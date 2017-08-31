@@ -47,7 +47,7 @@ public class StudentFeedbackSubmissionEditPageActionTest extends BaseActionTest 
     @Override
     @Test
     public void testExecuteAndPostProcess() throws Exception {
-        StudentAttributes student1InCourse1 = dataBundle.students.get("student1InCourse1");
+        StudentAttributes student1InCourse1 = dataBundle.getStudents().get("student1InCourse1");
         StudentAttributes unregStudent = StudentAttributes
                 .builder("idOfTypicalCourse1", "Unreg Student", "unreg@stud.ent")
                 .withSection("1")
@@ -61,7 +61,7 @@ public class StudentFeedbackSubmissionEditPageActionTest extends BaseActionTest 
 
         verifyAssumptionFailure();
 
-        FeedbackSessionAttributes session1InCourse1 = dataBundle.feedbackSessions.get("session1InCourse1");
+        FeedbackSessionAttributes session1InCourse1 = dataBundle.getFeedbackSessions().get("session1InCourse1");
 
         String[] submissionParams = new String[]{
                 Const.ParamsNames.FEEDBACK_SESSION_NAME, session1InCourse1.getFeedbackSessionName(),
@@ -190,7 +190,7 @@ public class StudentFeedbackSubmissionEditPageActionTest extends BaseActionTest 
         gaeSimulation.loginAsStudent(student1InCourse1.googleId);
         removeAndRestoreTypicalDataBundle();
 
-        session1InCourse1 = dataBundle.feedbackSessions.get("session1InCourse1");
+        session1InCourse1 = dataBundle.getFeedbackSessions().get("session1InCourse1");
 
         params = new String[]{
                 Const.ParamsNames.COURSE_ID, session1InCourse1.getCourseId(),
@@ -253,7 +253,7 @@ public class StudentFeedbackSubmissionEditPageActionTest extends BaseActionTest 
     @Override
     @Test
     protected void testAccessControl() throws Exception {
-        FeedbackSessionAttributes session1InCourse1 = dataBundle.feedbackSessions
+        FeedbackSessionAttributes session1InCourse1 = dataBundle.getFeedbackSessions()
                 .get("session1InCourse1");
 
         String[] submissionParams = new String[] {

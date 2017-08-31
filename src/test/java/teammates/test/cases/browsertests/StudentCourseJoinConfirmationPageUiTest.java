@@ -28,12 +28,12 @@ public class StudentCourseJoinConfirmationPageUiTest extends BaseUiTestCase {
 
         String student1GoogleId = TestProperties.TEST_STUDENT1_ACCOUNT;
         String student1Email = student1GoogleId + "@gmail.com";
-        testData.accounts.get("alice.tmms").googleId = student1GoogleId;
-        testData.accounts.get("alice.tmms").email = student1Email;
-        testData.students.get("alice.tmms@SCJConfirmationUiT.CS2104").email = student1Email;
-        testData.students.get("alice.tmms@SCJConfirmationUiT.CS2103").email = student1Email;
-        testData.students.get("alice.tmms@SCJConfirmationUiT.CS1101").googleId = student1GoogleId;
-        testData.students.get("alice.tmms@SCJConfirmationUiT.CS1101").email = student1Email;
+        testData.getAccounts().get("alice.tmms").googleId = student1GoogleId;
+        testData.getAccounts().get("alice.tmms").email = student1Email;
+        testData.getStudents().get("alice.tmms@SCJConfirmationUiT.CS2104").email = student1Email;
+        testData.getStudents().get("alice.tmms@SCJConfirmationUiT.CS2103").email = student1Email;
+        testData.getStudents().get("alice.tmms@SCJConfirmationUiT.CS1101").googleId = student1GoogleId;
+        testData.getStudents().get("alice.tmms@SCJConfirmationUiT.CS1101").email = student1Email;
 
         removeAndRestoreDataBundle(testData);
     }
@@ -61,9 +61,9 @@ public class StudentCourseJoinConfirmationPageUiTest extends BaseUiTestCase {
 
         ______TS("click join link, skips confirmation and asks for login");
 
-        String courseId = testData.courses.get("SCJConfirmationUiT.CS2104").getId();
-        String courseName = testData.courses.get("SCJConfirmationUiT.CS2104").getName();
-        String studentEmail = testData.students.get("alice.tmms@SCJConfirmationUiT.CS2104").email;
+        String courseId = testData.getCourses().get("SCJConfirmationUiT.CS2104").getId();
+        String courseName = testData.getCourses().get("SCJConfirmationUiT.CS2104").getName();
+        String studentEmail = testData.getStudents().get("alice.tmms@SCJConfirmationUiT.CS2104").email;
         joinLink = createUrl(Const.ActionURIs.STUDENT_COURSE_JOIN_NEW)
                         .withRegistrationKey(getKeyFromBackDoor(courseId, studentEmail))
                         .withCourseId(courseId)
@@ -85,9 +85,9 @@ public class StudentCourseJoinConfirmationPageUiTest extends BaseUiTestCase {
 
         ______TS("test student confirmation page content");
 
-        courseId = testData.courses.get("SCJConfirmationUiT.CS2103").getId();
-        courseName = testData.courses.get("SCJConfirmationUiT.CS2103").getName();
-        studentEmail = testData.students.get("alice.tmms@SCJConfirmationUiT.CS2103").email;
+        courseId = testData.getCourses().get("SCJConfirmationUiT.CS2103").getId();
+        courseName = testData.getCourses().get("SCJConfirmationUiT.CS2103").getName();
+        studentEmail = testData.getStudents().get("alice.tmms@SCJConfirmationUiT.CS2103").email;
         joinLink = createUrl(Const.ActionURIs.STUDENT_COURSE_JOIN_NEW)
                                         .withRegistrationKey(getKeyFromBackDoor(courseId, studentEmail))
                                         .toAbsoluteString();
@@ -153,9 +153,9 @@ public class StudentCourseJoinConfirmationPageUiTest extends BaseUiTestCase {
 
         ______TS("click join link, skips confirmation and asks for login");
 
-        String courseId = testData.courses.get("SCJConfirmationUiT.CS2104").getId();
-        String courseName = testData.courses.get("SCJConfirmationUiT.CS2104").getName();
-        String studentEmail = testData.students.get("alice.tmms@SCJConfirmationUiT.CS2104").email;
+        String courseId = testData.getCourses().get("SCJConfirmationUiT.CS2104").getId();
+        String courseName = testData.getCourses().get("SCJConfirmationUiT.CS2104").getName();
+        String studentEmail = testData.getStudents().get("alice.tmms@SCJConfirmationUiT.CS2104").email;
         joinLink = createUrl(Const.ActionURIs.STUDENT_COURSE_JOIN)
                                         .withRegistrationKey(getKeyFromBackDoor(courseId, studentEmail))
                                         .toAbsoluteString();
@@ -174,9 +174,9 @@ public class StudentCourseJoinConfirmationPageUiTest extends BaseUiTestCase {
 
         ______TS("test student confirmation page content");
 
-        courseId = testData.courses.get("SCJConfirmationUiT.CS2103").getId();
-        courseName = testData.courses.get("SCJConfirmationUiT.CS2103").getName();
-        studentEmail = testData.students.get("alice.tmms@SCJConfirmationUiT.CS2103").email;
+        courseId = testData.getCourses().get("SCJConfirmationUiT.CS2103").getId();
+        courseName = testData.getCourses().get("SCJConfirmationUiT.CS2103").getName();
+        studentEmail = testData.getStudents().get("alice.tmms@SCJConfirmationUiT.CS2103").email;
         joinLink = createUrl(Const.ActionURIs.STUDENT_COURSE_JOIN)
                                         .withRegistrationKey(getKeyFromBackDoor(courseId, studentEmail))
                                         .toAbsoluteString();

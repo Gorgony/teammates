@@ -53,7 +53,7 @@ public class StudentFeedbackSubmitPageUiTest extends BaseUiTestCase {
         submitPage.loadProfileTab();
 
         submitPage.logout();
-        submitPage = loginToStudentFeedbackSubmitPage(testData.students.get("DropOut"), "Open Session");
+        submitPage = loginToStudentFeedbackSubmitPage(testData.getStudents().get("DropOut"), "Open Session");
         submitPage.clickAndCancel(browser.driver.findElement(By.id("studentHomeNavLink")));
         submitPage.clickAndCancel(browser.driver.findElement(By.id("studentProfileNavLink")));
     }
@@ -64,7 +64,7 @@ public class StudentFeedbackSubmitPageUiTest extends BaseUiTestCase {
 
         logout();
 
-        submitPage = loginToStudentFeedbackSubmitPage(testData.students.get("DropOut"), "Open Session");
+        submitPage = loginToStudentFeedbackSubmitPage(testData.getStudents().get("DropOut"), "Open Session");
 
         // This is the full HTML verification for Unregistered Student Feedback Submit Page,
         // the rest can all be verifyMainHtml
@@ -208,7 +208,7 @@ public class StudentFeedbackSubmitPageUiTest extends BaseUiTestCase {
         assertNull(BackDoor.getFeedbackResponse(fq.getId(),
                                                 "SFSubmitUiT.alice.b@gmail.tmt",
                                                 "SFSubmitUiT.benny.c@gmail.tmt"));
-        String aliceTeam = testData.students.get("Alice").team;
+        String aliceTeam = testData.getStudents().get("Alice").team;
         assertNull(BackDoor.getFeedbackResponse(fqPartial.getId(),
                                                 aliceTeam,
                                                 "Team 3"));
@@ -411,7 +411,7 @@ public class StudentFeedbackSubmitPageUiTest extends BaseUiTestCase {
 
         ______TS("create new response for unreg student");
         submitPage.logout();
-        submitPage = loginToStudentFeedbackSubmitPage(testData.students.get("DropOut"), "Open Session");
+        submitPage = loginToStudentFeedbackSubmitPage(testData.getStudents().get("DropOut"), "Open Session");
 
         responseText = "Test Self Feedback";
         submitPage.fillResponseRichTextEditor(1, 0, responseText);
@@ -450,8 +450,8 @@ public class StudentFeedbackSubmitPageUiTest extends BaseUiTestCase {
 
         assertNull(BackDoor.getFeedbackResponse(fq.getId(), "drop.out@gmail.tmt", "SFSubmitUiT.benny.c@gmail.tmt"));
         assertNull(BackDoor.getFeedbackResponse(fqPartial.getId(), "Team 2", "Team 3"));
-        assertNull(BackDoor.getFeedbackResponse(fqMcq.getId(), "Team 2", testData.students.get("Alice").team));
-        assertNull(BackDoor.getFeedbackResponse(fqMsq.getId(), "Team 2", testData.students.get("Alice").team));
+        assertNull(BackDoor.getFeedbackResponse(fqMcq.getId(), "Team 2", testData.getStudents().get("Alice").team));
+        assertNull(BackDoor.getFeedbackResponse(fqMsq.getId(), "Team 2", testData.getStudents().get("Alice").team));
         assertNull(BackDoor.getFeedbackResponse(fqNumscale.getId(), "drop.out@gmail.tmt", "drop.out@gmail.tmt"));
         assertNull(BackDoor.getFeedbackResponse(fqConstSum.getId(), "drop.out@gmail.tmt", "drop.out@gmail.tmt"));
         assertNull(BackDoor.getFeedbackResponse(fqContrib.getId(), "drop.out@gmail.tmt", "SFSubmitUiT.charlie.d@gmail.tmt"));
@@ -463,8 +463,8 @@ public class StudentFeedbackSubmitPageUiTest extends BaseUiTestCase {
 
         assertNotNull(BackDoor.getFeedbackResponse(fq.getId(), "drop.out@gmail.tmt", "SFSubmitUiT.benny.c@gmail.tmt"));
         assertNotNull(BackDoor.getFeedbackResponse(fqPartial.getId(), "Team 2", "Team 3"));
-        assertNotNull(BackDoor.getFeedbackResponse(fqMcq.getId(), "Team 2", testData.students.get("Alice").team));
-        assertNotNull(BackDoor.getFeedbackResponse(fqMsq.getId(), "Team 2", testData.students.get("Alice").team));
+        assertNotNull(BackDoor.getFeedbackResponse(fqMcq.getId(), "Team 2", testData.getStudents().get("Alice").team));
+        assertNotNull(BackDoor.getFeedbackResponse(fqMsq.getId(), "Team 2", testData.getStudents().get("Alice").team));
         assertNotNull(BackDoor.getFeedbackResponse(fqNumscale.getId(), "drop.out@gmail.tmt", "drop.out@gmail.tmt"));
         assertNotNull(BackDoor.getFeedbackResponse(fqConstSum.getId(), "drop.out@gmail.tmt", "drop.out@gmail.tmt"));
         assertNotNull(BackDoor.getFeedbackResponse(fqContrib.getId(), "drop.out@gmail.tmt",
@@ -552,7 +552,7 @@ public class StudentFeedbackSubmitPageUiTest extends BaseUiTestCase {
 
     private void testResponsiveSubmission() {
         ______TS("mobile test");
-        submitPage = loginToStudentFeedbackSubmitPage(testData.students.get("DropOut"), "Open Session");
+        submitPage = loginToStudentFeedbackSubmitPage(testData.getStudents().get("DropOut"), "Open Session");
 
         // Select the first option for the first question for each student
         submitPage.clickRubricRadio(21, 0, 0, 0);
@@ -628,13 +628,13 @@ public class StudentFeedbackSubmitPageUiTest extends BaseUiTestCase {
         // move one student out of Team 2 into a new team
         // This should cause the page to render an extra response box for
         // the team question.
-        StudentAttributes extraGuy = testData.students.get("ExtraGuy");
+        StudentAttributes extraGuy = testData.getStudents().get("ExtraGuy");
         moveToTeam(extraGuy, "New Team");
 
         // delete one student
         // This should remove (hide on page render; not deleted) the response made to him,
         // and change the number of options in the recipient dropdown list.
-        StudentAttributes dropOutGuy = testData.students.get("DropOut");
+        StudentAttributes dropOutGuy = testData.getStudents().get("DropOut");
         String backDoorOperationStatus = BackDoor.deleteStudent(dropOutGuy.course,
                 dropOutGuy.email);
         assertEquals(Const.StatusCodes.BACKDOOR_STATUS_SUCCESS, backDoorOperationStatus);
@@ -642,7 +642,7 @@ public class StudentFeedbackSubmitPageUiTest extends BaseUiTestCase {
         // move Benny out of Team >'"< 1 into team 2 and change her email
         // This should cause the team mates question to disappear completely as
         // no one else is in Team >'"< 1, but other responses to Benny should remain.
-        StudentAttributes benny = testData.students.get("Benny");
+        StudentAttributes benny = testData.getStudents().get("Benny");
         moveToTeam(benny, "Team 2");
 
         submitPage = loginToStudentFeedbackSubmitPage("Alice", "Open Session");
@@ -655,9 +655,9 @@ public class StudentFeedbackSubmitPageUiTest extends BaseUiTestCase {
         submitPage.verifyStatus(Const.StatusMessages.FEEDBACK_RESPONSES_SAVED);
 
         ______TS("Responses with invalid recipients do not prevent submission");
-        StudentAttributes alice = testData.students.get("Alice");
+        StudentAttributes alice = testData.getStudents().get("Alice");
 
-        FeedbackQuestionAttributes questionFromDataBundle = testData.feedbackQuestions.get("qn4InSession1");
+        FeedbackQuestionAttributes questionFromDataBundle = testData.getFeedbackQuestions().get("qn4InSession1");
         FeedbackQuestionAttributes question = BackDoor.getFeedbackQuestion(
                 questionFromDataBundle.courseId, questionFromDataBundle.feedbackSessionName,
                 questionFromDataBundle.questionNumber);
@@ -683,7 +683,7 @@ public class StudentFeedbackSubmitPageUiTest extends BaseUiTestCase {
         AppUrl submitUrl = createUrl(Const.ActionURIs.STUDENT_FEEDBACK_SUBMISSION_EDIT_PAGE)
                                              .withCourseId(s.course)
                                              .withStudentEmail(s.email)
-                                             .withSessionName(testData.feedbackSessions.get(fsDataId)
+                                             .withSessionName(testData.getFeedbackSessions().get(fsDataId)
                                                                                        .getFeedbackSessionName())
                                              .withRegistrationKey(BackDoor.getEncryptedKeyForStudent(s.course, s.email));
 
@@ -692,9 +692,9 @@ public class StudentFeedbackSubmitPageUiTest extends BaseUiTestCase {
 
     private FeedbackSubmitPage loginToStudentFeedbackSubmitPage(String studentName, String fsName) {
         AppUrl editUrl = createUrl(Const.ActionURIs.STUDENT_FEEDBACK_SUBMISSION_EDIT_PAGE)
-                                        .withUserId(testData.students.get(studentName).googleId)
-                                        .withCourseId(testData.feedbackSessions.get(fsName).getCourseId())
-                                        .withSessionName(testData.feedbackSessions.get(fsName).getFeedbackSessionName());
+                                        .withUserId(testData.getStudents().get(studentName).googleId)
+                                        .withCourseId(testData.getFeedbackSessions().get(fsName).getCourseId())
+                                        .withSessionName(testData.getFeedbackSessions().get(fsName).getFeedbackSessionName());
 
         return loginAdminToPage(editUrl, FeedbackSubmitPage.class);
     }
@@ -702,9 +702,9 @@ public class StudentFeedbackSubmitPageUiTest extends BaseUiTestCase {
     private FeedbackSessionNotVisiblePage
             loginToStudentFeedbackSubmitPageFeedbackSessionNotVisible(String studentName, String fsName) {
         AppUrl editUrl = createUrl(Const.ActionURIs.STUDENT_FEEDBACK_SUBMISSION_EDIT_PAGE)
-                                        .withUserId(testData.students.get(studentName).googleId)
-                                        .withCourseId(testData.feedbackSessions.get(fsName).getCourseId())
-                                        .withSessionName(testData.feedbackSessions.get(fsName).getFeedbackSessionName());
+                                        .withUserId(testData.getStudents().get(studentName).googleId)
+                                        .withCourseId(testData.getFeedbackSessions().get(fsName).getCourseId())
+                                        .withSessionName(testData.getFeedbackSessions().get(fsName).getFeedbackSessionName());
 
         return loginAdminToPage(editUrl, FeedbackSessionNotVisiblePage.class);
     }

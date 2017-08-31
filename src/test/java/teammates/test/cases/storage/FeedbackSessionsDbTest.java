@@ -41,12 +41,12 @@ public class FeedbackSessionsDbTest extends BaseComponentTestCase {
     }
 
     private void addSessionsToDb() throws Exception {
-        Set<String> keys = dataBundle.feedbackSessions.keySet();
+        Set<String> keys = dataBundle.getFeedbackSessions().keySet();
         for (String i : keys) {
             try {
-                fsDb.createEntity(dataBundle.feedbackSessions.get(i));
+                fsDb.createEntity(dataBundle.getFeedbackSessions().get(i));
             } catch (EntityAlreadyExistsException e) {
-                fsDb.updateFeedbackSession(dataBundle.feedbackSessions.get(i));
+                fsDb.updateFeedbackSession(dataBundle.getFeedbackSessions().get(i));
             }
         }
     }
@@ -113,7 +113,7 @@ public class FeedbackSessionsDbTest extends BaseComponentTestCase {
         ______TS("standard success case");
 
         FeedbackSessionAttributes expected =
-                dataBundle.feedbackSessions.get("session1InCourse2");
+                dataBundle.getFeedbackSessions().get("session1InCourse2");
         FeedbackSessionAttributes actual =
                 fsDb.getFeedbackSession("idOfTypicalCourse2", "Private feedback session");
 
@@ -150,12 +150,12 @@ public class FeedbackSessionsDbTest extends BaseComponentTestCase {
         List<FeedbackSessionAttributes> sessions = fsDb.getFeedbackSessionsForCourse("idOfTypicalCourse1");
 
         String expected =
-                dataBundle.feedbackSessions.get("session1InCourse1").toString() + Const.EOL
-                + dataBundle.feedbackSessions.get("session2InCourse1").toString() + Const.EOL
-                + dataBundle.feedbackSessions.get("empty.session").toString() + Const.EOL
-                + dataBundle.feedbackSessions.get("awaiting.session").toString() + Const.EOL
-                + dataBundle.feedbackSessions.get("closedSession").toString() + Const.EOL
-                + dataBundle.feedbackSessions.get("gracePeriodSession").toString() + Const.EOL;
+                dataBundle.getFeedbackSessions().get("session1InCourse1").toString() + Const.EOL
+                + dataBundle.getFeedbackSessions().get("session2InCourse1").toString() + Const.EOL
+                + dataBundle.getFeedbackSessions().get("empty.session").toString() + Const.EOL
+                + dataBundle.getFeedbackSessions().get("awaiting.session").toString() + Const.EOL
+                + dataBundle.getFeedbackSessions().get("closedSession").toString() + Const.EOL
+                + dataBundle.getFeedbackSessions().get("gracePeriodSession").toString() + Const.EOL;
 
         for (FeedbackSessionAttributes session : sessions) {
             AssertHelper.assertContains(session.toString(), expected);
@@ -305,9 +305,9 @@ public class FeedbackSessionsDbTest extends BaseComponentTestCase {
     }
 
     private void deleteSessionsFromDb() {
-        Set<String> keys = dataBundle.feedbackSessions.keySet();
+        Set<String> keys = dataBundle.getFeedbackSessions().keySet();
         for (String i : keys) {
-            fsDb.deleteEntity(dataBundle.feedbackSessions.get(i));
+            fsDb.deleteEntity(dataBundle.getFeedbackSessions().get(i));
         }
         fsDb.deleteEntity(getNewFeedbackSession());
     }

@@ -23,7 +23,7 @@ public class InstructorCoursesPageDataTest extends BaseTestCase {
     @Test
     public void testAll() {
         ______TS("test no course");
-        AccountAttributes instructorAccountWithoutCourses = dataBundle.accounts.get("instructorWithoutCourses");
+        AccountAttributes instructorAccountWithoutCourses = dataBundle.getAccounts().get("instructorWithoutCourses");
         InstructorCoursesPageData pageData =
                 new InstructorCoursesPageData(instructorAccountWithoutCourses, dummySessionToken);
         List<CourseAttributes> activeCourses = new ArrayList<>();
@@ -43,14 +43,14 @@ public class InstructorCoursesPageDataTest extends BaseTestCase {
         assertEquals("", pageData.getCourseNameToShow());
 
         ______TS("test 1 active course");
-        AccountAttributes instructorAccountWithOneActiveCourse = dataBundle.accounts.get("instructor1OfCourse1");
+        AccountAttributes instructorAccountWithOneActiveCourse = dataBundle.getAccounts().get("instructor1OfCourse1");
         pageData = new InstructorCoursesPageData(instructorAccountWithOneActiveCourse, dummySessionToken);
         activeCourses = new ArrayList<>();
-        activeCourses.add(dataBundle.courses.get("typicalCourse1"));
+        activeCourses.add(dataBundle.getCourses().get("typicalCourse1"));
 
         archivedCourses = new ArrayList<>();
         instructorForCourses = new HashMap<>();
-        instructorForCourses.put("idOfTypicalCourse1", dataBundle.instructors.get("instructor1OfCourse1"));
+        instructorForCourses.put("idOfTypicalCourse1", dataBundle.getInstructors().get("instructor1OfCourse1"));
         pageData.init(activeCourses, archivedCourses, instructorForCourses);
 
         assertNotNull(pageData.getActiveCourses());
@@ -65,16 +65,16 @@ public class InstructorCoursesPageDataTest extends BaseTestCase {
         assertEquals("", pageData.getCourseNameToShow());
 
         ______TS("test 2 active courses");
-        AccountAttributes instructorAccountWithTwoActiveCourses = dataBundle.accounts.get("instructor3");
+        AccountAttributes instructorAccountWithTwoActiveCourses = dataBundle.getAccounts().get("instructor3");
         pageData = new InstructorCoursesPageData(instructorAccountWithTwoActiveCourses, dummySessionToken);
         activeCourses = new ArrayList<>();
-        activeCourses.add(dataBundle.courses.get("typicalCourse1"));
-        activeCourses.add(dataBundle.courses.get("typicalCourse2"));
+        activeCourses.add(dataBundle.getCourses().get("typicalCourse1"));
+        activeCourses.add(dataBundle.getCourses().get("typicalCourse2"));
 
         archivedCourses = new ArrayList<>();
         instructorForCourses = new HashMap<>();
-        instructorForCourses.put("idOfTypicalCourse1", dataBundle.instructors.get("instructor3OfCourse1"));
-        instructorForCourses.put("idOfTypicalCourse2", dataBundle.instructors.get("instructor3OfCourse2"));
+        instructorForCourses.put("idOfTypicalCourse1", dataBundle.getInstructors().get("instructor3OfCourse1"));
+        instructorForCourses.put("idOfTypicalCourse2", dataBundle.getInstructors().get("instructor3OfCourse2"));
         pageData.init(activeCourses, archivedCourses, instructorForCourses, "Id to show", "Name to show");
 
         assertNotNull(pageData.getActiveCourses());
@@ -89,15 +89,15 @@ public class InstructorCoursesPageDataTest extends BaseTestCase {
         assertEquals("Name to show", pageData.getCourseNameToShow());
 
         ______TS("test 1 archived course");
-        AccountAttributes instructorAccountWithOneArchivedCourse = dataBundle.accounts.get("instructorOfArchivedCourse");
+        AccountAttributes instructorAccountWithOneArchivedCourse = dataBundle.getAccounts().get("instructorOfArchivedCourse");
         pageData = new InstructorCoursesPageData(instructorAccountWithOneArchivedCourse, dummySessionToken);
         activeCourses = new ArrayList<>();
 
         archivedCourses = new ArrayList<>();
-        archivedCourses.add(dataBundle.courses.get("archivedCourse"));
+        archivedCourses.add(dataBundle.getCourses().get("archivedCourse"));
 
         instructorForCourses = new HashMap<>();
-        instructorForCourses.put("idOfArchivedCourse", dataBundle.instructors.get("instructorOfArchivedCourse"));
+        instructorForCourses.put("idOfArchivedCourse", dataBundle.getInstructors().get("instructorOfArchivedCourse"));
 
         pageData.init(activeCourses, archivedCourses, instructorForCourses);
 

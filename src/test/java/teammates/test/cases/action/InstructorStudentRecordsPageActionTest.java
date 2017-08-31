@@ -36,8 +36,8 @@ public class InstructorStudentRecordsPageActionTest extends BaseActionTest {
     @Override
     @Test
     public void testExecuteAndPostProcess() throws Exception {
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor3OfCourse1");
-        StudentAttributes student = dataBundle.students.get("student2InCourse1");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor3OfCourse1");
+        StudentAttributes student = dataBundle.getStudents().get("student2InCourse1");
         String instructorId = instructor.googleId;
 
         gaeSimulation.loginAsInstructor(instructorId);
@@ -62,7 +62,7 @@ public class InstructorStudentRecordsPageActionTest extends BaseActionTest {
         verifyAssumptionFailure(invalidParams);
 
         // student not in course
-        String studentEmailOfStudent1InCourse2 = dataBundle.students.get("student1InCourse2").email;
+        String studentEmailOfStudent1InCourse2 = dataBundle.getStudents().get("student1InCourse2").email;
         invalidParams = new String[] {
                 Const.ParamsNames.COURSE_ID, instructor.courseId,
                 Const.ParamsNames.STUDENT_EMAIL, studentEmailOfStudent1InCourse2
@@ -114,7 +114,7 @@ public class InstructorStudentRecordsPageActionTest extends BaseActionTest {
 
         ______TS("Typical case: instructor cannot view sections");
 
-        instructor = dataBundle.instructors.get("helperOfCourse1");
+        instructor = dataBundle.getInstructors().get("helperOfCourse1");
         gaeSimulation.loginAsInstructor(instructor.googleId);
 
         submissionParams = new String[] {
@@ -136,7 +136,7 @@ public class InstructorStudentRecordsPageActionTest extends BaseActionTest {
 
         ______TS("Typical case: student has no records, no profiles");
 
-        String instructor4Id = dataBundle.instructors.get("instructor4").googleId;
+        String instructor4Id = dataBundle.getInstructors().get("instructor4").googleId;
         // re-login as another instructor for new test
         gaeSimulation.loginAsInstructor(instructor4Id);
         String courseIdWithNoSession = "idOfCourseNoEvals";
@@ -169,11 +169,11 @@ public class InstructorStudentRecordsPageActionTest extends BaseActionTest {
 
         ______TS("Typical case: student has profile with script injection");
 
-        instructor = dataBundle.instructors.get("instructor1OfTestingSanitizationCourse");
+        instructor = dataBundle.getInstructors().get("instructor1OfTestingSanitizationCourse");
         instructorId = instructor.googleId;
         String studentId = "student1InTestingSanitizationCourse";
-        student = dataBundle.students.get(studentId);
-        expectedProfile = dataBundle.accounts.get(studentId).studentProfile;
+        student = dataBundle.getStudents().get(studentId);
+        expectedProfile = dataBundle.getAccounts().get(studentId).studentProfile;
 
         gaeSimulation.loginAsInstructor(instructorId);
 
@@ -225,8 +225,8 @@ public class InstructorStudentRecordsPageActionTest extends BaseActionTest {
     @Override
     @Test
     protected void testAccessControl() throws Exception {
-        InstructorAttributes instructor1OfCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
-        StudentAttributes student1InCourse1 = dataBundle.students.get("student1InCourse1");
+        InstructorAttributes instructor1OfCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
+        StudentAttributes student1InCourse1 = dataBundle.getStudents().get("student1InCourse1");
 
         String[] submissionParams = new String[]{
                 Const.ParamsNames.COURSE_ID, instructor1OfCourse1.courseId,

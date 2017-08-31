@@ -21,18 +21,18 @@ public class FeedbackResponseCommentSearchTest extends BaseSearchTest {
     public void allTests() {
         FeedbackResponseCommentsDb commentsDb = new FeedbackResponseCommentsDb();
 
-        FeedbackResponseCommentAttributes frc1I1Q1S1C1 = dataBundle.feedbackResponseComments
+        FeedbackResponseCommentAttributes frc1I1Q1S1C1 = dataBundle.getFeedbackResponseComments()
                 .get("comment1FromT1C1ToR1Q1S1C1");
-        FeedbackResponseCommentAttributes frc1I1Q2S1C1 = dataBundle.feedbackResponseComments
+        FeedbackResponseCommentAttributes frc1I1Q2S1C1 = dataBundle.getFeedbackResponseComments()
                 .get("comment1FromT1C1ToR1Q2S1C1");
-        FeedbackResponseCommentAttributes frc1I3Q1S1C2 = dataBundle.feedbackResponseComments
+        FeedbackResponseCommentAttributes frc1I3Q1S1C2 = dataBundle.getFeedbackResponseComments()
                 .get("comment1FromT1C1ToR1Q1S1C2");
 
         ArrayList<InstructorAttributes> instructors = new ArrayList<InstructorAttributes>();
 
         ______TS("success: search for comments; no results found as instructor doesn't have privileges");
 
-        instructors.add(dataBundle.instructors.get("helperOfCourse1"));
+        instructors.add(dataBundle.getInstructors().get("helperOfCourse1"));
         FeedbackResponseCommentSearchResultBundle bundle = commentsDb.search("\"self-feedback\"", instructors);
         assertEquals(0, bundle.numberOfResults);
         assertTrue(bundle.comments.isEmpty());
@@ -40,8 +40,8 @@ public class FeedbackResponseCommentSearchTest extends BaseSearchTest {
         ______TS("success: search for comments; query string does not match any comment");
 
         instructors.clear();
-        instructors.add(dataBundle.instructors.get("instructor3OfCourse1"));
-        instructors.add(dataBundle.instructors.get("instructor3OfCourse2"));
+        instructors.add(dataBundle.getInstructors().get("instructor3OfCourse1"));
+        instructors.add(dataBundle.getInstructors().get("instructor3OfCourse2"));
         bundle = commentsDb.search("non-existent", instructors);
         assertEquals(0, bundle.numberOfResults);
         assertTrue(bundle.comments.isEmpty());

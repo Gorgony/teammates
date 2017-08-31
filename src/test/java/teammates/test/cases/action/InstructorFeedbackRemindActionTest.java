@@ -22,8 +22,8 @@ public class InstructorFeedbackRemindActionTest extends BaseActionTest {
     @Override
     @Test
     public void testExecuteAndPostProcess() {
-        InstructorAttributes instructor1ofCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("session1InCourse1");
+        InstructorAttributes instructor1ofCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("session1InCourse1");
 
         gaeSimulation.loginAsInstructor(instructor1ofCourse1.googleId);
 
@@ -40,7 +40,7 @@ public class InstructorFeedbackRemindActionTest extends BaseActionTest {
 
         ______TS("Unsuccessful case: Feedback session not open, warning message generated");
 
-        fs = dataBundle.feedbackSessions.get("awaiting.session");
+        fs = dataBundle.getFeedbackSessions().get("awaiting.session");
         String[] paramsFeedbackSessionNotOpen = new String[] {
                 Const.ParamsNames.COURSE_ID, fs.getCourseId(),
                 Const.ParamsNames.FEEDBACK_SESSION_NAME, fs.getSessionName()
@@ -54,7 +54,7 @@ public class InstructorFeedbackRemindActionTest extends BaseActionTest {
 
         ______TS("Successful case: Typical case");
 
-        fs = dataBundle.feedbackSessions.get("session1InCourse1");
+        fs = dataBundle.getFeedbackSessions().get("session1InCourse1");
         String[] paramsTypical = new String[]{
                 Const.ParamsNames.COURSE_ID, fs.getCourseId(),
                 Const.ParamsNames.FEEDBACK_SESSION_NAME, fs.getSessionName(),
@@ -78,7 +78,7 @@ public class InstructorFeedbackRemindActionTest extends BaseActionTest {
     @Override
     @Test
     protected void testAccessControl() throws Exception {
-        FeedbackSessionAttributes session = dataBundle.feedbackSessions.get("session1InCourse1");
+        FeedbackSessionAttributes session = dataBundle.getFeedbackSessions().get("session1InCourse1");
 
         String[] submissionParams = new String[]{
                 Const.ParamsNames.COURSE_ID, session.getCourseId(),

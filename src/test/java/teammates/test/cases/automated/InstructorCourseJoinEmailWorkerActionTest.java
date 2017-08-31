@@ -25,8 +25,8 @@ public class InstructorCourseJoinEmailWorkerActionTest extends BaseAutomatedActi
     @Test
     public void allTests() {
 
-        CourseAttributes course1 = dataBundle.courses.get("typicalCourse1");
-        InstructorAttributes instr1InCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
+        CourseAttributes course1 = dataBundle.getCourses().get("typicalCourse1");
+        InstructorAttributes instr1InCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
         AccountAttributes inviter = AccountsLogic.inst().getAccount("idOfInstructor2OfCourse1");
 
         String[] submissionParams = new String[] {

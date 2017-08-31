@@ -27,7 +27,7 @@ public class FeedbackSessionUnpublishedEmailWorkerActionTest extends BaseAutomat
 
     @Test
     public void allTests() {
-        FeedbackSessionAttributes session1 = dataBundle.feedbackSessions.get("session1InCourse1");
+        FeedbackSessionAttributes session1 = dataBundle.getFeedbackSessions().get("session1InCourse1");
 
         String[] submissionParams = new String[] {
                 ParamsNames.EMAIL_COURSE, session1.getCourseId(),

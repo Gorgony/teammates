@@ -23,10 +23,10 @@ public class InstructorFeedbackRemindParticularStudentsPageActionTest extends Ba
     @Override
     @Test
     public void testExecuteAndPostProcess() {
-        InstructorAttributes instructor1OfCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes instructor1OfCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
         String instructorId = instructor1OfCourse1.googleId;
-        CourseAttributes course = dataBundle.courses.get("typicalCourse1");
-        FeedbackSessionAttributes fsa = dataBundle.feedbackSessions.get("session1InCourse1");
+        CourseAttributes course = dataBundle.getCourses().get("typicalCourse1");
+        FeedbackSessionAttributes fsa = dataBundle.getFeedbackSessions().get("session1InCourse1");
 
         gaeSimulation.loginAsInstructor(instructorId);
 

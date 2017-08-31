@@ -28,13 +28,13 @@ public class StudentProfileEditSaveActionTest extends BaseActionTest {
     @Override
     @Test
     public void testExecuteAndPostProcess() throws Exception {
-        AccountAttributes student = dataBundle.accounts.get("student1InCourse1");
+        AccountAttributes student = dataBundle.getAccounts().get("student1InCourse1");
 
         testActionWithInvalidParameters(student);
         testActionSuccess(student, "Typical Case");
         testActionInMasqueradeMode(student);
 
-        student = dataBundle.accounts.get("student1InTestingSanitizationCourse");
+        student = dataBundle.getAccounts().get("student1InTestingSanitizationCourse");
         // simulate sanitization that occurs before persistence
         student.sanitizeForSaving();
         testActionSuccess(student, "Typical case: attempted script injection");

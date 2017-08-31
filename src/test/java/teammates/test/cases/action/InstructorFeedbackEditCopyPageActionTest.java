@@ -31,7 +31,7 @@ public class InstructorFeedbackEditCopyPageActionTest extends BaseActionTest {
     @Override
     @Test
     public void testExecuteAndPostProcess() {
-        InstructorAttributes instructor = dataBundle.instructors.get("teammates.test.instructor2");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("teammates.test.instructor2");
         String instructorId = instructor.googleId;
 
         gaeSimulation.loginAsInstructor(instructorId);

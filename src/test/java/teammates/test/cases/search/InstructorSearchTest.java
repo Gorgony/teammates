@@ -20,16 +20,16 @@ public class InstructorSearchTest extends BaseSearchTest {
     public void allTests() throws InvalidParametersException {
         InstructorsDb instructorsDb = new InstructorsDb();
 
-        InstructorAttributes ins1InCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
-        InstructorAttributes ins2InCourse1 = dataBundle.instructors.get("instructor2OfCourse1");
-        InstructorAttributes helperInCourse1 = dataBundle.instructors.get("helperOfCourse1");
-        InstructorAttributes ins1InCourse2 = dataBundle.instructors.get("instructor1OfCourse2");
-        InstructorAttributes ins2InCourse2 = dataBundle.instructors.get("instructor2OfCourse2");
-        InstructorAttributes ins3InCourse2 = dataBundle.instructors.get("instructor3OfCourse2");
-        InstructorAttributes insInArchivedCourse = dataBundle.instructors.get("instructorOfArchivedCourse");
-        InstructorAttributes insInUnregCourse = dataBundle.instructors.get("instructor5");
+        InstructorAttributes ins1InCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
+        InstructorAttributes ins2InCourse1 = dataBundle.getInstructors().get("instructor2OfCourse1");
+        InstructorAttributes helperInCourse1 = dataBundle.getInstructors().get("helperOfCourse1");
+        InstructorAttributes ins1InCourse2 = dataBundle.getInstructors().get("instructor1OfCourse2");
+        InstructorAttributes ins2InCourse2 = dataBundle.getInstructors().get("instructor2OfCourse2");
+        InstructorAttributes ins3InCourse2 = dataBundle.getInstructors().get("instructor3OfCourse2");
+        InstructorAttributes insInArchivedCourse = dataBundle.getInstructors().get("instructorOfArchivedCourse");
+        InstructorAttributes insInUnregCourse = dataBundle.getInstructors().get("instructor5");
         InstructorAttributes ins1InTestingSanitizationCourse =
-                dataBundle.instructors.get("instructor1OfTestingSanitizationCourse");
+                dataBundle.getInstructors().get("instructor1OfTestingSanitizationCourse");
         ins1InTestingSanitizationCourse.sanitizeForSaving();
 
         ______TS("success: search for instructors in whole system; query string does not match anyone");

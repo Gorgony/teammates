@@ -31,7 +31,7 @@ public class InstructorCourseEnrollPageActionTest extends BaseActionTest {
     private void visitEnrollPage_withInvalidRequestParams_throwsException() {
         ______TS("Not enough parameters");
 
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor4");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor4");
         gaeSimulation.loginAsInstructor(instructor.getGoogleId());
 
         verifyAssumptionFailure();
@@ -40,7 +40,7 @@ public class InstructorCourseEnrollPageActionTest extends BaseActionTest {
     private void visitEnrollPage_forCourseWithoutResponses_noWarningMessage() {
         ______TS("Typical case 1: open the enroll page of a course without existing feedback responses");
 
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor4");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor4");
         gaeSimulation.loginAsInstructor(instructor.getGoogleId());
 
         String courseId = instructor.getCourseId();
@@ -68,7 +68,7 @@ public class InstructorCourseEnrollPageActionTest extends BaseActionTest {
     private void visitEnrollPage_forCourseWithResponses_hasWarningMessage() {
         ______TS("Typical case 2: open the enroll page of a course with existing feedback responses");
 
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor1OfCourse1");
         gaeSimulation.loginAsInstructor(instructor.getGoogleId());
 
         String courseId = instructor.getCourseId();
@@ -98,7 +98,7 @@ public class InstructorCourseEnrollPageActionTest extends BaseActionTest {
 
         gaeSimulation.loginAsAdmin("admin.user");
 
-        InstructorAttributes instructorToMasquerade = dataBundle.instructors.get("instructor4");
+        InstructorAttributes instructorToMasquerade = dataBundle.getInstructors().get("instructor4");
         String instructorId = instructorToMasquerade.googleId;
         String courseId = instructorToMasquerade.courseId;
 
@@ -133,7 +133,7 @@ public class InstructorCourseEnrollPageActionTest extends BaseActionTest {
     @Test
     protected void testAccessControl() throws Exception {
         String[] submissionParams = new String[]{
-                Const.ParamsNames.COURSE_ID, dataBundle.instructors.get("instructor1OfCourse1").courseId
+                Const.ParamsNames.COURSE_ID, dataBundle.getInstructors().get("instructor1OfCourse1").courseId
         };
 
         verifyOnlyInstructorsOfTheSameCourseCanAccess(submissionParams);

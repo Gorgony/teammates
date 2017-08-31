@@ -23,7 +23,7 @@ public class InstructorFeedbackEditPageActionTest extends BaseActionTest {
     @Override
     @Test
     public void testExecuteAndPostProcess() {
-        InstructorAttributes instructor1OfCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes instructor1OfCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
         gaeSimulation.loginAsInstructor(instructor1OfCourse1.googleId);
 
         // declare all variables to be used
@@ -35,7 +35,7 @@ public class InstructorFeedbackEditPageActionTest extends BaseActionTest {
 
         ______TS("typical success case");
 
-        feedbackSessionAttributes = dataBundle.feedbackSessions.get("session1InCourse1");
+        feedbackSessionAttributes = dataBundle.getFeedbackSessions().get("session1InCourse1");
 
         submissionParams = new String[] {
                 Const.ParamsNames.COURSE_ID, feedbackSessionAttributes.getCourseId(),
@@ -88,7 +88,7 @@ public class InstructorFeedbackEditPageActionTest extends BaseActionTest {
     @Override
     @Test
     protected void testAccessControl() throws Exception {
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("session1InCourse1");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("session1InCourse1");
 
         String[] submissionParams = new String[]{
                 Const.ParamsNames.COURSE_ID, fs.getCourseId(),

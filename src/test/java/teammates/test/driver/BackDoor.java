@@ -91,7 +91,7 @@ public final class BackDoor {
      */
     public static String createAccount(AccountAttributes account) {
         DataBundle dataBundle = new DataBundle();
-        dataBundle.accounts.put(account.googleId, account);
+        dataBundle.getAccounts().put(account.googleId, account);
         return restoreDataBundle(dataBundle);
     }
 
@@ -148,7 +148,7 @@ public final class BackDoor {
      */
     public static String createInstructor(InstructorAttributes instructor) {
         DataBundle dataBundle = new DataBundle();
-        dataBundle.instructors.put(instructor.googleId, instructor);
+        dataBundle.getInstructors().put(instructor.googleId, instructor);
         return restoreDataBundle(dataBundle);
     }
 
@@ -199,7 +199,7 @@ public final class BackDoor {
      */
     public static String createCourse(CourseAttributes course) {
         DataBundle dataBundle = new DataBundle();
-        dataBundle.courses.put("dummy-key", course);
+        dataBundle.getCourses().put("dummy-key", course);
         return restoreDataBundle(dataBundle);
     }
 
@@ -227,7 +227,7 @@ public final class BackDoor {
      */
     public static String createStudent(StudentAttributes student) {
         DataBundle dataBundle = new DataBundle();
-        dataBundle.students.put("dummy-key", student);
+        dataBundle.getStudents().put("dummy-key", student);
         return restoreDataBundle(dataBundle);
     }
 
@@ -478,7 +478,7 @@ public final class BackDoor {
      * may affect normal functioning of Admin Emails and remove non-testing data.
      */
     private static void removeAdminEmailsFromDataBundle(DataBundle dataBundle) {
-        dataBundle.adminEmails = new HashMap<>();
+        dataBundle.setAdminEmails(new HashMap<>());
     }
 
     /**

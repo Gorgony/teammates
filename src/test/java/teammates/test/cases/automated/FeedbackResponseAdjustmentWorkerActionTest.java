@@ -39,8 +39,8 @@ public class FeedbackResponseAdjustmentWorkerActionTest extends BaseAutomatedAct
 
         ______TS("typical case : existing student changes team");
 
-        FeedbackSessionAttributes session = dataBundle.feedbackSessions.get("session2InCourse1");
-        StudentAttributes student = dataBundle.students.get("student1InCourse1");
+        FeedbackSessionAttributes session = dataBundle.getFeedbackSessions().get("session2InCourse1");
+        StudentAttributes student = dataBundle.getStudents().get("student1InCourse1");
 
         // Verify pre-existing submissions and responses
 

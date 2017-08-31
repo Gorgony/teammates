@@ -72,9 +72,9 @@ public class AdminSearchPageUiTest extends BaseUiTestCase {
         assertTrue(isSearchPanelPresent());
         assertTrue(isSearchDataDisplayCorrect());
 
-        StudentAttributes student = testData.students.get("student1InCourse1");
-        InstructorAttributes instructor = testData.instructors.get("instructor1OfCourse1");
-        CourseAttributes course = testData.courses.get("typicalCourse1");
+        StudentAttributes student = testData.getStudents().get("student1InCourse1");
+        InstructorAttributes instructor = testData.getInstructors().get("instructor1OfCourse1");
+        CourseAttributes course = testData.getCourses().get("typicalCourse1");
         assertStudentRowDisplayed(student, instructor, course);
 
         ______TS("search for student1 email");
@@ -107,9 +107,9 @@ public class AdminSearchPageUiTest extends BaseUiTestCase {
         searchPage.inputSearchContent(searchContent);
         searchPage.clickSearchButton();
 
-        StudentAttributes student = testData.students.get("student1InTestingSanitizationCourse");
-        InstructorAttributes instructor = testData.instructors.get("instructor1OfTestingSanitizationCourse");
-        CourseAttributes course = testData.courses.get("testingSanitizationCourse");
+        StudentAttributes student = testData.getStudents().get("student1InTestingSanitizationCourse");
+        InstructorAttributes instructor = testData.getInstructors().get("instructor1OfTestingSanitizationCourse");
+        CourseAttributes course = testData.getCourses().get("testingSanitizationCourse");
         assertStudentRowDisplayed(student, instructor, course);
 
         ______TS("search for instructor with data requiring sanitization");

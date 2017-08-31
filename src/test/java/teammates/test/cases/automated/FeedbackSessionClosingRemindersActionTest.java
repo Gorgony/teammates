@@ -44,7 +44,7 @@ public class FeedbackSessionClosingRemindersActionTest extends BaseAutomatedActi
 
         // Modify session to close in 24 hours
 
-        FeedbackSessionAttributes session1 = dataBundle.feedbackSessions.get("session1InCourse1");
+        FeedbackSessionAttributes session1 = dataBundle.getFeedbackSessions().get("session1InCourse1");
         session1.setTimeZone(0);
         session1.setStartTime(TimeHelper.getDateOffsetToCurrentTime(-1));
         session1.setEndTime(TimeHelper.getDateOffsetToCurrentTime(1));
@@ -53,7 +53,7 @@ public class FeedbackSessionClosingRemindersActionTest extends BaseAutomatedActi
 
         // Ditto, but disable the closing reminder
 
-        FeedbackSessionAttributes session2 = dataBundle.feedbackSessions.get("session2InCourse2");
+        FeedbackSessionAttributes session2 = dataBundle.getFeedbackSessions().get("session2InCourse2");
         session2.setTimeZone(0);
         session2.setStartTime(TimeHelper.getDateOffsetToCurrentTime(-1));
         session2.setEndTime(TimeHelper.getDateOffsetToCurrentTime(1));
@@ -63,7 +63,7 @@ public class FeedbackSessionClosingRemindersActionTest extends BaseAutomatedActi
 
         // 1 session not yet opened; do not send the closing reminder
 
-        FeedbackSessionAttributes session3 = dataBundle.feedbackSessions.get("gracePeriodSession");
+        FeedbackSessionAttributes session3 = dataBundle.getFeedbackSessions().get("gracePeriodSession");
         session3.setTimeZone(0);
         session3.setStartTime(TimeHelperExtension.getHoursOffsetToCurrentTime(1));
         session3.setEndTime(TimeHelper.getDateOffsetToCurrentTime(1));

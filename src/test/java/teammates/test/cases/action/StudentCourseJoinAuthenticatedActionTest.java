@@ -41,7 +41,7 @@ public class StudentCourseJoinAuthenticatedActionTest extends BaseActionTest {
         StudentsDb studentsDb = new StudentsDb();
         AccountsDb accountsDb = new AccountsDb();
 
-        StudentAttributes student1InCourse1 = dataBundle.students
+        StudentAttributes student1InCourse1 = dataBundle.getStudents()
                 .get("student1InCourse1");
         student1InCourse1 = studentsDb.getStudentForGoogleId(
                 student1InCourse1.course, student1InCourse1.googleId);
@@ -120,7 +120,7 @@ public class StudentCourseJoinAuthenticatedActionTest extends BaseActionTest {
                 redirectResult.getStatusMessage());
 */
         ______TS("join course with no feedback sessions, profile is empty");
-        AccountAttributes studentWithEmptyProfile = dataBundle.accounts.get("noFSStudent");
+        AccountAttributes studentWithEmptyProfile = dataBundle.getAccounts().get("noFSStudent");
         studentWithEmptyProfile = accountsDb.getAccount(studentWithEmptyProfile.googleId, true);
         assertNotNull(studentWithEmptyProfile.studentProfile);
         assertEquals("", studentWithEmptyProfile.studentProfile.pictureKey);
@@ -129,7 +129,7 @@ public class StudentCourseJoinAuthenticatedActionTest extends BaseActionTest {
         assertEquals("", studentWithEmptyProfile.studentProfile.moreInfo);
         assertEquals("", studentWithEmptyProfile.studentProfile.email);
 
-        StudentAttributes studentWithEmptyProfileAttributes = dataBundle.students.get("noFSStudentWithNoProfile");
+        StudentAttributes studentWithEmptyProfileAttributes = dataBundle.getStudents().get("noFSStudentWithNoProfile");
         studentWithEmptyProfileAttributes = studentsDb.getStudentForEmail(
                 studentWithEmptyProfileAttributes.course, studentWithEmptyProfileAttributes.email);
 
@@ -160,7 +160,7 @@ public class StudentCourseJoinAuthenticatedActionTest extends BaseActionTest {
                 redirectResult.getStatusMessage());
 
         ______TS("join course with no feedback sessions, profile has only one missing field");
-        AccountAttributes studentWithoutProfilePicture = dataBundle.accounts.get("noFSStudent2");
+        AccountAttributes studentWithoutProfilePicture = dataBundle.getAccounts().get("noFSStudent2");
         studentWithoutProfilePicture = accountsDb.getAccount(studentWithoutProfilePicture.googleId, true);
         assertNotNull(studentWithoutProfilePicture.studentProfile);
         assertEquals("", studentWithoutProfilePicture.studentProfile.pictureKey);
@@ -169,7 +169,7 @@ public class StudentCourseJoinAuthenticatedActionTest extends BaseActionTest {
         assertFalse(studentWithoutProfilePicture.studentProfile.moreInfo.isEmpty());
         assertFalse(studentWithoutProfilePicture.studentProfile.email.isEmpty());
 
-        StudentAttributes studentWithoutProfilePictureAttributes = dataBundle.students.get("noFSStudentWithPartialProfile");
+        StudentAttributes studentWithoutProfilePictureAttributes = dataBundle.getStudents().get("noFSStudentWithPartialProfile");
 
         studentWithoutProfilePictureAttributes = studentsDb.getStudentForEmail(
                 studentWithoutProfilePictureAttributes.course, studentWithoutProfilePictureAttributes.email);
@@ -204,7 +204,7 @@ public class StudentCourseJoinAuthenticatedActionTest extends BaseActionTest {
                 redirectResult.getStatusMessage());
 
         ______TS("join course with no feedback sessions, profile has no missing field");
-        AccountAttributes studentWithFullProfile = dataBundle.accounts.get("noFSStudent3");
+        AccountAttributes studentWithFullProfile = dataBundle.getAccounts().get("noFSStudent3");
 
         studentWithFullProfile = accountsDb.getAccount(studentWithFullProfile.googleId, true);
         assertNotNull(studentWithFullProfile.studentProfile);
@@ -214,7 +214,7 @@ public class StudentCourseJoinAuthenticatedActionTest extends BaseActionTest {
         assertFalse(studentWithoutProfilePicture.studentProfile.moreInfo.isEmpty());
         assertFalse(studentWithoutProfilePicture.studentProfile.email.isEmpty());
 
-        StudentAttributes studentWithFullProfileAttributes = dataBundle.students.get("noFSStudentWithFullProfile");
+        StudentAttributes studentWithFullProfileAttributes = dataBundle.getStudents().get("noFSStudentWithFullProfile");
         studentWithFullProfileAttributes = studentsDb.getStudentForEmail(
                 studentWithFullProfileAttributes.course, studentWithFullProfileAttributes.email);
 
@@ -283,9 +283,9 @@ public class StudentCourseJoinAuthenticatedActionTest extends BaseActionTest {
 
         ______TS("typical case: data requires sanitization");
 
-        AccountAttributes accountTestSanitization = dataBundle.accounts.get("student1InTestingSanitizationCourse");
-        StudentAttributes studentTestSanitization = dataBundle.students.get("student1InTestingSanitizationCourse");
-        CourseAttributes courseTestSanitization = dataBundle.courses.get("testingSanitizationCourse");
+        AccountAttributes accountTestSanitization = dataBundle.getAccounts().get("student1InTestingSanitizationCourse");
+        StudentAttributes studentTestSanitization = dataBundle.getStudents().get("student1InTestingSanitizationCourse");
+        CourseAttributes courseTestSanitization = dataBundle.getCourses().get("testingSanitizationCourse");
 
         gaeSimulation.loginUser(accountTestSanitization.googleId);
 
@@ -335,7 +335,7 @@ public class StudentCourseJoinAuthenticatedActionTest extends BaseActionTest {
     protected void testAccessControl() throws Exception {
 
         dataBundle = getTypicalDataBundle();
-        StudentAttributes unregStudent1 = dataBundle.students.get("student1InUnregisteredCourse");
+        StudentAttributes unregStudent1 = dataBundle.getStudents().get("student1InUnregisteredCourse");
         String key = StudentsLogic.inst().getStudentForEmail(unregStudent1.course, unregStudent1.email).key;
         String[] submissionParams = new String[] {
                 Const.ParamsNames.REGKEY, StringHelper.encrypt(key),

@@ -16,7 +16,7 @@ public class InstructorCourseEnrollPageDataTest extends BaseTestCase {
     @Test
     public void testAll() {
         ______TS("test typical case");
-        AccountAttributes account = dataBundle.accounts.get("instructor1OfCourse1");
+        AccountAttributes account = dataBundle.getAccounts().get("instructor1OfCourse1");
         String courseId = "CourseId";
         String enroll = "Section | Team | Name | Email | Comments\n"
                       + "Tut Group 1 | Team 1 | Tom Jacobs | tom@email.com\n"

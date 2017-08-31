@@ -36,11 +36,11 @@ public class FeedbackSubmissionEditPageDataTest extends BaseTestCase {
     private Map<String, String> recipients = new HashMap<>();
 
     private void createData(StudentAttributes student) {
-        FeedbackSessionAttributes feedbackSession = dataBundle.feedbackSessions.get("session1InCourse1");
-        question = dataBundle.feedbackQuestions.get("qn1InSession1InCourse1");
+        FeedbackSessionAttributes feedbackSession = dataBundle.getFeedbackSessions().get("session1InCourse1");
+        question = dataBundle.getFeedbackQuestions().get("qn1InSession1InCourse1");
 
-        responses.add(dataBundle.feedbackResponses.get("response1ForQ1S1C1"));
-        responses.add(dataBundle.feedbackResponses.get("response2ForQ1S1C1"));
+        responses.add(dataBundle.getFeedbackResponses().get("response1ForQ1S1C1"));
+        responses.add(dataBundle.getFeedbackResponses().get("response2ForQ1S1C1"));
 
         // create a dummy questionId for question,
         // otherwise it would be uninitialised as this is normally done by the database
@@ -67,8 +67,8 @@ public class FeedbackSubmissionEditPageDataTest extends BaseTestCase {
     @Test
     public void testAll() {
         ______TS("test typical case");
-        AccountAttributes studentAccount = dataBundle.accounts.get("student1InCourse1");
-        StudentAttributes student = dataBundle.students.get("student1InCourse1");
+        AccountAttributes studentAccount = dataBundle.getAccounts().get("student1InCourse1");
+        StudentAttributes student = dataBundle.getStudents().get("student1InCourse1");
 
         pageData = new FeedbackSubmissionEditPageData(studentAccount, student, dummySessionToken);
         createData(student);
@@ -93,7 +93,7 @@ public class FeedbackSubmissionEditPageDataTest extends BaseTestCase {
         testQuestionAttributes();
 
         ______TS("student in unregistered course");
-        student = dataBundle.students.get("student1InUnregisteredCourse");
+        student = dataBundle.getStudents().get("student1InUnregisteredCourse");
 
         pageData = new FeedbackSubmissionEditPageData(studentAccount, student, dummySessionToken);
         createData(student);
@@ -117,7 +117,7 @@ public class FeedbackSubmissionEditPageDataTest extends BaseTestCase {
         testQuestionAttributes();
 
         ______TS("student in archived course");
-        student = dataBundle.students.get("student1InArchivedCourse");
+        student = dataBundle.getStudents().get("student1InArchivedCourse");
 
         pageData = new FeedbackSubmissionEditPageData(studentAccount, student, dummySessionToken);
         createData(student);
@@ -140,7 +140,7 @@ public class FeedbackSubmissionEditPageDataTest extends BaseTestCase {
         testQuestionAttributes();
 
         ______TS("student submission open");
-        student = dataBundle.students.get("student1InCourse1");
+        student = dataBundle.getStudents().get("student1InCourse1");
 
         pageData = new FeedbackSubmissionEditPageData(studentAccount, student, dummySessionToken);
         createData(student);
@@ -164,9 +164,9 @@ public class FeedbackSubmissionEditPageDataTest extends BaseTestCase {
         assertTrue(pageData.isSubmittable());
 
         ______TS("instructor moderating a response - closed for submission");
-        AccountAttributes instructorAccount = dataBundle.accounts.get("instructor1OfCourse1");
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor1OfCourse1");
-        student = dataBundle.students.get("student1InCourse1");
+        AccountAttributes instructorAccount = dataBundle.getAccounts().get("instructor1OfCourse1");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor1OfCourse1");
+        student = dataBundle.getStudents().get("student1InCourse1");
 
         pageData = new FeedbackSubmissionEditPageData(instructorAccount, student, dummySessionToken);
         createData(student);
@@ -183,7 +183,7 @@ public class FeedbackSubmissionEditPageDataTest extends BaseTestCase {
         testQuestionAttributes();
 
         ______TS("instructor moderating a response - open for submission");
-        student = dataBundle.students.get("student1InCourse1");
+        student = dataBundle.getStudents().get("student1InCourse1");
 
         pageData = new FeedbackSubmissionEditPageData(instructorAccount, student, dummySessionToken);
         createData(student);

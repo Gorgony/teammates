@@ -90,7 +90,7 @@ public class CoursesLogicTest extends BaseLogicTest {
 
         ______TS("success: instructor with present courses");
 
-        String instructorId = dataBundle.accounts.get("instructor3").googleId;
+        String instructorId = dataBundle.getAccounts().get("instructor3").googleId;
 
         List<CourseAttributes> courses = coursesLogic.getCoursesForInstructor(instructorId);
 
@@ -105,7 +105,7 @@ public class CoursesLogicTest extends BaseLogicTest {
 
         ______TS("boundary: instructor without any courses");
 
-        instructorId = dataBundle.accounts.get("instructorWithoutCourses").googleId;
+        instructorId = dataBundle.getAccounts().get("instructorWithoutCourses").googleId;
 
         courses = coursesLogic.getCoursesForInstructor(instructorId);
 
@@ -213,7 +213,7 @@ public class CoursesLogicTest extends BaseLogicTest {
 
         ______TS("typical case");
 
-        CourseAttributes course = dataBundle.courses.get("typicalCourse1");
+        CourseAttributes course = dataBundle.getCourses().get("typicalCourse1");
         CourseDetailsBundle courseSummary = coursesLogic.getCourseSummary(course.getId());
         assertEquals(course.getId(), courseSummary.course.getId());
         assertEquals(course.getName(), courseSummary.course.getName());
@@ -276,7 +276,7 @@ public class CoursesLogicTest extends BaseLogicTest {
 
         ______TS("typical case");
 
-        CourseAttributes course = dataBundle.courses.get("typicalCourse1");
+        CourseAttributes course = dataBundle.getCourses().get("typicalCourse1");
         CourseSummaryBundle courseSummary = coursesLogic.getCourseSummaryWithoutStats(course.getId());
         assertEquals(course.getId(), courseSummary.course.getId());
         assertEquals(course.getName(), courseSummary.course.getName());
@@ -327,7 +327,7 @@ public class CoursesLogicTest extends BaseLogicTest {
 
         ______TS("typical case");
 
-        CourseAttributes course = dataBundle.courses.get("typicalCourse1");
+        CourseAttributes course = dataBundle.getCourses().get("typicalCourse1");
         CourseDetailsBundle courseDetails = coursesLogic.getCourseSummary(course.getId());
 
         assertEquals(course.getId(), courseDetails.course.getId());
@@ -386,7 +386,7 @@ public class CoursesLogicTest extends BaseLogicTest {
 
         ______TS("typical case");
 
-        CourseAttributes course = dataBundle.courses.get("typicalCourse1");
+        CourseAttributes course = dataBundle.getCourses().get("typicalCourse1");
         List<TeamDetailsBundle> teams = coursesLogic.getTeamsForCourse(course.getId());
 
         assertEquals(2, teams.size());
@@ -431,16 +431,16 @@ public class CoursesLogicTest extends BaseLogicTest {
 
         ______TS("student having two courses");
 
-        StudentAttributes studentInTwoCourses = dataBundle.students
+        StudentAttributes studentInTwoCourses = dataBundle.getStudents()
                 .get("student2InCourse1");
         List<CourseAttributes> courseList = coursesLogic
                 .getCoursesForStudentAccount(studentInTwoCourses.googleId);
         CourseAttributes.sortById(courseList);
         assertEquals(2, courseList.size());
 
-        CourseAttributes course1 = dataBundle.courses.get("typicalCourse1");
+        CourseAttributes course1 = dataBundle.getCourses().get("typicalCourse1");
 
-        CourseAttributes course2 = dataBundle.courses.get("typicalCourse2");
+        CourseAttributes course2 = dataBundle.getCourses().get("typicalCourse2");
 
         List<CourseAttributes> courses = new ArrayList<>();
         courses.add(course1);
@@ -455,11 +455,11 @@ public class CoursesLogicTest extends BaseLogicTest {
 
         ______TS("student having one course");
 
-        StudentAttributes studentInOneCourse = dataBundle.students
+        StudentAttributes studentInOneCourse = dataBundle.getStudents()
                 .get("student1InCourse1");
         courseList = coursesLogic.getCoursesForStudentAccount(studentInOneCourse.googleId);
         assertEquals(1, courseList.size());
-        course1 = dataBundle.courses.get("typicalCourse1");
+        course1 = dataBundle.getCourses().get("typicalCourse1");
         assertEquals(course1.getId(), courseList.get(0).getId());
         assertEquals(course1.getName(), courseList.get(0).getName());
 
@@ -489,10 +489,10 @@ public class CoursesLogicTest extends BaseLogicTest {
 
         ______TS("student having multiple evaluations in multiple courses");
 
-        CourseAttributes expectedCourse1 = dataBundle.courses.get("typicalCourse1");
+        CourseAttributes expectedCourse1 = dataBundle.getCourses().get("typicalCourse1");
 
         // This student is in both course 1 and 2
-        StudentAttributes studentInBothCourses = dataBundle.students
+        StudentAttributes studentInBothCourses = dataBundle.getStudents()
                 .get("student2InCourse1");
 
         // Get course details for student
@@ -531,7 +531,7 @@ public class CoursesLogicTest extends BaseLogicTest {
 
         ______TS("Instructor with 2 courses");
 
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor3OfCourse1");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor3OfCourse1");
         Map<String, CourseDetailsBundle> courseList =
                 coursesLogic.getCourseSummariesForInstructor(instructor.googleId, false);
         assertEquals(2, courseList.size());
@@ -607,7 +607,7 @@ public class CoursesLogicTest extends BaseLogicTest {
 
         ______TS("Typical case: course with section");
 
-        InstructorAttributes instructor1OfCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes instructor1OfCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
 
         String instructorId = instructor1OfCourse1.googleId;
         String courseId = instructor1OfCourse1.courseId;
@@ -633,7 +633,7 @@ public class CoursesLogicTest extends BaseLogicTest {
 
         ______TS("Typical case: course without sections");
 
-        InstructorAttributes instructor1OfCourse2 = dataBundle.instructors.get("instructor1OfCourse2");
+        InstructorAttributes instructor1OfCourse2 = dataBundle.getInstructors().get("instructor1OfCourse2");
 
         instructorId = instructor1OfCourse2.googleId;
         courseId = instructor1OfCourse2.courseId;
@@ -656,7 +656,7 @@ public class CoursesLogicTest extends BaseLogicTest {
 
         ______TS("Typical case: course with unregistered student");
 
-        InstructorAttributes instructor5 = dataBundle.instructors.get("instructor5");
+        InstructorAttributes instructor5 = dataBundle.getInstructors().get("instructor5");
 
         instructorId = instructor5.googleId;
         courseId = instructor5.courseId;
@@ -711,12 +711,12 @@ public class CoursesLogicTest extends BaseLogicTest {
 
         ______TS("Typical case: course with sections");
 
-        CourseAttributes typicalCourse1 = dataBundle.courses.get("typicalCourse1");
+        CourseAttributes typicalCourse1 = dataBundle.getCourses().get("typicalCourse1");
         assertTrue(coursesLogic.hasIndicatedSections(typicalCourse1.getId()));
 
         ______TS("Typical case: course without sections");
 
-        CourseAttributes typicalCourse2 = dataBundle.courses.get("typicalCourse2");
+        CourseAttributes typicalCourse2 = dataBundle.getCourses().get("typicalCourse2");
         assertFalse(coursesLogic.hasIndicatedSections(typicalCourse2.getId()));
 
         ______TS("Failure case: course does not exists");
@@ -898,20 +898,20 @@ public class CoursesLogicTest extends BaseLogicTest {
 
         ______TS("typical case");
 
-        CourseAttributes course1OfInstructor = dataBundle.courses.get("typicalCourse1");
-        StudentAttributes studentInCourse = dataBundle.students.get("student1InCourse1");
+        CourseAttributes course1OfInstructor = dataBundle.getCourses().get("typicalCourse1");
+        StudentAttributes studentInCourse = dataBundle.getStudents().get("student1InCourse1");
 
         // Ensure there are entities in the datastore under this course
         assertFalse(StudentsLogic.inst().getStudentsForCourse(course1OfInstructor.getId()).isEmpty());
 
         verifyPresentInDatastore(course1OfInstructor);
         verifyPresentInDatastore(studentInCourse);
-        verifyPresentInDatastore(dataBundle.instructors.get("instructor1OfCourse1"));
-        verifyPresentInDatastore(dataBundle.instructors.get("instructor3OfCourse1"));
-        verifyPresentInDatastore(dataBundle.students.get("student1InCourse1"));
-        verifyPresentInDatastore(dataBundle.students.get("student5InCourse1"));
-        verifyPresentInDatastore(dataBundle.feedbackSessions.get("session1InCourse1"));
-        verifyPresentInDatastore(dataBundle.feedbackSessions.get("session2InCourse1"));
+        verifyPresentInDatastore(dataBundle.getInstructors().get("instructor1OfCourse1"));
+        verifyPresentInDatastore(dataBundle.getInstructors().get("instructor3OfCourse1"));
+        verifyPresentInDatastore(dataBundle.getStudents().get("student1InCourse1"));
+        verifyPresentInDatastore(dataBundle.getStudents().get("student5InCourse1"));
+        verifyPresentInDatastore(dataBundle.getFeedbackSessions().get("session1InCourse1"));
+        verifyPresentInDatastore(dataBundle.getFeedbackSessions().get("session2InCourse1"));
         assertEquals(course1OfInstructor.getId(), studentInCourse.course);
 
         coursesLogic.deleteCourseCascade(course1OfInstructor.getId());
@@ -919,12 +919,12 @@ public class CoursesLogicTest extends BaseLogicTest {
         // Ensure the course and related entities are deleted
         verifyAbsentInDatastore(course1OfInstructor);
         verifyAbsentInDatastore(studentInCourse);
-        verifyAbsentInDatastore(dataBundle.instructors.get("instructor1OfCourse1"));
-        verifyAbsentInDatastore(dataBundle.instructors.get("instructor3OfCourse1"));
-        verifyAbsentInDatastore(dataBundle.students.get("student1InCourse1"));
-        verifyAbsentInDatastore(dataBundle.students.get("student5InCourse1"));
-        verifyAbsentInDatastore(dataBundle.feedbackSessions.get("session1InCourse1"));
-        verifyAbsentInDatastore(dataBundle.feedbackSessions.get("session2InCourse1"));
+        verifyAbsentInDatastore(dataBundle.getInstructors().get("instructor1OfCourse1"));
+        verifyAbsentInDatastore(dataBundle.getInstructors().get("instructor3OfCourse1"));
+        verifyAbsentInDatastore(dataBundle.getStudents().get("student1InCourse1"));
+        verifyAbsentInDatastore(dataBundle.getStudents().get("student5InCourse1"));
+        verifyAbsentInDatastore(dataBundle.getFeedbackSessions().get("session1InCourse1"));
+        verifyAbsentInDatastore(dataBundle.getFeedbackSessions().get("session2InCourse1"));
 
         ______TS("non-existent");
 

@@ -557,12 +557,12 @@ public class InstructorFeedbackSubmitPageUiTest extends BaseUiTestCase {
         // Next, we edit some student data to cover editing of students after creating the responses.
 
         // move one student out of Team 2 into a new team, should not cause the existing response to disappear
-        StudentAttributes extraGuy = testData.students.get("ExtraGuy");
+        StudentAttributes extraGuy = testData.getStudents().get("ExtraGuy");
         moveToTeam(extraGuy, "New Team");
 
         // delete one student, should remove (hide on page render; not deleted) the response made to him,
         // and change the number of options in the recipient dropdown list.
-        StudentAttributes dropOutGuy = testData.students.get("DropOut");
+        StudentAttributes dropOutGuy = testData.getStudents().get("DropOut");
         String backDoorOperationStatus = BackDoor.deleteStudent(dropOutGuy.course, dropOutGuy.email);
         assertEquals(Const.StatusCodes.BACKDOOR_STATUS_SUCCESS, backDoorOperationStatus);
 
@@ -572,18 +572,18 @@ public class InstructorFeedbackSubmitPageUiTest extends BaseUiTestCase {
 
     private FeedbackSubmitPage loginToInstructorFeedbackSubmitPage(String instructorName, String fsName) {
         AppUrl editUrl = createUrl(Const.ActionURIs.INSTRUCTOR_FEEDBACK_SUBMISSION_EDIT_PAGE)
-                          .withUserId(testData.instructors.get(instructorName).googleId)
-                          .withCourseId(testData.feedbackSessions.get(fsName).getCourseId())
-                          .withSessionName(testData.feedbackSessions.get(fsName).getFeedbackSessionName());
+                          .withUserId(testData.getInstructors().get(instructorName).googleId)
+                          .withCourseId(testData.getFeedbackSessions().get(fsName).getCourseId())
+                          .withSessionName(testData.getFeedbackSessions().get(fsName).getFeedbackSessionName());
         return loginAdminToPage(editUrl, FeedbackSubmitPage.class);
     }
 
     private FeedbackSubmitPage loginToStudentFeedbackSubmitPage(
             String studentName, String fsName) {
         AppUrl editUrl = createUrl(Const.ActionURIs.STUDENT_FEEDBACK_SUBMISSION_EDIT_PAGE)
-                          .withUserId(testData.students.get(studentName).googleId)
-                          .withCourseId(testData.feedbackSessions.get(fsName).getCourseId())
-                          .withSessionName(testData.feedbackSessions.get(fsName).getFeedbackSessionName());
+                          .withUserId(testData.getStudents().get(studentName).googleId)
+                          .withCourseId(testData.getFeedbackSessions().get(fsName).getCourseId())
+                          .withSessionName(testData.getFeedbackSessions().get(fsName).getFeedbackSessionName());
         return loginAdminToPage(editUrl, FeedbackSubmitPage.class);
     }
 

@@ -22,7 +22,7 @@ public class AdminHomePageDataTest extends BaseTestCase {
     }
 
     private void createData() {
-        AccountAttributes admin = dataBundle.accounts.get("instructor1OfCourse1");
+        AccountAttributes admin = dataBundle.getAccounts().get("instructor1OfCourse1");
         pageData = new AdminHomePageData(admin, dummySessionToken);
     }
 

@@ -25,11 +25,11 @@ public class InstructorFeedbackPreviewAsStudentActionTest extends BaseActionTest
     @Override
     @Test
     public void testExecuteAndPostProcess() {
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor1OfCourse1");
-        InstructorAttributes instructorHelper = dataBundle.instructors.get("helperOfCourse1");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor1OfCourse1");
+        InstructorAttributes instructorHelper = dataBundle.getInstructors().get("helperOfCourse1");
         String idOfInstructor = instructor.googleId;
         String idOfInstructorHelper = instructorHelper.googleId;
-        StudentAttributes student = dataBundle.students.get("student1InCourse1");
+        StudentAttributes student = dataBundle.getStudents().get("student1InCourse1");
 
         gaeSimulation.loginAsInstructor(idOfInstructor);
 
@@ -113,8 +113,8 @@ public class InstructorFeedbackPreviewAsStudentActionTest extends BaseActionTest
     @Override
     @Test
     protected void testAccessControl() throws Exception {
-        FeedbackSessionAttributes session = dataBundle.feedbackSessions.get("session1InCourse1");
-        StudentAttributes student = dataBundle.students.get("student1InCourse1");
+        FeedbackSessionAttributes session = dataBundle.getFeedbackSessions().get("session1InCourse1");
+        StudentAttributes student = dataBundle.getStudents().get("student1InCourse1");
 
         String[] submissionParams = new String[]{
                 Const.ParamsNames.COURSE_ID, session.getCourseId(),

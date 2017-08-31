@@ -30,11 +30,11 @@ public class InstructorEditStudentFeedbackPageActionTest extends BaseActionTest 
     @Override
     @Test
     public void testExecuteAndPostProcess() {
-        InstructorAttributes instructor = dataBundle.instructors.get("IESFPTCourseinstr");
-        InstructorAttributes instructorHelper = dataBundle.instructors.get("IESFPTCoursehelper1");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("IESFPTCourseinstr");
+        InstructorAttributes instructorHelper = dataBundle.getInstructors().get("IESFPTCoursehelper1");
         String idOfInstructor = instructor.googleId;
         String idOfInstructorHelper = instructorHelper.googleId;
-        StudentAttributes student = dataBundle.students.get("student1InCourse1");
+        StudentAttributes student = dataBundle.getStudents().get("student1InCourse1");
 
         gaeSimulation.loginAsInstructor(idOfInstructor);
 

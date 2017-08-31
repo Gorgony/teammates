@@ -18,7 +18,7 @@ public class InstructorCourseJoinConfirmationPageDataTest extends BaseTestCase {
     @Test
     public void testAll() {
         ______TS("test typical case");
-        AccountAttributes account = dataBundle.accounts.get("instructor1OfCourse1");
+        AccountAttributes account = dataBundle.getAccounts().get("instructor1OfCourse1");
         String regkey = "someRandomKey";
         String institute = "Institute Name";
 
@@ -38,7 +38,7 @@ public class InstructorCourseJoinConfirmationPageDataTest extends BaseTestCase {
         assertEquals(confirmationLink, pageData.getConfirmationLink());
 
         ______TS("test case when institute is null");
-        account = dataBundle.accounts.get("instructor1OfCourse1");
+        account = dataBundle.getAccounts().get("instructor1OfCourse1");
         regkey = "someRandomKey";
 
         pageData = new InstructorCourseJoinConfirmationPageData(account, dummySessionToken, regkey, null);

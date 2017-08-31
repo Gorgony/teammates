@@ -23,9 +23,9 @@ public class InstructorFeedbackRemindParticularStudentsActionTest extends BaseAc
     @Override
     @Test
     public void testExecuteAndPostProcess() {
-        InstructorAttributes instructor1ofCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("session1InCourse1");
-        StudentAttributes studentNotSubmitFeedback = dataBundle.students.get("student5InCourse1");
+        InstructorAttributes instructor1ofCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("session1InCourse1");
+        StudentAttributes studentNotSubmitFeedback = dataBundle.getStudents().get("student5InCourse1");
 
         gaeSimulation.loginAsInstructor(instructor1ofCourse1.googleId);
 
@@ -54,7 +54,7 @@ public class InstructorFeedbackRemindParticularStudentsActionTest extends BaseAc
 
         ______TS("Unsuccessful case: Feedback session not open, warning message generated");
 
-        fs = dataBundle.feedbackSessions.get("awaiting.session");
+        fs = dataBundle.getFeedbackSessions().get("awaiting.session");
         String[] paramsFeedbackSessionNotOpen = new String[] {
                 Const.ParamsNames.COURSE_ID, fs.getCourseId(),
                 Const.ParamsNames.FEEDBACK_SESSION_NAME, fs.getSessionName(),
@@ -69,7 +69,7 @@ public class InstructorFeedbackRemindParticularStudentsActionTest extends BaseAc
 
         ______TS("Successful case: Typical case");
 
-        fs = dataBundle.feedbackSessions.get("session1InCourse1");
+        fs = dataBundle.getFeedbackSessions().get("session1InCourse1");
         String[] paramsTypical = new String[]{
                 Const.ParamsNames.COURSE_ID, fs.getCourseId(),
                 Const.ParamsNames.FEEDBACK_SESSION_NAME, fs.getSessionName(),

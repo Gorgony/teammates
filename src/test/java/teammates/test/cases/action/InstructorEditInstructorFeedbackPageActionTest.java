@@ -29,8 +29,8 @@ public class InstructorEditInstructorFeedbackPageActionTest extends BaseActionTe
     @Override
     @Test
     public void testExecuteAndPostProcess() {
-        InstructorAttributes instructor = dataBundle.instructors.get("IEIFPTCourseinstr");
-        InstructorAttributes moderatedInstructor = dataBundle.instructors.get("IEIFPTCoursehelper1");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("IEIFPTCourseinstr");
+        InstructorAttributes moderatedInstructor = dataBundle.getInstructors().get("IEIFPTCoursehelper1");
         InstructorEditInstructorFeedbackPageAction editInstructorFpAction;
         ShowPageResult showPageResult;
 

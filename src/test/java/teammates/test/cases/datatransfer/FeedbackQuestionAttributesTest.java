@@ -181,7 +181,7 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
 
         ______TS("Text question: new Json format");
 
-        FeedbackQuestionAttributes fq = typicalBundle.feedbackQuestions.get("qn5InSession1InCourse1");
+        FeedbackQuestionAttributes fq = typicalBundle.getFeedbackQuestions().get("qn5InSession1InCourse1");
         FeedbackTextQuestionDetails questionDetails = new FeedbackTextQuestionDetails("New format text question");
         fq.setQuestionDetails(questionDetails);
 
@@ -190,7 +190,7 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
 
         ______TS("Text question: old string format");
 
-        fq = typicalBundle.feedbackQuestions.get("qn2InSession1InCourse1");
+        fq = typicalBundle.getFeedbackQuestions().get("qn2InSession1InCourse1");
         assertEquals(fq.getQuestionDetails().getQuestionText(), "Rate 1 other student's product");
     }
 

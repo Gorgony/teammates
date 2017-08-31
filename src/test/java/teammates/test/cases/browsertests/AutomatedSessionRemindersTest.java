@@ -30,27 +30,27 @@ public class AutomatedSessionRemindersTest extends BaseUiTestCase {
          * The tester should manually check the email box after running the test suite.
          */
 
-        testData.accounts.get("instructorWithEvals").email = Config.SUPPORT_EMAIL;
-        testData.instructors.get("AutSessRem.instructor").email = Config.SUPPORT_EMAIL;
-        testData.students.get("alice.tmms@AutSessRem.course").email = Config.SUPPORT_EMAIL;
-        testData.feedbackSessions.get("closedSession").setCreatorEmail(Config.SUPPORT_EMAIL);
-        testData.feedbackSessions.get("closingSession").setCreatorEmail(Config.SUPPORT_EMAIL);
-        testData.feedbackSessions.get("openingSession").setCreatorEmail(Config.SUPPORT_EMAIL);
-        testData.feedbackSessions.get("publishedSession").setCreatorEmail(Config.SUPPORT_EMAIL);
-        testData.feedbackQuestions.get("questionForOpeningSession").creatorEmail = Config.SUPPORT_EMAIL;
-        testData.feedbackQuestions.get("questionForClosingSession").creatorEmail = Config.SUPPORT_EMAIL;
-        testData.feedbackQuestions.get("questionForPublishedSession").creatorEmail = Config.SUPPORT_EMAIL;
+        testData.getAccounts().get("instructorWithEvals").email = Config.SUPPORT_EMAIL;
+        testData.getInstructors().get("AutSessRem.instructor").email = Config.SUPPORT_EMAIL;
+        testData.getStudents().get("alice.tmms@AutSessRem.course").email = Config.SUPPORT_EMAIL;
+        testData.getFeedbackSessions().get("closedSession").setCreatorEmail(Config.SUPPORT_EMAIL);
+        testData.getFeedbackSessions().get("closingSession").setCreatorEmail(Config.SUPPORT_EMAIL);
+        testData.getFeedbackSessions().get("openingSession").setCreatorEmail(Config.SUPPORT_EMAIL);
+        testData.getFeedbackSessions().get("publishedSession").setCreatorEmail(Config.SUPPORT_EMAIL);
+        testData.getFeedbackQuestions().get("questionForOpeningSession").creatorEmail = Config.SUPPORT_EMAIL;
+        testData.getFeedbackQuestions().get("questionForClosingSession").creatorEmail = Config.SUPPORT_EMAIL;
+        testData.getFeedbackQuestions().get("questionForPublishedSession").creatorEmail = Config.SUPPORT_EMAIL;
 
         // Set closing time of one feedback session to tomorrow
-        FeedbackSessionAttributes closingFeedbackSession = testData.feedbackSessions.get("closingSession");
+        FeedbackSessionAttributes closingFeedbackSession = testData.getFeedbackSessions().get("closingSession");
         closingFeedbackSession.setEndTime(TimeHelper.getDateOffsetToCurrentTime(1));
 
         // Set closing time of one feedback session to 30 mins ago
-        FeedbackSessionAttributes closedFeedbackSession = testData.feedbackSessions.get("closedSession");
+        FeedbackSessionAttributes closedFeedbackSession = testData.getFeedbackSessions().get("closedSession");
         closedFeedbackSession.setEndTime(TimeHelper.getMsOffsetToCurrentTime(-1000 * 60 * 30));
 
         // Set opening time for one feedback session to yesterday
-        FeedbackSessionAttributes openingFeedbackSession = testData.feedbackSessions.get("openingSession");
+        FeedbackSessionAttributes openingFeedbackSession = testData.getFeedbackSessions().get("openingSession");
         openingFeedbackSession.setStartTime(TimeHelper.getDateOffsetToCurrentTime(-1));
 
         //Published time for one feedback session already set to some time in the past.

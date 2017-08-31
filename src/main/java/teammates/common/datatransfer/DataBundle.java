@@ -21,31 +21,31 @@ import teammates.storage.entity.BaseEntity;
  * This class is mainly used for serializing JSON strings.
  */
 public class DataBundle {
-    public Map<String, AccountAttributes> accounts = new LinkedHashMap<>();
-    public Map<String, CourseAttributes> courses = new LinkedHashMap<>();
-    public Map<String, InstructorAttributes> instructors = new LinkedHashMap<>();
-    public Map<String, StudentAttributes> students = new LinkedHashMap<>();
-    public Map<String, FeedbackSessionAttributes> feedbackSessions = new LinkedHashMap<>();
-    public Map<String, FeedbackQuestionAttributes> feedbackQuestions = new LinkedHashMap<>();
-    public Map<String, FeedbackResponseAttributes> feedbackResponses = new LinkedHashMap<>();
-    public Map<String, FeedbackResponseCommentAttributes> feedbackResponseComments = new LinkedHashMap<>();
-    public Map<String, StudentProfileAttributes> profiles = new LinkedHashMap<>();
-    public Map<String, AdminEmailAttributes> adminEmails = new LinkedHashMap<>();
+    private Map<String, AccountAttributes> accounts = new LinkedHashMap<>();
+    private Map<String, CourseAttributes> courses = new LinkedHashMap<>();
+    private Map<String, InstructorAttributes> instructors = new LinkedHashMap<>();
+    private Map<String, StudentAttributes> students = new LinkedHashMap<>();
+    private Map<String, FeedbackSessionAttributes> feedbackSessions = new LinkedHashMap<>();
+    private Map<String, FeedbackQuestionAttributes> feedbackQuestions = new LinkedHashMap<>();
+    private Map<String, FeedbackResponseAttributes> feedbackResponses = new LinkedHashMap<>();
+    private Map<String, FeedbackResponseCommentAttributes> feedbackResponseComments = new LinkedHashMap<>();
+    private Map<String, StudentProfileAttributes> profiles = new LinkedHashMap<>();
+    private Map<String, AdminEmailAttributes> adminEmails = new LinkedHashMap<>();
 
     /**
      * Sanitize each attribute in the dataBundle for saving.
      */
     public void sanitizeForSaving() {
-        sanitizeMapForSaving(accounts);
-        sanitizeMapForSaving(courses);
-        sanitizeMapForSaving(instructors);
-        sanitizeMapForSaving(students);
-        sanitizeMapForSaving(feedbackSessions);
-        sanitizeMapForSaving(feedbackQuestions);
-        sanitizeMapForSaving(feedbackResponses);
-        sanitizeMapForSaving(feedbackResponseComments);
-        sanitizeMapForSaving(profiles);
-        sanitizeMapForSaving(adminEmails);
+        sanitizeMapForSaving(getAccounts());
+        sanitizeMapForSaving(getCourses());
+        sanitizeMapForSaving(getInstructors());
+        sanitizeMapForSaving(getStudents());
+        sanitizeMapForSaving(getFeedbackSessions());
+        sanitizeMapForSaving(getFeedbackQuestions());
+        sanitizeMapForSaving(getFeedbackResponses());
+        sanitizeMapForSaving(getFeedbackResponseComments());
+        sanitizeMapForSaving(getProfiles());
+        sanitizeMapForSaving(getAdminEmails());
     }
 
     /**
@@ -55,5 +55,85 @@ public class DataBundle {
         for (T attribute : map.values()) {
             attribute.sanitizeForSaving();
         }
+    }
+
+    public Map<String, AccountAttributes> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(Map<String, AccountAttributes> accounts) {
+        this.accounts = accounts;
+    }
+
+    public Map<String, CourseAttributes> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Map<String, CourseAttributes> courses) {
+        this.courses = courses;
+    }
+
+    public Map<String, InstructorAttributes> getInstructors() {
+        return instructors;
+    }
+
+    public void setInstructors(Map<String, InstructorAttributes> instructors) {
+        this.instructors = instructors;
+    }
+
+    public Map<String, StudentAttributes> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Map<String, StudentAttributes> students) {
+        this.students = students;
+    }
+
+    public Map<String, FeedbackSessionAttributes> getFeedbackSessions() {
+        return feedbackSessions;
+    }
+
+    public void setFeedbackSessions(Map<String, FeedbackSessionAttributes> feedbackSessions) {
+        this.feedbackSessions = feedbackSessions;
+    }
+
+    public Map<String, FeedbackQuestionAttributes> getFeedbackQuestions() {
+        return feedbackQuestions;
+    }
+
+    public void setFeedbackQuestions(Map<String, FeedbackQuestionAttributes> feedbackQuestions) {
+        this.feedbackQuestions = feedbackQuestions;
+    }
+
+    public Map<String, FeedbackResponseAttributes> getFeedbackResponses() {
+        return feedbackResponses;
+    }
+
+    public void setFeedbackResponses(Map<String, FeedbackResponseAttributes> feedbackResponses) {
+        this.feedbackResponses = feedbackResponses;
+    }
+
+    public Map<String, FeedbackResponseCommentAttributes> getFeedbackResponseComments() {
+        return feedbackResponseComments;
+    }
+
+    public void setFeedbackResponseComments(Map<String, FeedbackResponseCommentAttributes> feedbackResponseComments) {
+        this.feedbackResponseComments = feedbackResponseComments;
+    }
+
+    public Map<String, StudentProfileAttributes> getProfiles() {
+        return profiles;
+    }
+
+    public void setProfiles(Map<String, StudentProfileAttributes> profiles) {
+        this.profiles = profiles;
+    }
+
+    public Map<String, AdminEmailAttributes> getAdminEmails() {
+        return adminEmails;
+    }
+
+    public void setAdminEmails(Map<String, AdminEmailAttributes> adminEmails) {
+        this.adminEmails = adminEmails;
     }
 }

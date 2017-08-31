@@ -223,7 +223,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
 
         ______TS("standard update team case");
 
-        StudentAttributes studentToUpdate = dataBundle.students.get("student4InCourse1");
+        StudentAttributes studentToUpdate = dataBundle.getStudents().get("student4InCourse1");
 
         // Student 4 has 1 responses to him from team members,
         // 1 response from him a team member, and
@@ -270,7 +270,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
         ______TS("test updateFeedbackResponseForChangingTeam for recipient type = giver's team members including giver");
         FeedbackQuestionAttributes questionToTeamMembersAndSelf =
                                         getQuestionFromDatastore(questionTypeBundle, "qn1InContribSession2InCourse2");
-        studentToUpdate = questionTypeBundle.students.get("student2InCourse2");
+        studentToUpdate = questionTypeBundle.getStudents().get("student2InCourse2");
         FeedbackResponseAttributes responseToBeDeleted =
                 getResponseFromDatastore(questionTypeBundle, "response1ForQ1ContribSession2Course2");
         StudentEnrollDetails studentDetails1 =
@@ -299,7 +299,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
         assertEquals(1, numResponsesFromGiverInSession(responseToBeDeleted.giver,
                                                        responseToBeDeleted.feedbackSessionName,
                                                        responseToBeDeleted.courseId));
-        StudentAttributes student = questionTypeBundle.students.get("student2InCourse2");
+        StudentAttributes student = questionTypeBundle.getStudents().get("student2InCourse2");
         StudentEnrollDetails enrollmentDetailsToTriggerDeletion =
                 new StudentEnrollDetails(StudentUpdateStatus.MODIFIED, student.course,
                                          student.email, student.team, student.team + "tmp", student.section,
@@ -325,7 +325,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
         assertTrue(1 < numResponsesFromGiverInSession(responseToBeDeleted.giver,
                                                       responseToBeDeleted.feedbackSessionName,
                                                       responseToBeDeleted.courseId));
-        StudentAttributes student = questionTypeBundle.students.get("student1InCourse1");
+        StudentAttributes student = questionTypeBundle.getStudents().get("student1InCourse1");
         StudentEnrollDetails enrollmentDetailsToTriggerDeletion =
                 new StudentEnrollDetails(StudentUpdateStatus.MODIFIED, student.course,
                                          student.email, student.team, student.team + "tmp", student.section,
@@ -345,7 +345,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
 
     private int numResponsesFromGiverInSession(String studentEmail, String sessionName, String courseId) {
         int numResponses = 0;
-        for (FeedbackResponseAttributes response : questionTypeBundle.feedbackResponses.values()) {
+        for (FeedbackResponseAttributes response : questionTypeBundle.getFeedbackResponses().values()) {
             if (response.giver.equals(studentEmail) && response.feedbackSessionName.equals(sessionName)
                     && response.courseId.equals(courseId)) {
                 numResponses++;
@@ -372,7 +372,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
         // Student 1 currently has 2 responses to him and 2 from himself.
         // Student 1 currently has 1 response comment for responses to him
         // and 1 response comment from responses from himself.
-        StudentAttributes studentToUpdate = dataBundle.students.get("student1InCourse1");
+        StudentAttributes studentToUpdate = dataBundle.getStudents().get("student1InCourse1");
         List<FeedbackResponseAttributes> responsesForReceiver =
                 frLogic.getFeedbackResponsesForReceiverForCourse(
                         studentToUpdate.course, studentToUpdate.email);
@@ -428,7 +428,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
 
         ______TS("success: GetViewableResponsesForQuestion - instructor");
 
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor1OfCourse1");
         FeedbackQuestionAttributes fq = getQuestionFromDatastore("qn3InSession1InCourse1");
         List<FeedbackResponseAttributes> responses =
                 frLogic.getViewableFeedbackResponsesForQuestionInSection(fq, instructor.email,
@@ -451,7 +451,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
 
         ______TS("success: GetViewableResponsesForQuestion - student");
 
-        StudentAttributes student = dataBundle.students.get("student1InCourse1");
+        StudentAttributes student = dataBundle.getStudents().get("student1InCourse1");
         fq = getQuestionFromDatastore("qn2InSession1InCourse1");
         responses = frLogic.getViewableFeedbackResponsesForQuestionInSection(fq, student.email, UserRole.STUDENT, null);
 
@@ -494,7 +494,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
                         existingResponse.responseMetaData);
 
         frLogic.createFeedbackResponse(newResponse);
-        student = dataBundle.students.get("student2InCourse1");
+        student = dataBundle.getStudents().get("student2InCourse1");
         responses = frLogic.getViewableFeedbackResponsesForQuestionInSection(fq, student.email, UserRole.STUDENT, null);
         assertEquals(responses.size(), 4);
 
@@ -512,11 +512,11 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
 
         ______TS("testIsNameVisibleTo");
 
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor1OfCourse1");
-        StudentAttributes student = dataBundle.students.get("student1InCourse1");
-        StudentAttributes student2 = dataBundle.students.get("student2InCourse1");
-        StudentAttributes student3 = dataBundle.students.get("student3InCourse1");
-        StudentAttributes student5 = dataBundle.students.get("student5InCourse1");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor1OfCourse1");
+        StudentAttributes student = dataBundle.getStudents().get("student1InCourse1");
+        StudentAttributes student2 = dataBundle.getStudents().get("student2InCourse1");
+        StudentAttributes student3 = dataBundle.getStudents().get("student3InCourse1");
+        StudentAttributes student5 = dataBundle.getStudents().get("student5InCourse1");
 
         FeedbackQuestionAttributes fq = getQuestionFromDatastore("qn3InSession1InCourse1");
         FeedbackResponseAttributes fr = getResponseFromDatastore("response1ForQ3S1C1");
@@ -580,7 +580,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
 
         ______TS("standard delete");
 
-        StudentAttributes studentToDelete = dataBundle.students.get("student1InCourse1");
+        StudentAttributes studentToDelete = dataBundle.getStudents().get("student1InCourse1");
         List<FeedbackResponseAttributes> responsesForStudent1 =
                 frLogic.getFeedbackResponsesFromGiverForCourse(studentToDelete.course, studentToDelete.email);
         responsesForStudent1
@@ -605,7 +605,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
 
         remainingResponses.clear();
 
-        studentToDelete = dataBundle.students.get("student2InCourse1");
+        studentToDelete = dataBundle.getStudents().get("student2InCourse1");
 
         studentToDelete.team = "Team 1.3";
         StudentsLogic.inst().updateStudentCascadeWithoutDocument(studentToDelete.email, studentToDelete);
@@ -622,7 +622,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
 
         remainingResponses.clear();
 
-        studentToDelete = dataBundle.students.get("student5InCourse1");
+        studentToDelete = dataBundle.getStudents().get("student5InCourse1");
 
         frLogic.deleteFeedbackResponsesForStudentAndCascade(studentToDelete.course, studentToDelete.email);
         remainingResponses.addAll(
@@ -658,7 +658,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
     }
 
     private FeedbackQuestionAttributes getQuestionFromDatastore(DataBundle dataBundle, String jsonId) {
-        FeedbackQuestionAttributes questionToGet = dataBundle.feedbackQuestions.get(jsonId);
+        FeedbackQuestionAttributes questionToGet = dataBundle.getFeedbackQuestions().get(jsonId);
         questionToGet = fqLogic.getFeedbackQuestion(questionToGet.feedbackSessionName,
                                                     questionToGet.courseId,
                                                     questionToGet.questionNumber);
@@ -672,7 +672,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
 
     private FeedbackResponseAttributes getResponseFromDatastore(DataBundle dataBundle, String jsonId) {
         FeedbackResponseAttributes response =
-                                        dataBundle.feedbackResponses.get(jsonId);
+                                        dataBundle.getFeedbackResponses().get(jsonId);
 
         String qnId;
         try {

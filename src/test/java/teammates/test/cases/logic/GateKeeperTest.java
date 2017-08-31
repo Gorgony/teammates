@@ -35,8 +35,8 @@ public class GateKeeperTest extends BaseLogicTest {
 
         ______TS("admin+instructor+student");
 
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor1OfCourse1");
-        CourseAttributes course = dataBundle.courses.get("typicalCourse2");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor1OfCourse1");
+        CourseAttributes course = dataBundle.getCourses().get("typicalCourse2");
         gaeSimulation.loginAsAdmin(instructor.googleId);
         // also make this user a student of another course
         StudentAttributes instructorAsStudent = StudentAttributes

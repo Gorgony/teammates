@@ -23,13 +23,13 @@ public class StudentSearchTest extends BaseSearchTest {
 
         StudentsDb studentsDb = new StudentsDb();
 
-        StudentAttributes stu1InCourse1 = dataBundle.students.get("student1InCourse1");
-        StudentAttributes stu2InCourse1 = dataBundle.students.get("student2InCourse1");
-        StudentAttributes stu1InCourse2 = dataBundle.students.get("student1InCourse2");
-        StudentAttributes stu2InCourse2 = dataBundle.students.get("student2InCourse2");
-        StudentAttributes stu1InUnregCourse = dataBundle.students.get("student1InUnregisteredCourse");
-        StudentAttributes stu2InUnregCourse = dataBundle.students.get("student2InUnregisteredCourse");
-        StudentAttributes stu1InArchCourse = dataBundle.students.get("student1InArchivedCourse");
+        StudentAttributes stu1InCourse1 = dataBundle.getStudents().get("student1InCourse1");
+        StudentAttributes stu2InCourse1 = dataBundle.getStudents().get("student2InCourse1");
+        StudentAttributes stu1InCourse2 = dataBundle.getStudents().get("student1InCourse2");
+        StudentAttributes stu2InCourse2 = dataBundle.getStudents().get("student2InCourse2");
+        StudentAttributes stu1InUnregCourse = dataBundle.getStudents().get("student1InUnregisteredCourse");
+        StudentAttributes stu2InUnregCourse = dataBundle.getStudents().get("student2InUnregisteredCourse");
+        StudentAttributes stu1InArchCourse = dataBundle.getStudents().get("student1InArchivedCourse");
 
         ______TS("success: search for students in whole system; query string does not match any student");
 
@@ -61,9 +61,9 @@ public class StudentSearchTest extends BaseSearchTest {
                  + "based on instructor's privilege");
 
         List<InstructorAttributes> ins1OfCourse1 = Arrays.asList(
-                new InstructorAttributes[] { dataBundle.instructors.get("instructor1OfCourse1") });
+                new InstructorAttributes[] { dataBundle.getInstructors().get("instructor1OfCourse1") });
         List<InstructorAttributes> ins1OfCourse2 = Arrays.asList(
-                new InstructorAttributes[] { dataBundle.instructors.get("instructor1OfCourse2") });
+                new InstructorAttributes[] { dataBundle.getInstructors().get("instructor1OfCourse2") });
 
         bundle = studentsDb.search("student1", ins1OfCourse1);
 

@@ -78,15 +78,15 @@ public class BackDoorLogic extends Logic {
             throw new InvalidParametersException(Const.StatusCodes.NULL_PARAMETER, "Null data bundle");
         }
 
-        Collection<AccountAttributes> accounts = dataBundle.accounts.values();
-        Collection<CourseAttributes> courses = dataBundle.courses.values();
-        Collection<InstructorAttributes> instructors = dataBundle.instructors.values();
-        Collection<StudentAttributes> students = dataBundle.students.values();
-        Collection<FeedbackSessionAttributes> sessions = dataBundle.feedbackSessions.values();
-        Collection<FeedbackQuestionAttributes> questions = dataBundle.feedbackQuestions.values();
-        Collection<FeedbackResponseAttributes> responses = dataBundle.feedbackResponses.values();
-        Collection<FeedbackResponseCommentAttributes> responseComments = dataBundle.feedbackResponseComments.values();
-        Collection<AdminEmailAttributes> adminEmails = dataBundle.adminEmails.values();
+        Collection<AccountAttributes> accounts = dataBundle.getAccounts().values();
+        Collection<CourseAttributes> courses = dataBundle.getCourses().values();
+        Collection<InstructorAttributes> instructors = dataBundle.getInstructors().values();
+        Collection<StudentAttributes> students = dataBundle.getStudents().values();
+        Collection<FeedbackSessionAttributes> sessions = dataBundle.getFeedbackSessions().values();
+        Collection<FeedbackQuestionAttributes> questions = dataBundle.getFeedbackQuestions().values();
+        Collection<FeedbackResponseAttributes> responses = dataBundle.getFeedbackResponses().values();
+        Collection<FeedbackResponseCommentAttributes> responseComments = dataBundle.getFeedbackResponseComments().values();
+        Collection<AdminEmailAttributes> adminEmails = dataBundle.getAdminEmails().values();
 
         // For ensuring only one account per Google ID is created
         Map<String, AccountAttributes> googleIdAccountMap = new HashMap<>();
@@ -148,20 +148,20 @@ public class BackDoorLogic extends Logic {
     public String putDocuments(DataBundle dataBundle) {
         // query the entity in db first to get the actual data and create document for actual entity
 
-        Map<String, StudentAttributes> students = dataBundle.students;
+        Map<String, StudentAttributes> students = dataBundle.getStudents();
         for (StudentAttributes student : students.values()) {
             StudentAttributes studentInDb = studentsDb.getStudentForEmail(student.course, student.email);
             studentsDb.putDocument(studentInDb);
         }
 
-        Map<String, InstructorAttributes> instructors = dataBundle.instructors;
+        Map<String, InstructorAttributes> instructors = dataBundle.getInstructors();
         for (InstructorAttributes instructor : instructors.values()) {
             InstructorAttributes instructorInDb =
                     instructorsDb.getInstructorForEmail(instructor.courseId, instructor.email);
             instructorsDb.putDocument(instructorInDb);
         }
 
-        Map<String, FeedbackResponseCommentAttributes> responseComments = dataBundle.feedbackResponseComments;
+        Map<String, FeedbackResponseCommentAttributes> responseComments = dataBundle.getFeedbackResponseComments();
         for (FeedbackResponseCommentAttributes responseComment : responseComments.values()) {
             FeedbackResponseCommentAttributes fcInDb = fcDb.getFeedbackResponseComment(
                     responseComment.courseId, responseComment.createdAt, responseComment.giverEmail);
@@ -550,12 +550,12 @@ public class BackDoorLogic extends Logic {
 
         // Questions and responses will be deleted automatically.
         // We don't attempt to delete them again, to save time.
-        deleteCourses(dataBundle.courses.values());
+        deleteCourses(dataBundle.getCourses().values());
 
-        populateNullStudentProfiles(dataBundle.accounts.values());
-        accountsDb.deleteAccounts(dataBundle.accounts.values());
+        populateNullStudentProfiles(dataBundle.getAccounts().values());
+        accountsDb.deleteAccounts(dataBundle.getAccounts().values());
 
-        for (AdminEmailAttributes email : dataBundle.adminEmails.values()) {
+        for (AdminEmailAttributes email : dataBundle.getAdminEmails().values()) {
             // Retrieve email by subject as fields emailId, createDate cannot be specified by dataBundle.
             AdminEmailAttributes emailInDb = adminEmailsDb.getAdminEmailBySubject(email.subject);
             // It is expected that email may not be in datastore yet, should fail silently.

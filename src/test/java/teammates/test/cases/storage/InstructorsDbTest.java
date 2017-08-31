@@ -37,13 +37,13 @@ public class InstructorsDbTest extends BaseComponentTestCase {
     }
 
     private void addInstructorsToDb() throws Exception {
-        Set<String> keys = dataBundle.instructors.keySet();
+        Set<String> keys = dataBundle.getInstructors().keySet();
         for (String i : keys) {
             try {
-                instructorsDb.createEntity(dataBundle.instructors.get(i));
+                instructorsDb.createEntity(dataBundle.getInstructors().get(i));
             } catch (EntityAlreadyExistsException e) {
                 instructorsDb.updateInstructorByGoogleId(
-                        dataBundle.instructors.get(i));
+                        dataBundle.getInstructors().get(i));
             }
         }
     }
@@ -126,7 +126,7 @@ public class InstructorsDbTest extends BaseComponentTestCase {
     @Test
     public void testGetInstructorForEmail() {
 
-        InstructorAttributes i = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes i = dataBundle.getInstructors().get("instructor1OfCourse1");
 
         ______TS("Success: get an instructor");
 
@@ -151,7 +151,7 @@ public class InstructorsDbTest extends BaseComponentTestCase {
     @Test
     public void testGetInstructorForGoogleId() {
 
-        InstructorAttributes i = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes i = dataBundle.getInstructors().get("instructor1OfCourse1");
 
         ______TS("Success: get an instructor");
 
@@ -176,7 +176,7 @@ public class InstructorsDbTest extends BaseComponentTestCase {
     @Test
     public void testGetInstructorForRegistrationKey() {
 
-        InstructorAttributes i = dataBundle.instructors.get("instructorNotYetJoinCourse");
+        InstructorAttributes i = dataBundle.getInstructors().get("instructorNotYetJoinCourse");
 
         ______TS("Success: get an instructor");
 
@@ -310,7 +310,7 @@ public class InstructorsDbTest extends BaseComponentTestCase {
     @Test
     public void testUpdateInstructorByGoogleId() throws Exception {
 
-        InstructorAttributes instructorToEdit = dataBundle.instructors.get("instructor2OfCourse1");
+        InstructorAttributes instructorToEdit = dataBundle.getInstructors().get("instructor2OfCourse1");
 
         ______TS("Success: update an instructor");
 
@@ -460,7 +460,7 @@ public class InstructorsDbTest extends BaseComponentTestCase {
 
     @Test
     public void testDeleteInstructor() {
-        InstructorAttributes i = dataBundle.instructors.get("instructorWithOnlyOneSampleCourse");
+        InstructorAttributes i = dataBundle.getInstructors().get("instructorWithOnlyOneSampleCourse");
 
         ______TS("Success: delete an instructor");
 
@@ -539,9 +539,9 @@ public class InstructorsDbTest extends BaseComponentTestCase {
     }
 
     private void deleteInstructorsFromDb() {
-        Set<String> keys = dataBundle.instructors.keySet();
+        Set<String> keys = dataBundle.getInstructors().keySet();
         for (String i : keys) {
-            instructorsDb.deleteEntity(dataBundle.instructors.get(i));
+            instructorsDb.deleteEntity(dataBundle.getInstructors().get(i));
         }
     }
 }

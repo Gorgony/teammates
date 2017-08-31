@@ -45,13 +45,13 @@ public class InstructorFeedbackSubmissionEditSaveActionTest extends BaseActionTe
     @Test
     public void testExecuteAndPostProcess() {
         prepareTestData();
-        InstructorAttributes instructor1InCourse1 = dataBundle.instructors.get("instructor1InCourse1");
+        InstructorAttributes instructor1InCourse1 = dataBundle.getInstructors().get("instructor1InCourse1");
         gaeSimulation.loginAsInstructor(instructor1InCourse1.googleId);
 
         ______TS("Unsuccessful case: test empty feedback session name parameter");
 
         String[] submissionParams = new String[]{
-                Const.ParamsNames.COURSE_ID, dataBundle.feedbackResponses.get("response1ForQ1S1C1").courseId
+                Const.ParamsNames.COURSE_ID, dataBundle.getFeedbackResponses().get("response1ForQ1S1C1").courseId
         };
 
         InstructorFeedbackSubmissionEditSaveAction a;
@@ -70,7 +70,7 @@ public class InstructorFeedbackSubmissionEditSaveActionTest extends BaseActionTe
 
         submissionParams = new String[]{
                 Const.ParamsNames.FEEDBACK_SESSION_NAME,
-                dataBundle.feedbackResponses.get("response1ForQ1S1C1").feedbackSessionName
+                dataBundle.getFeedbackResponses().get("response1ForQ1S1C1").feedbackSessionName
         };
 
         try {
@@ -89,12 +89,12 @@ public class InstructorFeedbackSubmissionEditSaveActionTest extends BaseActionTe
         assertNotNull("Feedback question not found in database", fq);
 
         FeedbackResponsesDb frDb = new FeedbackResponsesDb();
-        FeedbackResponseAttributes fr = dataBundle.feedbackResponses.get("response1ForQ1S1C1");
+        FeedbackResponseAttributes fr = dataBundle.getFeedbackResponses().get("response1ForQ1S1C1");
         // necessary to get the correct responseId
         fr = frDb.getFeedbackResponse(fq.getId(), fr.giver, fr.recipient);
         assertNotNull("Feedback response not found in database", fr);
 
-        instructor1InCourse1 = dataBundle.instructors.get("instructor1InCourse1");
+        instructor1InCourse1 = dataBundle.getInstructors().get("instructor1InCourse1");
         gaeSimulation.loginAsInstructor(instructor1InCourse1.googleId);
 
         submissionParams = new String[]{
@@ -211,7 +211,7 @@ public class InstructorFeedbackSubmissionEditSaveActionTest extends BaseActionTe
         fq = fqDb.getFeedbackQuestion("First Session", "idOfCourse1", 2);
         assertNotNull("Feedback question not found in database", fq);
 
-        fr = dataBundle.feedbackResponses.get("response1ForQ2S1C1");
+        fr = dataBundle.getFeedbackResponses().get("response1ForQ2S1C1");
         // necessary to get the correct responseId
         fr = frDb.getFeedbackResponse(fq.getId(), fr.giver, fr.recipient);
         assertNotNull("Feedback response not found in database", fr);
@@ -266,7 +266,7 @@ public class InstructorFeedbackSubmissionEditSaveActionTest extends BaseActionTe
         fq = fqDb.getFeedbackQuestion("Private Session", "idOfCourse1", 1);
         assertNotNull("Feedback question not found in database", fq);
 
-        fr = dataBundle.feedbackResponses.get("response1ForPrivateSession");
+        fr = dataBundle.getFeedbackResponses().get("response1ForPrivateSession");
         // necessary to get the correct responseId
         fr = frDb.getFeedbackResponse(fq.getId(), fr.giver, fr.recipient);
         assertNotNull("Feedback response not found in database", fr);
@@ -328,12 +328,12 @@ public class InstructorFeedbackSubmissionEditSaveActionTest extends BaseActionTe
         fq = fqDb.getFeedbackQuestion("MCQ Session", "FSQTT.idOfTypicalCourse1", 2);
         assertNotNull("Feedback question not found in database", fq);
 
-        fr = dataBundle.feedbackResponses.get("response1ForQ2S1C1");
+        fr = dataBundle.getFeedbackResponses().get("response1ForQ2S1C1");
         // necessary to get the correct responseId
         fr = frDb.getFeedbackResponse(fq.getId(), fr.giver, fr.recipient);
         assertNotNull("Feedback response not found in database", fr);
 
-        instructor1InCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
+        instructor1InCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
         gaeSimulation.loginAsInstructor(instructor1InCourse1.googleId);
 
         submissionParams = new String[]{
@@ -386,12 +386,12 @@ public class InstructorFeedbackSubmissionEditSaveActionTest extends BaseActionTe
         fq = fqDb.getFeedbackQuestion("MSQ Session", "FSQTT.idOfTypicalCourse1", 2);
         assertNotNull("Feedback question not found in database", fq);
 
-        fr = dataBundle.feedbackResponses.get("response1ForQ2S2C1");
+        fr = dataBundle.getFeedbackResponses().get("response1ForQ2S2C1");
         // necessary to get the correct responseId
         fr = frDb.getFeedbackResponse(fq.getId(), fr.giver, fr.recipient);
         assertNotNull("Feedback response not found in database", fr);
 
-        instructor1InCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
+        instructor1InCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
         gaeSimulation.loginAsInstructor(instructor1InCourse1.googleId);
 
         submissionParams = new String[]{
@@ -446,12 +446,12 @@ public class InstructorFeedbackSubmissionEditSaveActionTest extends BaseActionTe
         FeedbackNumericalScaleQuestionDetails fqd =
                 (FeedbackNumericalScaleQuestionDetails) fq.getQuestionDetails();
 
-        fr = dataBundle.feedbackResponses.get("response1ForQ2S3C1");
+        fr = dataBundle.getFeedbackResponses().get("response1ForQ2S3C1");
         // necessary to get the correct responseId
         fr = frDb.getFeedbackResponse(fq.getId(), fr.giver, fr.recipient);
         assertNotNull("Feedback response not found in database", fr);
 
-        instructor1InCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
+        instructor1InCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
         gaeSimulation.loginAsInstructor(instructor1InCourse1.googleId);
 
         submissionParams = new String[]{
@@ -511,17 +511,17 @@ public class InstructorFeedbackSubmissionEditSaveActionTest extends BaseActionTe
         fq = fqDb.getFeedbackQuestion("CONSTSUM Session", "FSQTT.idOfTypicalCourse1", 2);
         assertNotNull("Feedback question not found in database", fq);
 
-        fr = dataBundle.feedbackResponses.get("response1ForQ2S4C1");
+        fr = dataBundle.getFeedbackResponses().get("response1ForQ2S4C1");
         // necessary to get the correct responseId
         fr = frDb.getFeedbackResponse(fq.getId(), fr.giver, fr.recipient);
         assertNotNull("Feedback response not found in database", fr);
 
-        FeedbackResponseAttributes fr2 = dataBundle.feedbackResponses.get("response2ForQ2S4C1");
+        FeedbackResponseAttributes fr2 = dataBundle.getFeedbackResponses().get("response2ForQ2S4C1");
         // necessary to get the correct responseId
         fr2 = frDb.getFeedbackResponse(fq.getId(), fr2.giver, fr2.recipient);
         assertNotNull("Feedback response not found in database", fr2);
 
-        instructor1InCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
+        instructor1InCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
         gaeSimulation.loginAsInstructor(instructor1InCourse1.googleId);
 
         submissionParams = new String[]{
@@ -589,8 +589,8 @@ public class InstructorFeedbackSubmissionEditSaveActionTest extends BaseActionTe
     public void testGracePeriodExecuteAndPostProcess() throws Exception {
         dataBundle = loadDataBundle("/InstructorFeedbackSubmissionEditSaveActionTest.json");
         FeedbackSessionsDb feedbackSessionDb = new FeedbackSessionsDb();
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("Grace Period Session");
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor1InCourse1");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("Grace Period Session");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor1InCourse1");
         gaeSimulation.loginAsInstructor(instructor.googleId);
 
         String[] submissionParams = new String[]{
@@ -655,7 +655,7 @@ public class InstructorFeedbackSubmissionEditSaveActionTest extends BaseActionTe
     @Test
     protected void testAccessControl() throws Exception {
         dataBundle = getTypicalDataBundle();
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("session1InCourse1");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("session1InCourse1");
 
         String[] submissionParams = new String[]{
                 Const.ParamsNames.COURSE_ID, fs.getCourseId(),
@@ -669,7 +669,7 @@ public class InstructorFeedbackSubmissionEditSaveActionTest extends BaseActionTe
     private void testGracePeriodAccessControlForInstructors() throws Exception {
 
         dataBundle = getTypicalDataBundle();
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("gracePeriodSession");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("gracePeriodSession");
 
         closeSession(fs);
 

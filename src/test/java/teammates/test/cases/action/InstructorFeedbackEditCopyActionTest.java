@@ -31,11 +31,11 @@ public class InstructorFeedbackEditCopyActionTest extends BaseActionTest {
     @Override
     @Test
     public void testExecuteAndPostProcess() {
-        InstructorAttributes instructor = dataBundle.instructors.get("teammates.test.instructor2");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("teammates.test.instructor2");
         String instructorId = instructor.googleId;
 
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("openSession");
-        CourseAttributes course = dataBundle.courses.get("course");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("openSession");
+        CourseAttributes course = dataBundle.getCourses().get("course");
 
         gaeSimulation.loginAsInstructor(instructorId);
 
@@ -173,7 +173,7 @@ public class InstructorFeedbackEditCopyActionTest extends BaseActionTest {
 
         ______TS("Failure case: course already has feedback session with same name, instructor home page");
 
-        CourseAttributes course6 = dataBundle.courses.get("course6");
+        CourseAttributes course6 = dataBundle.getCourses().get("course6");
         params = new String[] {
                 Const.ParamsNames.FEEDBACK_SESSION_NAME, "First Session",
                 Const.ParamsNames.COURSE_ID, course.getId(),
@@ -370,7 +370,7 @@ public class InstructorFeedbackEditCopyActionTest extends BaseActionTest {
 
         ______TS("Successful case");
 
-        CourseAttributes course7 = dataBundle.courses.get("course7");
+        CourseAttributes course7 = dataBundle.getCourses().get("course7");
         String copiedCourseName = "Session with valid name";
         params = new String[] {
                 Const.ParamsNames.FEEDBACK_SESSION_NAME, "First Session",

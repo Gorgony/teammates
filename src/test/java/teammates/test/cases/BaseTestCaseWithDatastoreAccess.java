@@ -33,22 +33,22 @@ public abstract class BaseTestCaseWithDatastoreAccess extends BaseTestCaseWithOb
     protected RetryManager persistenceRetryManager = new RetryManager(TestProperties.PERSISTENCE_RETRY_PERIOD_IN_S / 2);
 
     protected void verifyPresentInDatastore(DataBundle data) {
-        Map<String, AccountAttributes> accounts = data.accounts;
+        Map<String, AccountAttributes> accounts = data.getAccounts();
         for (AccountAttributes account : accounts.values()) {
             verifyPresentInDatastore(account);
         }
 
-        Map<String, InstructorAttributes> instructors = data.instructors;
+        Map<String, InstructorAttributes> instructors = data.getInstructors();
         for (InstructorAttributes instructor : instructors.values()) {
             verifyPresentInDatastore(instructor);
         }
 
-        Map<String, CourseAttributes> courses = data.courses;
+        Map<String, CourseAttributes> courses = data.getCourses();
         for (CourseAttributes course : courses.values()) {
             verifyPresentInDatastore(course);
         }
 
-        Map<String, StudentAttributes> students = data.students;
+        Map<String, StudentAttributes> students = data.getStudents();
         for (StudentAttributes student : students.values()) {
             verifyPresentInDatastore(student);
         }

@@ -18,8 +18,8 @@ public class InstructorCourseStudentDetailsPageUiTest extends BaseUiTestCase {
     protected void prepareTestData() {
         testData = loadDataBundle("/InstructorCourseStudentDetailsPageUiTest.json");
         removeAndRestoreDataBundle(testData);
-        instructorId = testData.instructors.get("CCSDetailsUiT.instr").googleId;
-        courseId = testData.courses.get("CCSDetailsUiT.CS2104").getId();
+        instructorId = testData.getInstructors().get("CCSDetailsUiT.instr").googleId;
+        courseId = testData.getCourses().get("CCSDetailsUiT.CS2104").getId();
     }
 
     @Test
@@ -45,15 +45,15 @@ public class InstructorCourseStudentDetailsPageUiTest extends BaseUiTestCase {
         ______TS("content: registered student with helper view");
 
         // the helper here is configured to be able to view studentDetailsPage
-        instructorId = testData.instructors.get("CCSDetailsUiT.Helper").googleId;
+        instructorId = testData.getInstructors().get("CCSDetailsUiT.Helper").googleId;
 
         viewPage = getCourseStudentDetailsPage("registeredStudent");
         viewPage.verifyHtmlMainContent("/instructorCourseStudentDetailsRegisteredWithHelperView.html");
 
         ______TS("content: registered student with attempted script and html injection");
 
-        instructorId = testData.instructors.get("instructor1OfTestingSanitizationCourse").googleId;
-        courseId = testData.courses.get("testingSanitizationCourse").getId();
+        instructorId = testData.getInstructors().get("instructor1OfTestingSanitizationCourse").googleId;
+        courseId = testData.getCourses().get("testingSanitizationCourse").getId();
 
         viewPage = getCourseStudentDetailsPage("student1InTestingSanitizationCourse");
         viewPage.verifyHtmlMainContent("/instructorCourseStudentDetailsRegisteredWithAttemptedScriptInjection.html");
@@ -65,7 +65,7 @@ public class InstructorCourseStudentDetailsPageUiTest extends BaseUiTestCase {
         AppUrl viewPageUrl = createUrl(Const.ActionURIs.INSTRUCTOR_COURSE_STUDENT_DETAILS_PAGE)
                 .withUserId(instructorId)
                 .withCourseId(courseId)
-                .withStudentEmail(testData.students.get(studentStr).email);
+                .withStudentEmail(testData.getStudents().get(studentStr).email);
 
         return loginAdminToPage(viewPageUrl, InstructorCourseStudentDetailsViewPage.class);
     }

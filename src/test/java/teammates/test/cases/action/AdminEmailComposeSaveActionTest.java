@@ -114,7 +114,7 @@ public class AdminEmailComposeSaveActionTest extends BaseActionTest {
         assertEquals(subject, data.emailToEdit.subject);
 
         ______TS("save existing email : typical values given : success");
-        AdminEmailAttributes emailData = dataBundle.adminEmails.get("adminEmail1");
+        AdminEmailAttributes emailData = dataBundle.getAdminEmails().get("adminEmail1");
         AdminEmailAttributes email = adminEmailsLogic.getAdminEmailBySubject(emailData.getSubject());
         String emailId = email.emailId;
         content = "valid content";

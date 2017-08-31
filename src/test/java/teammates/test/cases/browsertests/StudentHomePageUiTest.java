@@ -25,15 +25,15 @@ public class StudentHomePageUiTest extends BaseUiTestCase {
 
         String student1GoogleId = TestProperties.TEST_STUDENT1_ACCOUNT;
         String student1Email = student1GoogleId + "@gmail.com";
-        testData.accounts.get("alice.tmms").googleId = student1GoogleId;
-        testData.accounts.get("alice.tmms").email = student1Email;
-        testData.students.get("alice.tmms@SHomeUiT.CS2104").email = student1Email;
-        testData.students.get("alice.tmms@SHomeUiT.CS1101").googleId = student1GoogleId;
-        testData.students.get("alice.tmms@SHomeUiT.CS1101").email = student1Email;
-        testData.students.get("alice.tmms@SHomeUiT.CS4215").googleId = student1GoogleId;
-        testData.students.get("alice.tmms@SHomeUiT.CS4215").email = student1Email;
-        testData.students.get("alice.tmms@SHomeUiT.CS4221").googleId = student1GoogleId;
-        testData.students.get("alice.tmms@SHomeUiT.CS4221").email = student1Email;
+        testData.getAccounts().get("alice.tmms").googleId = student1GoogleId;
+        testData.getAccounts().get("alice.tmms").email = student1Email;
+        testData.getStudents().get("alice.tmms@SHomeUiT.CS2104").email = student1Email;
+        testData.getStudents().get("alice.tmms@SHomeUiT.CS1101").googleId = student1GoogleId;
+        testData.getStudents().get("alice.tmms@SHomeUiT.CS1101").email = student1Email;
+        testData.getStudents().get("alice.tmms@SHomeUiT.CS4215").googleId = student1GoogleId;
+        testData.getStudents().get("alice.tmms@SHomeUiT.CS4215").email = student1Email;
+        testData.getStudents().get("alice.tmms@SHomeUiT.CS4221").googleId = student1GoogleId;
+        testData.getStudents().get("alice.tmms@SHomeUiT.CS4221").email = student1Email;
 
         removeAndRestoreDataBundle(testData);
 
@@ -85,7 +85,7 @@ public class StudentHomePageUiTest extends BaseUiTestCase {
         studentHome.verifyHtmlMainContent("/studentHomeHTML.html");
 
         AppUrl detailsPageUrl = createUrl(Const.ActionURIs.STUDENT_HOME_PAGE)
-                             .withUserId(testData.students.get("SHomeUiT.charlie.d@SHomeUiT.CS2104").googleId);
+                             .withUserId(testData.getStudents().get("SHomeUiT.charlie.d@SHomeUiT.CS2104").googleId);
 
         StudentHomePage studentHomePage = loginAdminToPage(detailsPageUrl, StudentHomePage.class);
 
@@ -94,7 +94,7 @@ public class StudentHomePageUiTest extends BaseUiTestCase {
         ______TS("content: requires sanitization");
 
         detailsPageUrl = createUrl(Const.ActionURIs.STUDENT_HOME_PAGE)
-                            .withUserId(testData.students.get("SHomeUiT.student1InTestingSanitizationCourse").googleId);
+                            .withUserId(testData.getStudents().get("SHomeUiT.student1InTestingSanitizationCourse").googleId);
 
         studentHomePage = loginAdminToPage(detailsPageUrl, StudentHomePage.class);
 
@@ -104,7 +104,7 @@ public class StudentHomePageUiTest extends BaseUiTestCase {
     private void testLinks() {
 
         AppUrl homePageUrl = createUrl(Const.ActionURIs.STUDENT_HOME_PAGE)
-                .withUserId(testData.students.get("SHomeUiT.charlie.d@SHomeUiT.CS2104").googleId);
+                .withUserId(testData.getStudents().get("SHomeUiT.charlie.d@SHomeUiT.CS2104").googleId);
 
         StudentHomePage studentHomePage = loginAdminToPage(homePageUrl, StudentHomePage.class);
 
@@ -118,8 +118,8 @@ public class StudentHomePageUiTest extends BaseUiTestCase {
         studentHomePage.clickViewTeam();
 
         AppUrl detailsPageUrl = createUrl(Const.ActionURIs.STUDENT_COURSE_DETAILS_PAGE)
-                .withUserId(testData.students.get("SHomeUiT.charlie.d@SHomeUiT.CS1101").googleId)
-                .withCourseId(testData.students.get("SHomeUiT.charlie.d@SHomeUiT.CS1101").course);
+                .withUserId(testData.getStudents().get("SHomeUiT.charlie.d@SHomeUiT.CS1101").googleId)
+                .withCourseId(testData.getStudents().get("SHomeUiT.charlie.d@SHomeUiT.CS1101").course);
         assertEquals(detailsPageUrl.toAbsoluteString(), browser.driver.getCurrentUrl());
         studentHomePage.loadStudentHomeTab();
 
@@ -171,7 +171,7 @@ public class StudentHomePageUiTest extends BaseUiTestCase {
     private void testLinkAndContentAfterDelete() throws Exception {
 
         AppUrl detailsPageUrl = createUrl(Const.ActionURIs.STUDENT_HOME_PAGE)
-                             .withUserId(testData.students.get("SHomeUiT.charlie.d@SHomeUiT.CS2104").googleId);
+                             .withUserId(testData.getStudents().get("SHomeUiT.charlie.d@SHomeUiT.CS2104").googleId);
 
         StudentHomePage studentHomePage = loginAdminToPage(detailsPageUrl, StudentHomePage.class);
 

@@ -30,10 +30,10 @@ public class FeedbackResponseCommentsDbTest extends BaseComponentTestCase {
     private DataBundle dataBundle = getTypicalDataBundle();
 
     private FeedbackResponseCommentAttributes frcaData =
-            dataBundle.feedbackResponseComments.get("comment1FromT1C1ToR1Q1S1C1");
-    private String frId = dataBundle.feedbackResponseComments.get("comment1FromT1C1ToR1Q1S1C1").feedbackResponseId;
+            dataBundle.getFeedbackResponseComments().get("comment1FromT1C1ToR1Q1S1C1");
+    private String frId = dataBundle.getFeedbackResponseComments().get("comment1FromT1C1ToR1Q1S1C1").feedbackResponseId;
     private FeedbackResponseCommentAttributes anotherFrcaData =
-            dataBundle.feedbackResponseComments.get("comment1FromT1C1ToR1Q2S1C1");
+            dataBundle.getFeedbackResponseComments().get("comment1FromT1C1ToR1Q2S1C1");
     private ArrayList<FeedbackResponseCommentAttributes> frcasData = new ArrayList<>();
 
     @BeforeClass
@@ -77,7 +77,7 @@ public class FeedbackResponseCommentsDbTest extends BaseComponentTestCase {
 
     private void testEntityCreationAndDeletion() throws Exception {
         FeedbackResponseCommentAttributes frcaTemp =
-                dataBundle.feedbackResponseComments.get("comment1FromT1C1ToR1Q2S1C1");
+                dataBundle.getFeedbackResponseComments().get("comment1FromT1C1ToR1Q2S1C1");
         frcaTemp.createdAt = new Date();
         frcaTemp.commentText = new Text("test creation and deletion");
 
@@ -227,7 +227,7 @@ public class FeedbackResponseCommentsDbTest extends BaseComponentTestCase {
         ______TS("typical success case");
 
         FeedbackResponseCommentAttributes frcaTemp =
-                dataBundle.feedbackResponseComments.get("comment1FromT1C1ToR1Q2S1C1");
+                dataBundle.getFeedbackResponseComments().get("comment1FromT1C1ToR1Q2S1C1");
         frcaTemp.createdAt = new Date();
         frcaTemp.commentText = new Text("Update feedback response comment");
         frcDb.createEntity(frcaTemp);
@@ -309,7 +309,7 @@ public class FeedbackResponseCommentsDbTest extends BaseComponentTestCase {
     private void testUpdateFeedbackResponseCommentsGiverEmail()
             throws InvalidParametersException, EntityAlreadyExistsException {
         FeedbackResponseCommentAttributes frcaDataOfNewGiver =
-                dataBundle.feedbackResponseComments.get("comment1FromT1C1ToR1Q3S1C1");
+                dataBundle.getFeedbackResponseComments().get("comment1FromT1C1ToR1Q3S1C1");
         String giverEmail = "frcdb.newGiver@email.com";
         String courseId = "frcdb.giver.courseId";
         Date createdAt = new Date();
@@ -370,7 +370,7 @@ public class FeedbackResponseCommentsDbTest extends BaseComponentTestCase {
 
         // get another frc from data bundle and use it to create another feedback response
         FeedbackResponseCommentAttributes tempFrcaData =
-                dataBundle.feedbackResponseComments.get("comment1FromT1C1ToR1Q2S1C1");
+                dataBundle.getFeedbackResponseComments().get("comment1FromT1C1ToR1Q2S1C1");
         tempFrcaData.createdAt = new Date();
         tempFrcaData.commentText = new Text("another comment for this response");
         // for some reason, the id is 0 instead of null. so we explicitly set it to be null

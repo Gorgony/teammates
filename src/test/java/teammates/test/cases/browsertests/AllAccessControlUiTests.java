@@ -35,12 +35,12 @@ public class AllAccessControlUiTests extends BaseUiTestCase {
         testData = loadDataBundle("/AllAccessControlUiTest.json");
 
         // This test suite requires some real accounts; Here, we inject them to the test data.
-        testData.students.get("student1InCourse1.access").googleId = TestProperties.TEST_STUDENT1_ACCOUNT;
-        testData.instructors.get("instructor1OfCourse1").googleId = TestProperties.TEST_INSTRUCTOR_ACCOUNT;
+        testData.getStudents().get("student1InCourse1.access").googleId = TestProperties.TEST_STUDENT1_ACCOUNT;
+        testData.getInstructors().get("instructor1OfCourse1").googleId = TestProperties.TEST_INSTRUCTOR_ACCOUNT;
 
         removeAndRestoreDataBundle(testData);
 
-        otherInstructor = testData.instructors.get("instructor1OfCourse2");
+        otherInstructor = testData.getInstructors().get("instructor1OfCourse2");
     }
 
     @BeforeClass

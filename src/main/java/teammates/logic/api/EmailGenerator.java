@@ -268,7 +268,7 @@ public class EmailGenerator {
                 "${sessionInstructions}", session.getInstructionsString(),
                 Templates.EmailIdentifiers.SUBMIT_URL, submitUrl,
                 Templates.EmailIdentifiers.REPORT_URL, reportUrl,
-                Templates.EmailIdentifiers.CO_OWNERS_EMAILS,,, coOwnersLine,
+                Templates.EmailIdentifiers.CO_OWNERS_EMAILS, coOwnersLine,
                 Templates.EmailIdentifiers.SUPPORT_EMAIL, Config.SUPPORT_EMAIL,
                 "${additionalInstructions}", "",
                 "${feedbackAction}", FEEDBACK_ACTION_SUBMIT);
@@ -441,7 +441,7 @@ public class EmailGenerator {
                 "${sessionInstructions}", session.getInstructionsString(),
                 Templates.EmailIdentifiers.SUBMIT_URL, submitUrl,
                 Templates.EmailIdentifiers.REPORT_URL, reportUrl,
-                Templates.EmailIdentifiers.CO_OWNERS_EMAILS,,, coOwnersLine,
+                Templates.EmailIdentifiers.CO_OWNERS_EMAILS, coOwnersLine,
                 Templates.EmailIdentifiers.SUPPORT_EMAIL, Config.SUPPORT_EMAIL,
                 "${additionalInstructions}", additionalInstructions,
                 "${feedbackAction}", feedbackAction);
@@ -484,7 +484,7 @@ public class EmailGenerator {
                 "${sessionInstructions}", session.getInstructionsString(),
                 Templates.EmailIdentifiers.SUBMIT_URL, "{in the actual email sent to the students, this will be the unique link}",
                 Templates.EmailIdentifiers.REPORT_URL, "{in the actual email sent to the students, this will be the unique link}",
-                Templates.EmailIdentifiers.CO_OWNERS_EMAILS,,, coOwnersLine,
+                Templates.EmailIdentifiers.CO_OWNERS_EMAILS, coOwnersLine,
                 Templates.EmailIdentifiers.SUPPORT_EMAIL, Config.SUPPORT_EMAIL,
                 "${additionalInstructions}", additionalInstructions,
                 "${feedbackAction}", feedbackAction);
@@ -525,7 +525,7 @@ public class EmailGenerator {
                 fillUpStudentJoinFragment(student, EmailTemplates.USER_COURSE_JOIN),
                 Templates.EmailIdentifiers.USER_NAME, SanitizationHelper.sanitizeForHtml(student.name),
                 Templates.EmailIdentifiers.COURSE_NAME, SanitizationHelper.sanitizeForHtml(course.getName()),
-                Templates.EmailIdentifiers.CO_OWNERS_EMAILS,,, generateCoOwnersEmailsLine(course.getId()),
+                Templates.EmailIdentifiers.CO_OWNERS_EMAILS, generateCoOwnersEmailsLine(course.getId()),
                 Templates.EmailIdentifiers.SUPPORT_EMAIL, Config.SUPPORT_EMAIL);
 
         EmailWrapper email = getEmptyEmailAddressedToEmail(student.email);
@@ -545,7 +545,7 @@ public class EmailGenerator {
                 fillUpStudentRejoinAfterGoogleIdResetFragment(student, EmailTemplates.USER_COURSE_JOIN),
                 Templates.EmailIdentifiers.USER_NAME, SanitizationHelper.sanitizeForHtml(student.name),
                 Templates.EmailIdentifiers.COURSE_NAME, SanitizationHelper.sanitizeForHtml(course.getName()),
-                Templates.EmailIdentifiers.CO_OWNERS_EMAILS,,, generateCoOwnersEmailsLine(course.getId()),
+                Templates.EmailIdentifiers.CO_OWNERS_EMAILS, generateCoOwnersEmailsLine(course.getId()),
                 Templates.EmailIdentifiers.SUPPORT_EMAIL, Config.SUPPORT_EMAIL);
 
         EmailWrapper email = getEmptyEmailAddressedToEmail(student.email);

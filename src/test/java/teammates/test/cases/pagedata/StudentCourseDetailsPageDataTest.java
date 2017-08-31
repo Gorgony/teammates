@@ -26,24 +26,24 @@ public class StudentCourseDetailsPageDataTest extends BaseTestCase {
     public void test() {
         ______TS("typical success case");
 
-        AccountAttributes account = dataBundle.accounts.get("student1InCourse1");
+        AccountAttributes account = dataBundle.getAccounts().get("student1InCourse1");
         StudentCourseDetailsPageData pageData = new StudentCourseDetailsPageData(account, dummySessionToken);
 
-        StudentAttributes student = dataBundle.students.get("student1InCourse1");
-        CourseAttributes course = dataBundle.courses.get("typicalCourse1");
+        StudentAttributes student = dataBundle.getStudents().get("student1InCourse1");
+        CourseAttributes course = dataBundle.getCourses().get("typicalCourse1");
 
         CourseDetailsBundle courseDetails = new CourseDetailsBundle(course);
 
         List<InstructorAttributes> instructors = new ArrayList<>();
-        instructors.add(dataBundle.instructors.get("instructor1OfCourse1"));
-        instructors.add(dataBundle.instructors.get("instructor2OfCourse1"));
-        instructors.add(dataBundle.instructors.get("helperOfCourse1"));
+        instructors.add(dataBundle.getInstructors().get("instructor1OfCourse1"));
+        instructors.add(dataBundle.getInstructors().get("instructor2OfCourse1"));
+        instructors.add(dataBundle.getInstructors().get("helperOfCourse1"));
 
         TeamDetailsBundle team = new TeamDetailsBundle();
         team.name = student.team;
 
         // Get team members of student
-        for (Entry<String, StudentAttributes> entry : dataBundle.students.entrySet()) {
+        for (Entry<String, StudentAttributes> entry : dataBundle.getStudents().entrySet()) {
             StudentAttributes currStudent = entry.getValue();
             if (currStudent.team.equals(team.name)) {
                 team.students.add(currStudent);
@@ -77,19 +77,19 @@ public class StudentCourseDetailsPageDataTest extends BaseTestCase {
 
         ______TS("student in unregistered course");
 
-        student = dataBundle.students.get("student1InUnregisteredCourse");
-        course = dataBundle.courses.get("unregisteredCourse");
+        student = dataBundle.getStudents().get("student1InUnregisteredCourse");
+        course = dataBundle.getCourses().get("unregisteredCourse");
 
         courseDetails = new CourseDetailsBundle(course);
 
         instructors = new ArrayList<>();
-        instructors.add(dataBundle.instructors.get("instructor5"));
+        instructors.add(dataBundle.getInstructors().get("instructor5"));
 
         team = new TeamDetailsBundle();
         team.name = student.team;
 
         // Get team members of student
-        for (Entry<String, StudentAttributes> entry : dataBundle.students.entrySet()) {
+        for (Entry<String, StudentAttributes> entry : dataBundle.getStudents().entrySet()) {
             StudentAttributes currStudent = entry.getValue();
             if (currStudent.team.equals(team.name)) {
                 team.students.add(currStudent);
@@ -119,19 +119,19 @@ public class StudentCourseDetailsPageDataTest extends BaseTestCase {
 
         ______TS("student in archived course");
 
-        student = dataBundle.students.get("student1InArchivedCourse");
-        course = dataBundle.courses.get("archivedCourse");
+        student = dataBundle.getStudents().get("student1InArchivedCourse");
+        course = dataBundle.getCourses().get("archivedCourse");
 
         courseDetails = new CourseDetailsBundle(course);
 
         instructors = new ArrayList<>();
-        instructors.add(dataBundle.instructors.get("instructorOfArchivedCourse"));
+        instructors.add(dataBundle.getInstructors().get("instructorOfArchivedCourse"));
 
         team = new TeamDetailsBundle();
         team.name = student.team;
 
         // Get team members of student
-        for (Entry<String, StudentAttributes> entry : dataBundle.students.entrySet()) {
+        for (Entry<String, StudentAttributes> entry : dataBundle.getStudents().entrySet()) {
             StudentAttributes currStudent = entry.getValue();
             if (currStudent.team.equals(team.name)) {
                 team.students.add(currStudent);

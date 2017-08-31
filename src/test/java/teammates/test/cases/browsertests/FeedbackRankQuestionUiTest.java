@@ -29,9 +29,9 @@ public class FeedbackRankQuestionUiTest extends FeedbackQuestionUiTest {
         testData = loadDataBundle("/FeedbackRankQuestionUiTest.json");
         removeAndRestoreDataBundle(testData);
 
-        instructorId = testData.accounts.get("instructor1").googleId;
-        courseId = testData.courses.get("course").getId();
-        feedbackSessionName = testData.feedbackSessions.get("edit").getFeedbackSessionName();
+        instructorId = testData.getAccounts().get("instructor1").googleId;
+        courseId = testData.getCourses().get("course").getId();
+        feedbackSessionName = testData.getFeedbackSessions().get("edit").getFeedbackSessionName();
     }
 
     @Test
@@ -491,36 +491,36 @@ public class FeedbackRankQuestionUiTest extends FeedbackQuestionUiTest {
     private FeedbackSubmitPage loginToInstructorFeedbackSubmitPage(
             String instructorName, String fsName) {
         AppUrl submitPageUrl = createUrl(Const.ActionURIs.INSTRUCTOR_FEEDBACK_SUBMISSION_EDIT_PAGE)
-                        .withUserId(testData.instructors.get(instructorName).googleId)
-                        .withCourseId(testData.feedbackSessions.get(fsName).getCourseId())
-                        .withSessionName(testData.feedbackSessions.get(fsName).getFeedbackSessionName());
+                        .withUserId(testData.getInstructors().get(instructorName).googleId)
+                        .withCourseId(testData.getFeedbackSessions().get(fsName).getCourseId())
+                        .withSessionName(testData.getFeedbackSessions().get(fsName).getFeedbackSessionName());
         return loginAdminToPage(submitPageUrl, FeedbackSubmitPage.class);
     }
 
     private FeedbackSubmitPage loginToStudentFeedbackSubmitPage(
             String studentName, String fsName) {
         AppUrl submitPageUrl = createUrl(Const.ActionURIs.STUDENT_FEEDBACK_SUBMISSION_EDIT_PAGE)
-                        .withUserId(testData.students.get(studentName).googleId)
-                        .withCourseId(testData.feedbackSessions.get(fsName).getCourseId())
-                        .withSessionName(testData.feedbackSessions.get(fsName).getFeedbackSessionName());
+                        .withUserId(testData.getStudents().get(studentName).googleId)
+                        .withCourseId(testData.getFeedbackSessions().get(fsName).getCourseId())
+                        .withSessionName(testData.getFeedbackSessions().get(fsName).getFeedbackSessionName());
         return loginAdminToPage(submitPageUrl, FeedbackSubmitPage.class);
     }
 
     private StudentFeedbackResultsPage loginToStudentFeedbackResultsPage(
             String studentName, String fsName) {
         AppUrl resultsPageUrl = createUrl(Const.ActionURIs.STUDENT_FEEDBACK_RESULTS_PAGE)
-                        .withUserId(testData.students.get(studentName).googleId)
-                        .withCourseId(testData.feedbackSessions.get(fsName).getCourseId())
-                        .withSessionName(testData.feedbackSessions.get(fsName).getFeedbackSessionName());
+                        .withUserId(testData.getStudents().get(studentName).googleId)
+                        .withCourseId(testData.getFeedbackSessions().get(fsName).getCourseId())
+                        .withSessionName(testData.getFeedbackSessions().get(fsName).getFeedbackSessionName());
         return loginAdminToPage(resultsPageUrl, StudentFeedbackResultsPage.class);
     }
 
     private InstructorFeedbackResultsPage loginToInstructorFeedbackResultsPageWithViewType(
             String instructorName, String fsName, boolean needAjax, String viewType) {
         AppUrl resultsPageUrl = createUrl(Const.ActionURIs.INSTRUCTOR_FEEDBACK_RESULTS_PAGE)
-                    .withUserId(testData.instructors.get(instructorName).googleId)
-                    .withCourseId(testData.feedbackSessions.get(fsName).getCourseId())
-                    .withSessionName(testData.feedbackSessions.get(fsName).getFeedbackSessionName());
+                    .withUserId(testData.getInstructors().get(instructorName).googleId)
+                    .withCourseId(testData.getFeedbackSessions().get(fsName).getCourseId())
+                    .withSessionName(testData.getFeedbackSessions().get(fsName).getFeedbackSessionName());
 
         if (needAjax) {
             resultsPageUrl = resultsPageUrl.withParam(Const.ParamsNames.FEEDBACK_RESULTS_NEED_AJAX,

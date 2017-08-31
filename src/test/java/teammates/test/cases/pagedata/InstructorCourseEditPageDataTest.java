@@ -25,16 +25,16 @@ public class InstructorCourseEditPageDataTest extends BaseTestCase {
     public void testAll() {
         ______TS("test typical case");
 
-        AccountAttributes account = dataBundle.accounts.get("instructor1OfCourse1");
-        CourseAttributes course = dataBundle.courses.get("typicalCourse1");
+        AccountAttributes account = dataBundle.getAccounts().get("instructor1OfCourse1");
+        CourseAttributes course = dataBundle.getCourses().get("typicalCourse1");
 
         List<InstructorAttributes> instructorList = new ArrayList<>();
-        instructorList.add(dataBundle.instructors.get("instructor1OfCourse1"));
-        instructorList.add(dataBundle.instructors.get("instructor2OfCourse1"));
-        instructorList.add(dataBundle.instructors.get("helperOfCourse1"));
-        instructorList.add(dataBundle.instructors.get("instructorNotYetJoinCourse1"));
+        instructorList.add(dataBundle.getInstructors().get("instructor1OfCourse1"));
+        instructorList.add(dataBundle.getInstructors().get("instructor2OfCourse1"));
+        instructorList.add(dataBundle.getInstructors().get("helperOfCourse1"));
+        instructorList.add(dataBundle.getInstructors().get("instructorNotYetJoinCourse1"));
 
-        InstructorAttributes currentInstructor = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes currentInstructor = dataBundle.getInstructors().get("instructor1OfCourse1");
 
         int offset = -1;
 

@@ -35,7 +35,7 @@ public class InstructorFeedbackSessionsPageDataTest extends BaseTestCase {
     @Test
     public void testInitWithoutDefaultFormValues() {
 
-        AccountAttributes instructorAccount = dataBundle.accounts.get("instructor1OfCourse1");
+        AccountAttributes instructorAccount = dataBundle.getAccounts().get("instructor1OfCourse1");
 
         ______TS("typical success case");
 
@@ -121,7 +121,7 @@ public class InstructorFeedbackSessionsPageDataTest extends BaseTestCase {
         assertEquals(6, copyModalModel.getExistingFeedbackSessions().size());
 
         ______TS("case with instructor with only archived course");
-        AccountAttributes instructorOfArchivedCourseAccount = dataBundle.accounts.get("instructorOfArchivedCourse");
+        AccountAttributes instructorOfArchivedCourseAccount = dataBundle.getAccounts().get("instructorOfArchivedCourse");
         InstructorFeedbackSessionsPageData instructorArchivedCourseData =
                 new InstructorFeedbackSessionsPageData(instructorOfArchivedCourseAccount, dummySessionToken);
         Map<String, InstructorAttributes> archivedCourseInstructorMap = new HashMap<>();
@@ -150,7 +150,7 @@ public class InstructorFeedbackSessionsPageDataTest extends BaseTestCase {
         assertTrue(formModel.isSubmitButtonDisabled());
 
         ______TS("case with instructor with restricted permissions");
-        AccountAttributes helperAccount = dataBundle.accounts.get("helperOfCourse1");
+        AccountAttributes helperAccount = dataBundle.getAccounts().get("helperOfCourse1");
 
         InstructorFeedbackSessionsPageData helperData = new InstructorFeedbackSessionsPageData(helperAccount,
                                                                                                dummySessionToken);
@@ -194,7 +194,7 @@ public class InstructorFeedbackSessionsPageDataTest extends BaseTestCase {
 
         ______TS("case with highlighted session in session table");
 
-        instructorAccount = dataBundle.accounts.get("instructor1OfCourse1");
+        instructorAccount = dataBundle.getAccounts().get("instructor1OfCourse1");
 
         data = new InstructorFeedbackSessionsPageData(instructorAccount, dummySessionToken);
 
@@ -233,7 +233,7 @@ public class InstructorFeedbackSessionsPageDataTest extends BaseTestCase {
     @Test
     public void testInit() {
 
-        AccountAttributes instructorAccount = dataBundle.accounts.get("instructor1OfCourse1");
+        AccountAttributes instructorAccount = dataBundle.getAccounts().get("instructor1OfCourse1");
 
         ______TS("typical success case with existing fs passed in");
 
@@ -251,7 +251,7 @@ public class InstructorFeedbackSessionsPageDataTest extends BaseTestCase {
 
         List<FeedbackSessionAttributes> fsList = getFeedbackSessionsListForInstructor(instructorsForUser);
 
-        FeedbackSessionAttributes fsa = dataBundle.feedbackSessions.get("session1InCourse1");
+        FeedbackSessionAttributes fsa = dataBundle.getFeedbackSessions().get("session1InCourse1");
 
         data.init(courses, null, fsList, courseInstructorMap, fsa, null, null);
 
@@ -322,7 +322,7 @@ public class InstructorFeedbackSessionsPageDataTest extends BaseTestCase {
     @Test
     public void testInitWithoutHighlighting() {
 
-        AccountAttributes instructorAccount = dataBundle.accounts.get("instructor2OfCourse1");
+        AccountAttributes instructorAccount = dataBundle.getAccounts().get("instructor2OfCourse1");
 
         ______TS("typical success case with existing fs passed in");
 
@@ -340,7 +340,7 @@ public class InstructorFeedbackSessionsPageDataTest extends BaseTestCase {
 
         List<FeedbackSessionAttributes> fsList = getFeedbackSessionsListForInstructor(instructorsForUser);
 
-        FeedbackSessionAttributes fsa = dataBundle.feedbackSessions.get("session1InCourse1");
+        FeedbackSessionAttributes fsa = dataBundle.getFeedbackSessions().get("session1InCourse1");
 
         data.initWithoutHighlightedRow(courses, "idOfTypicalCourse1", fsList, courseInstructorMap, fsa, "STANDARD");
 
@@ -359,7 +359,7 @@ public class InstructorFeedbackSessionsPageDataTest extends BaseTestCase {
     }
 
     private List<InstructorAttributes> getInstructorsForGoogleId(String googleId, boolean isOmitArchived) {
-        List<InstructorAttributes> instructors = new ArrayList<>(dataBundle.instructors.values());
+        List<InstructorAttributes> instructors = new ArrayList<>(dataBundle.getInstructors().values());
 
         Iterator<InstructorAttributes> iter = instructors.iterator();
         while (iter.hasNext()) {
@@ -381,7 +381,7 @@ public class InstructorFeedbackSessionsPageDataTest extends BaseTestCase {
     private List<CourseAttributes> getCoursesForInstructor(List<InstructorAttributes> instructorsForUser) {
         Set<String> courseIdsOfUser = getSetOfCourseIdsFromInstructorAttributes(instructorsForUser);
 
-        List<CourseAttributes> courses = new ArrayList<>(dataBundle.courses.values());
+        List<CourseAttributes> courses = new ArrayList<>(dataBundle.getCourses().values());
 
         Iterator<CourseAttributes> iter = courses.iterator();
         while (iter.hasNext()) {
@@ -398,7 +398,7 @@ public class InstructorFeedbackSessionsPageDataTest extends BaseTestCase {
             getFeedbackSessionsListForInstructor(List<InstructorAttributes> instructorsForUser) {
         Set<String> courseIdsOfUser = getSetOfCourseIdsFromInstructorAttributes(instructorsForUser);
 
-        List<FeedbackSessionAttributes> feedbackSessions = new ArrayList<>(dataBundle.feedbackSessions.values());
+        List<FeedbackSessionAttributes> feedbackSessions = new ArrayList<>(dataBundle.getFeedbackSessions().values());
 
         Iterator<FeedbackSessionAttributes> iter = feedbackSessions.iterator();
         while (iter.hasNext()) {

@@ -19,9 +19,9 @@ public class InstructorFeedbackEditCopyUiTest extends BaseUiTestCase {
     protected void prepareTestData() {
         testData = loadDataBundle("/InstructorFeedbackEditCopyTest.json");
         removeAndRestoreDataBundle(testData);
-        instructorId = testData.accounts.get("instructorWithSessions").googleId;
-        courseId = testData.courses.get("course").getId();
-        feedbackSessionName = testData.feedbackSessions.get("openSession").getFeedbackSessionName();
+        instructorId = testData.getAccounts().get("instructorWithSessions").googleId;
+        courseId = testData.getCourses().get("course").getId();
+        feedbackSessionName = testData.getFeedbackSessions().get("openSession").getFeedbackSessionName();
     }
 
     @Test
@@ -55,7 +55,7 @@ public class InstructorFeedbackEditCopyUiTest extends BaseUiTestCase {
                         .verifyStatusMessage(
                                  String.format(Const.StatusMessages.FEEDBACK_SESSION_COPY_ALREADYEXISTS,
                                                feedbackSessionName,
-                                               testData.courses.get("course").getId()));
+                                               testData.getCourses().get("course").getId()));
 
         // Full HTML verification already done in InstructorFeedbackEditPageUiTest
         feedbackEditPage.verifyHtmlMainContent("/instructorFeedbackEditCopyFail.html");

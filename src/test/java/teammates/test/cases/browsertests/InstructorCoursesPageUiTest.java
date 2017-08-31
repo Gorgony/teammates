@@ -113,7 +113,7 @@ public class InstructorCoursesPageUiTest extends BaseUiTestCase {
 
         ______TS("no courses");
 
-        instructorId = testData.accounts.get("instructorWithoutCourses").googleId;
+        instructorId = testData.getAccounts().get("instructorWithoutCourses").googleId;
         coursesPage = getCoursesPage();
 
         // This is the full HTML verification for Instructor Courses Page, the rest can all be verifyMainHtml
@@ -121,7 +121,7 @@ public class InstructorCoursesPageUiTest extends BaseUiTestCase {
 
         ______TS("multiple course");
 
-        instructorId = testData.accounts.get("instructorWithCourses").googleId;
+        instructorId = testData.getAccounts().get("instructorWithCourses").googleId;
         coursesPage = getCoursesPage();
         // for course CS1101, current instructor cannot modify course or modify students
         coursesPage.verifyHtmlMainContent("/instructorCoursesMultipleCourses.html");
@@ -154,7 +154,7 @@ public class InstructorCoursesPageUiTest extends BaseUiTestCase {
          * 'Delete' is not a link, but an action.
          */
 
-        String courseId = testData.courses.get("CS2104").getId();
+        String courseId = testData.getCourses().get("CS2104").getId();
 
         ______TS("view link");
 
@@ -227,7 +227,7 @@ public class InstructorCoursesPageUiTest extends BaseUiTestCase {
          *
          */
 
-        instructorId = testData.accounts.get("instructorWithCourses").googleId;
+        instructorId = testData.getAccounts().get("instructorWithCourses").googleId;
         coursesPage = getCoursesPage();
 
         ______TS("add action success: add course with leading/trailing space in parameters");
@@ -290,7 +290,7 @@ public class InstructorCoursesPageUiTest extends BaseUiTestCase {
 
     private void testArchiveAction() throws Exception {
 
-        InstructorAttributes instructor1CS1101 = testData.instructors.get("instructor1CS1101");
+        InstructorAttributes instructor1CS1101 = testData.getInstructors().get("instructor1CS1101");
 
         ______TS("archive action success");
         String courseId = "CCAddUiTest.CS1101";
@@ -317,13 +317,13 @@ public class InstructorCoursesPageUiTest extends BaseUiTestCase {
 
         //this instructor already has his own non-null archive status
         //so other instructors' archiving actions will not affect his own status
-        instructorId = testData.accounts.get("OtherInstructorWithoutCourses").googleId;
+        instructorId = testData.getAccounts().get("OtherInstructorWithoutCourses").googleId;
         coursesPage = getCoursesPage();
         coursesPage.verifyHtmlMainContent("/instructorArchiveStatusNotAffected.html");
 
         ______TS("unarchive action success");
 
-        instructorId = testData.accounts.get("instructorWithCourses").googleId;
+        instructorId = testData.getAccounts().get("instructorWithCourses").googleId;
         coursesPage = getCoursesPage();
 
         coursesPage.unarchiveCourse(courseId);

@@ -29,7 +29,7 @@ public class MashupPageUiTest extends BaseUiTestCase {
     }
 
     private void uploadNewPhotoForStudent() throws Exception {
-        String googleId = testData.accounts.get("benny.c.tmms").googleId;
+        String googleId = testData.getAccounts().get("benny.c.tmms").googleId;
         File picture = new File("src/test/resources/images/profile_pic_updated.png");
         String pictureData = JsonUtils.toJson(FileHelper.readFileAsBytes(picture.getAbsolutePath()));
 

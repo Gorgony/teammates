@@ -45,23 +45,23 @@ public final class ImportData {
         String status = "";
         do {
             long start = System.currentTimeMillis();
-            boolean hasAccounts = !data.accounts.isEmpty();
-            boolean hasInstructors = !data.instructors.isEmpty();
-            boolean hasCourses = !data.courses.isEmpty();
-            boolean hasStudents = !data.students.isEmpty();
+            boolean hasAccounts = !data.getAccounts().isEmpty();
+            boolean hasInstructors = !data.getInstructors().isEmpty();
+            boolean hasCourses = !data.getCourses().isEmpty();
+            boolean hasStudents = !data.getStudents().isEmpty();
 
             if (hasAccounts) {
                 // Accounts
-                status = persist(data.accounts);
+                status = persist(data.getAccounts());
             } else if (hasInstructors) {
                 // Instructors
-                status = persist(data.instructors);
+                status = persist(data.getInstructors());
             } else if (hasCourses) {
                 // Courses
-                status = persist(data.courses);
+                status = persist(data.getCourses());
             } else if (hasStudents) {
                 // Students
-                status = persist(data.students);
+                status = persist(data.getStudents());
             } else {
                 // No more data, break the loop
                 System.out.print("\n Finish!");
@@ -95,19 +95,19 @@ public final class ImportData {
             if (obj instanceof AccountAttributes) {
                 type = "AccountData";
                 AccountAttributes accountData = (AccountAttributes) obj;
-                bundle.accounts.put(key, accountData);
+                bundle.getAccounts().put(key, accountData);
             } else if (obj instanceof InstructorAttributes) {
                 type = "InstructorData";
                 InstructorAttributes instructorData = (InstructorAttributes) obj;
-                bundle.instructors.put(key, instructorData);
+                bundle.getInstructors().put(key, instructorData);
             } else if (obj instanceof CourseAttributes) {
                 type = "CourseData";
                 CourseAttributes courseData = (CourseAttributes) obj;
-                bundle.courses.put(key, courseData);
+                bundle.getCourses().put(key, courseData);
             } else if (obj instanceof StudentAttributes) {
                 type = "StudentData";
                 StudentAttributes studentData = (StudentAttributes) obj;
-                bundle.students.put(key, studentData);
+                bundle.getStudents().put(key, studentData);
             }
             count++;
             System.out.print(key + "\n");

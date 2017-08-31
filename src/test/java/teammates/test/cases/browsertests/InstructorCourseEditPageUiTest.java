@@ -30,8 +30,8 @@ public class InstructorCourseEditPageUiTest extends BaseUiTestCase {
     protected void prepareTestData() {
         testData = loadDataBundle("/InstructorCourseEditPageUiTest.json");
         removeAndRestoreDataBundle(testData);
-        instructorId = testData.instructors.get("InsCrsEdit.test").googleId;
-        courseId = testData.courses.get("InsCrsEdit.CS2104").getId();
+        instructorId = testData.getInstructors().get("InsCrsEdit.test").googleId;
+        courseId = testData.getCourses().get("InsCrsEdit.CS2104").getId();
     }
 
     @Test
@@ -61,7 +61,7 @@ public class InstructorCourseEditPageUiTest extends BaseUiTestCase {
 
         ______TS("page load: Helper privileges (custom)");
 
-        instructorId = testData.instructors.get("InsCrsEdit.Helper").googleId;
+        instructorId = testData.getInstructors().get("InsCrsEdit.Helper").googleId;
         courseEditPage = getCourseEditPage();
 
         // This is the full HTML verification for Instructor Course Edit Page, the rest can all be verifyMainHtml
@@ -69,31 +69,31 @@ public class InstructorCourseEditPageUiTest extends BaseUiTestCase {
 
         ______TS("page load: Co-owner privileges");
 
-        instructorId = testData.instructors.get("InsCrsEdit.test").googleId;
+        instructorId = testData.getInstructors().get("InsCrsEdit.test").googleId;
         courseEditPage = getCourseEditPage();
         courseEditPage.verifyHtmlMainContent("/instructorCourseEditCoowner.html");
 
         ______TS("page load: Manager privileges");
 
-        instructorId = testData.instructors.get("InsCrsEdit.manager").googleId;
+        instructorId = testData.getInstructors().get("InsCrsEdit.manager").googleId;
         courseEditPage = getCourseEditPage();
         courseEditPage.verifyHtmlMainContent("/instructorCourseEditManager.html");
 
         ______TS("page load: Observer privileges");
 
-        instructorId = testData.instructors.get("InsCrsEdit.observer").googleId;
+        instructorId = testData.getInstructors().get("InsCrsEdit.observer").googleId;
         courseEditPage = getCourseEditPage();
         courseEditPage.verifyHtmlMainContent("/instructorCourseEditObserver.html");
 
         ______TS("page load: Tutor privileges");
 
-        instructorId = testData.instructors.get("InsCrsEdit.tutor").googleId;
+        instructorId = testData.getInstructors().get("InsCrsEdit.tutor").googleId;
         courseEditPage = getCourseEditPage();
         courseEditPage.verifyHtmlMainContent("/instructorCourseEditTutor.html");
 
         ______TS("go back to co-owner privileges");
 
-        instructorId = testData.instructors.get("InsCrsEdit.test").googleId;
+        instructorId = testData.getInstructors().get("InsCrsEdit.test").googleId;
         courseEditPage = getCourseEditPage();
     }
 
@@ -189,7 +189,7 @@ public class InstructorCourseEditPageUiTest extends BaseUiTestCase {
 
         AppUrl courseDetailsLink = createUrl(Const.ActionURIs.INSTRUCTOR_COURSE_DETAILS_PAGE)
                                     .withCourseId(courseId)
-                                    .withUserId(testData.instructors.get("InsCrsEdit.test").googleId);
+                                    .withUserId(testData.getInstructors().get("InsCrsEdit.test").googleId);
 
         InstructorCourseDetailsPage courseDetailsPage = AppPage.getNewPageInstance(browser,
                                                                 courseDetailsLink, InstructorCourseDetailsPage.class);
@@ -703,7 +703,7 @@ public class InstructorCourseEditPageUiTest extends BaseUiTestCase {
         ______TS("delete own instructor role and redirect to courses page");
 
         // Create another registered instructor with co-owner privilege
-        BackDoor.createInstructor(testData.instructors.get("InsCrsEdit.coord"));
+        BackDoor.createInstructor(testData.getInstructors().get("InsCrsEdit.coord"));
         courseEditPage = getCourseEditPage();
 
         // Delete own instructor role
@@ -715,7 +715,7 @@ public class InstructorCourseEditPageUiTest extends BaseUiTestCase {
                                  + Const.StatusMessages.COURSE_EMPTY);
 
         // Restore own instructor role to ensure remaining test cases work properly
-        BackDoor.createInstructor(testData.instructors.get("InsCrsEdit.test"));
+        BackDoor.createInstructor(testData.getInstructors().get("InsCrsEdit.test"));
     }
 
     /**
@@ -781,8 +781,8 @@ public class InstructorCourseEditPageUiTest extends BaseUiTestCase {
     private void testSanitization() throws IOException {
         ______TS("page load: data requires sanitization");
 
-        instructorId = testData.instructors.get("InsCrsEdit.instructor1OfTestingSanitizationCourse").googleId;
-        courseId = testData.courses.get("InsCrsEdit.testingSanitizationCourse").getId();
+        instructorId = testData.getInstructors().get("InsCrsEdit.instructor1OfTestingSanitizationCourse").googleId;
+        courseId = testData.getCourses().get("InsCrsEdit.testingSanitizationCourse").getId();
         courseEditPage = getCourseEditPage();
         courseEditPage.verifyHtmlMainContent("/instructorCourseEditTestingSanitization.html");
     }

@@ -745,7 +745,7 @@ public class InstructorsLogicTest extends BaseLogicTest {
 
         // Generate ArrayList<String> of emails of all coOwners in course from data bundle
         List<String> coOwnersEmailsFromDataBundle = new ArrayList<>();
-        for (InstructorAttributes instructor : new ArrayList<>(dataBundle.instructors.values())) {
+        for (InstructorAttributes instructor : new ArrayList<>(dataBundle.getInstructors().values())) {
             if (!(instructor.getCourseId().equals(courseId) && instructor.hasCoownerPrivileges())) {
                 continue;
             }

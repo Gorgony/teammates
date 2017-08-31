@@ -23,20 +23,20 @@ public class InstructorCourseDetailsPageDataTest extends BaseTestCase {
     @Test
     public void testAll() {
         ______TS("test typical case");
-        AccountAttributes instructorAccount = dataBundle.accounts.get("instructor1OfCourse1");
+        AccountAttributes instructorAccount = dataBundle.getAccounts().get("instructor1OfCourse1");
         InstructorCourseDetailsPageData pageData =
                 new InstructorCourseDetailsPageData(instructorAccount, dummySessionToken);
 
-        InstructorAttributes curInstructor = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes curInstructor = dataBundle.getInstructors().get("instructor1OfCourse1");
 
         List<InstructorAttributes> instructors = new ArrayList<>();
-        for (InstructorAttributes instructor : dataBundle.instructors.values()) {
+        for (InstructorAttributes instructor : dataBundle.getInstructors().values()) {
             if ("idOfTypicalCourse1".equals(instructor.courseId)) {
                 instructors.add(instructor);
             }
         }
 
-        CourseDetailsBundle courseDetails = new CourseDetailsBundle(dataBundle.courses.get("typicalCourse1"));
+        CourseDetailsBundle courseDetails = new CourseDetailsBundle(dataBundle.getCourses().get("typicalCourse1"));
         courseDetails.sections = new ArrayList<>();
         SectionDetailsBundle sampleSection = new SectionDetailsBundle();
         sampleSection.name = "Sample section name";

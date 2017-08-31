@@ -36,11 +36,11 @@ public class InstructorStudentListPageUiTest extends BaseUiTestCase {
         removeAndRestoreDataBundle(testData);
 
         DataBundle studentsOnly = new DataBundle();
-        studentsOnly.students = testData.students;
+        studentsOnly.setStudents(testData.getStudents());
         putDocuments(studentsOnly); // put the search document for students only
 
         // upload a profile picture for one of the students
-        StudentAttributes student = testData.students.get("Student3Course3");
+        StudentAttributes student = testData.getStudents().get("Student3Course3");
         File picture = new File("src/test/resources/images/profile_pic_updated.png");
         String pictureData = JsonUtils.toJson(FileHelper.readFileAsBytes(picture.getAbsolutePath()));
         assertEquals("Unable to upload profile picture", "[BACKDOOR_STATUS_SUCCESS]",
@@ -60,7 +60,7 @@ public class InstructorStudentListPageUiTest extends BaseUiTestCase {
 
     private void testSearch() throws Exception {
 
-        InstructorAttributes instructorWith2Courses = testData.instructors.get("instructorOfCourse2");
+        InstructorAttributes instructorWith2Courses = testData.getInstructors().get("instructorOfCourse2");
         String instructorId = instructorWith2Courses.googleId;
 
         AppUrl viewPageUrl = createUrl(Const.ActionURIs.INSTRUCTOR_STUDENT_LIST_PAGE).withUserId(instructorId);
@@ -90,7 +90,7 @@ public class InstructorStudentListPageUiTest extends BaseUiTestCase {
 
         ______TS("content: 2 course with students");
 
-        InstructorAttributes instructorWith2Courses = testData.instructors.get("instructorOfCourse2");
+        InstructorAttributes instructorWith2Courses = testData.getInstructors().get("instructorOfCourse2");
         instructorId = instructorWith2Courses.googleId;
 
         AppUrl viewPageUrl = createUrl(Const.ActionURIs.INSTRUCTOR_STUDENT_LIST_PAGE).withUserId(instructorId);
@@ -121,7 +121,7 @@ public class InstructorStudentListPageUiTest extends BaseUiTestCase {
 
         ______TS("content: 1 course with no students");
 
-        instructorId = testData.instructors.get("instructorOfCourse1").googleId;
+        instructorId = testData.getInstructors().get("instructorOfCourse1").googleId;
 
         viewPageUrl = createUrl(Const.ActionURIs.INSTRUCTOR_STUDENT_LIST_PAGE).withUserId(instructorId);
 
@@ -131,7 +131,7 @@ public class InstructorStudentListPageUiTest extends BaseUiTestCase {
 
         ______TS("content: no course");
 
-        instructorId = testData.accounts.get("instructorWithoutCourses").googleId;
+        instructorId = testData.getAccounts().get("instructorWithoutCourses").googleId;
 
         viewPageUrl = createUrl(Const.ActionURIs.INSTRUCTOR_STUDENT_LIST_PAGE).withUserId(instructorId);
 
@@ -140,7 +140,7 @@ public class InstructorStudentListPageUiTest extends BaseUiTestCase {
 
         ______TS("content: data required sanitization");
 
-        instructorId = testData.accounts.get("instructor1OfTestingSanitizationCourse").googleId;
+        instructorId = testData.getAccounts().get("instructor1OfTestingSanitizationCourse").googleId;
 
         viewPageUrl = createUrl(Const.ActionURIs.INSTRUCTOR_STUDENT_LIST_PAGE).withUserId(instructorId);
 
@@ -162,14 +162,14 @@ public class InstructorStudentListPageUiTest extends BaseUiTestCase {
             return;
         }
 
-        String instructorId = testData.instructors.get("instructorOfCourse2").googleId;
+        String instructorId = testData.getInstructors().get("instructorOfCourse2").googleId;
         AppUrl viewPageUrl = createUrl(Const.ActionURIs.INSTRUCTOR_STUDENT_LIST_PAGE).withUserId(instructorId);
 
         viewPage = loginAdminToPage(viewPageUrl, InstructorStudentListPage.class);
 
         ______TS("default image");
 
-        StudentAttributes student = testData.students.get("Student1Course2");
+        StudentAttributes student = testData.getStudents().get("Student1Course2");
         viewPage.checkCourse(0);
         viewPage.checkCourse(1);
 
@@ -178,7 +178,7 @@ public class InstructorStudentListPageUiTest extends BaseUiTestCase {
 
         ______TS("student has uploaded an image");
 
-        StudentAttributes student2 = testData.students.get("Student3Course3");
+        StudentAttributes student2 = testData.getStudents().get("Student3Course3");
         viewPage.clickShowPhoto(student2.course, student2.name);
         String photoUrl = createUrl(Const.ActionURIs.STUDENT_PROFILE_PICTURE)
                                         .withStudentEmail(StringHelper.encrypt(student2.email))
@@ -191,20 +191,20 @@ public class InstructorStudentListPageUiTest extends BaseUiTestCase {
 
     private void testLinks() {
 
-        String instructorId = testData.instructors.get("instructorOfCourse2").googleId;
+        String instructorId = testData.getInstructors().get("instructorOfCourse2").googleId;
         AppUrl viewPageUrl = createUrl(Const.ActionURIs.INSTRUCTOR_STUDENT_LIST_PAGE).withUserId(instructorId);
 
         viewPage = loginAdminToPage(viewPageUrl, InstructorStudentListPage.class);
 
         ______TS("link: enroll");
-        String courseId = testData.courses.get("course2").getId();
+        String courseId = testData.getCourses().get("course2").getId();
         InstructorCourseEnrollPage enrollPage = viewPage.clickEnrollStudents(courseId);
         enrollPage.verifyIsCorrectPage(courseId);
         viewPage = enrollPage.goToPreviousPage(InstructorStudentListPage.class);
 
         ______TS("link: view");
 
-        StudentAttributes student1 = testData.students.get("Student2Course2");
+        StudentAttributes student1 = testData.getStudents().get("Student2Course2");
         viewPage.checkCourse(0);
         viewPage.checkCourse(1);
         ThreadHelper.waitFor(500);
@@ -216,7 +216,7 @@ public class InstructorStudentListPageUiTest extends BaseUiTestCase {
 
         ______TS("link: edit");
 
-        StudentAttributes student2 = testData.students.get("Student3Course3");
+        StudentAttributes student2 = testData.getStudents().get("Student3Course3");
         viewPage.checkCourse(0);
         viewPage.checkCourse(1);
         ThreadHelper.waitFor(500);
@@ -240,7 +240,7 @@ public class InstructorStudentListPageUiTest extends BaseUiTestCase {
     }
 
     private void testDeleteAction() {
-        InstructorAttributes instructorWith2Courses = testData.instructors.get("instructorOfCourse2");
+        InstructorAttributes instructorWith2Courses = testData.getInstructors().get("instructorOfCourse2");
         String instructorId = instructorWith2Courses.googleId;
 
         AppUrl viewPageUrl = createUrl(Const.ActionURIs.INSTRUCTOR_STUDENT_LIST_PAGE).withUserId(instructorId);
@@ -251,9 +251,9 @@ public class InstructorStudentListPageUiTest extends BaseUiTestCase {
         viewPage.checkCourse(0);
         viewPage.checkCourse(1);
         ThreadHelper.waitFor(500);
-        String studentName = testData.students.get("Student2Course2").name;
-        String studentEmail = testData.students.get("Student2Course2").email;
-        String courseId = testData.courses.get("course2").getId();
+        String studentName = testData.getStudents().get("Student2Course2").name;
+        String studentEmail = testData.getStudents().get("Student2Course2").email;
+        String courseId = testData.getCourses().get("course2").getId();
 
         viewPage.clickDeleteAndCancel(courseId, studentName);
         assertNotNull(BackDoor.getStudent(courseId, studentEmail));
@@ -270,7 +270,7 @@ public class InstructorStudentListPageUiTest extends BaseUiTestCase {
     }
 
     private void testDisplayArchive() throws Exception {
-        String instructorId = testData.instructors.get("instructorOfCourse4").googleId;
+        String instructorId = testData.getInstructors().get("instructorOfCourse4").googleId;
         AppUrl viewPageUrl = createUrl(Const.ActionURIs.INSTRUCTOR_STUDENT_LIST_PAGE).withUserId(instructorId);
         viewPage = loginAdminToPage(viewPageUrl, InstructorStudentListPage.class);
 

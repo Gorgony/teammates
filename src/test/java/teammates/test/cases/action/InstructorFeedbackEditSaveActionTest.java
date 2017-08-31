@@ -24,8 +24,8 @@ public class InstructorFeedbackEditSaveActionTest extends BaseActionTest {
     @Override
     @Test
     public void testExecuteAndPostProcess() {
-        InstructorAttributes instructor1ofCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
-        FeedbackSessionAttributes session = dataBundle.feedbackSessions.get("session1InCourse1");
+        InstructorAttributes instructor1ofCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
+        FeedbackSessionAttributes session = dataBundle.getFeedbackSessions().get("session1InCourse1");
 
         String expectedString = "";
 
@@ -182,7 +182,7 @@ public class InstructorFeedbackEditSaveActionTest extends BaseActionTest {
     @Override
     @Test
     protected void testAccessControl() throws Exception {
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("session1InCourse1");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("session1InCourse1");
         String[] submissionParams =
                 createParamsForTypicalFeedbackSession(fs.getCourseId(), fs.getFeedbackSessionName());
 

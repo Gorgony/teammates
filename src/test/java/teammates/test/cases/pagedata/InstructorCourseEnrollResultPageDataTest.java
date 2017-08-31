@@ -21,7 +21,7 @@ public class InstructorCourseEnrollResultPageDataTest extends BaseTestCase {
     @Test
     public void testAll() {
         ______TS("test typical case");
-        AccountAttributes account = dataBundle.accounts.get("instructor1OfCourse1");
+        AccountAttributes account = dataBundle.getAccounts().get("instructor1OfCourse1");
         String courseId = "idOfTypicalCourse1";
 
         @SuppressWarnings("unchecked")
@@ -29,11 +29,11 @@ public class InstructorCourseEnrollResultPageDataTest extends BaseTestCase {
         for (int i = 0; i < StudentUpdateStatus.STATUS_COUNT; i++) {
             students[i] = new ArrayList<>();
         }
-        students[StudentUpdateStatus.NEW.numericRepresentation].add(dataBundle.students.get("student1InCourse1"));
-        students[StudentUpdateStatus.NEW.numericRepresentation].add(dataBundle.students.get("student2InCourse1"));
-        students[StudentUpdateStatus.MODIFIED.numericRepresentation].add(dataBundle.students.get("student3InCourse1"));
-        students[StudentUpdateStatus.UNMODIFIED.numericRepresentation].add(dataBundle.students.get("student4InCourse1"));
-        students[StudentUpdateStatus.ERROR.numericRepresentation].add(dataBundle.students.get("student5InCourse1"));
+        students[StudentUpdateStatus.NEW.numericRepresentation].add(dataBundle.getStudents().get("student1InCourse1"));
+        students[StudentUpdateStatus.NEW.numericRepresentation].add(dataBundle.getStudents().get("student2InCourse1"));
+        students[StudentUpdateStatus.MODIFIED.numericRepresentation].add(dataBundle.getStudents().get("student3InCourse1"));
+        students[StudentUpdateStatus.UNMODIFIED.numericRepresentation].add(dataBundle.getStudents().get("student4InCourse1"));
+        students[StudentUpdateStatus.ERROR.numericRepresentation].add(dataBundle.getStudents().get("student5InCourse1"));
 
         boolean hasSection = true;
         String enrollStudents = "enrollString";

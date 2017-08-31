@@ -47,16 +47,16 @@ public class InstructorFeedbackEditPageUiTest extends BaseUiTestCase {
         testData = loadDataBundle("/InstructorFeedbackEditPageUiTest.json");
         removeAndRestoreDataBundle(testData);
 
-        editedSession = testData.feedbackSessions.get("openSession");
+        editedSession = testData.getFeedbackSessions().get("openSession");
         editedSession.setGracePeriod(30);
         editedSession.setSessionVisibleFromTime(Const.TIME_REPRESENTS_FOLLOW_OPENING);
         editedSession.setResultsVisibleFromTime(Const.TIME_REPRESENTS_LATER);
         editedSession.setInstructions(new Text("Please fill in the edited feedback session."));
         editedSession.setEndTime(TimeHelper.convertToDate("2026-05-01 10:00 PM UTC"));
 
-        instructorId = testData.accounts.get("instructorWithSessions").googleId;
-        courseId = testData.courses.get("course").getId();
-        feedbackSessionName = testData.feedbackSessions.get("openSession").getFeedbackSessionName();
+        instructorId = testData.getAccounts().get("instructorWithSessions").googleId;
+        courseId = testData.getCourses().get("course").getId();
+        feedbackSessionName = testData.getFeedbackSessions().get("openSession").getFeedbackSessionName();
     }
 
     @BeforeClass
@@ -769,8 +769,8 @@ public class InstructorFeedbackEditPageUiTest extends BaseUiTestCase {
     private void testSanitization() throws IOException {
         ______TS("Test sanitization for edit page");
 
-        instructorId = testData.accounts.get("instructor1OfTestingSanitizationCourse").googleId;
-        FeedbackSessionAttributes session = testData.feedbackSessions.get("session1InTestingSanitizationCourse");
+        instructorId = testData.getAccounts().get("instructor1OfTestingSanitizationCourse").googleId;
+        FeedbackSessionAttributes session = testData.getFeedbackSessions().get("session1InTestingSanitizationCourse");
         courseId = session.getCourseId();
         feedbackSessionName = session.getFeedbackSessionName();
 
@@ -1086,9 +1086,9 @@ public class InstructorFeedbackEditPageUiTest extends BaseUiTestCase {
     }
 
     private InstructorFeedbackEditPage getFeedbackEditPageOfCourseWithoutQuestions() {
-        String instructor = testData.instructors.get("teammates.test.instructor3").googleId;
-        String courseWithoutQuestion = testData.courses.get("course2").getId();
-        String sessionWithoutQuestions = testData.feedbackSessions.get("openSession3")
+        String instructor = testData.getInstructors().get("teammates.test.instructor3").googleId;
+        String courseWithoutQuestion = testData.getCourses().get("course2").getId();
+        String sessionWithoutQuestions = testData.getFeedbackSessions().get("openSession3")
                                                                   .getFeedbackSessionName();
         AppUrl feedbackPageLink = createUrl(Const.ActionURIs.INSTRUCTOR_FEEDBACK_EDIT_PAGE)
                                     .withUserId(instructor)

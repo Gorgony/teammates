@@ -44,7 +44,7 @@ public class FeedbackSessionClosedRemindersActionTest extends BaseAutomatedActio
 
         // Session is closed recently
 
-        FeedbackSessionAttributes session1 = dataBundle.feedbackSessions.get("session1InCourse1");
+        FeedbackSessionAttributes session1 = dataBundle.getFeedbackSessions().get("session1InCourse1");
         session1.setTimeZone(0);
         session1.setStartTime(TimeHelper.getDateOffsetToCurrentTime(-2));
         session1.setEndTime(TimeHelperExtension.getHoursOffsetToCurrentTime(-1));
@@ -53,7 +53,7 @@ public class FeedbackSessionClosedRemindersActionTest extends BaseAutomatedActio
 
         // Ditto, but with disabled closed reminder
 
-        FeedbackSessionAttributes session2 = dataBundle.feedbackSessions.get("session2InCourse1");
+        FeedbackSessionAttributes session2 = dataBundle.getFeedbackSessions().get("session2InCourse1");
         session2.setTimeZone(0);
         session2.setStartTime(TimeHelper.getDateOffsetToCurrentTime(-2));
         session2.setEndTime(TimeHelperExtension.getHoursOffsetToCurrentTime(-1));
@@ -63,7 +63,7 @@ public class FeedbackSessionClosedRemindersActionTest extends BaseAutomatedActio
 
         // Still in grace period; closed reminder should not be sent
 
-        FeedbackSessionAttributes session3 = dataBundle.feedbackSessions.get("gracePeriodSession");
+        FeedbackSessionAttributes session3 = dataBundle.getFeedbackSessions().get("gracePeriodSession");
         session3.setTimeZone(0);
         session3.setStartTime(TimeHelper.getDateOffsetToCurrentTime(-2));
         session3.setEndTime(TimeHelper.getDateOffsetToCurrentTime(0));

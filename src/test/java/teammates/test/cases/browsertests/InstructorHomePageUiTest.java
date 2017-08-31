@@ -37,10 +37,10 @@ public class InstructorHomePageUiTest extends BaseUiTestCase {
         testData = loadDataBundle("/InstructorHomePageUiTest2.json");
         removeAndRestoreDataBundle(testData);
 
-        feedbackSessionAwaiting = testData.feedbackSessions.get("Second Feedback Session");
-        feedbackSessionOpen = testData.feedbackSessions.get("First Feedback Session");
-        feedbackSessionClosed = testData.feedbackSessions.get("Third Feedback Session");
-        feedbackSessionPublished = testData.feedbackSessions.get("Fourth Feedback Session");
+        feedbackSessionAwaiting = testData.getFeedbackSessions().get("Second Feedback Session");
+        feedbackSessionOpen = testData.getFeedbackSessions().get("First Feedback Session");
+        feedbackSessionClosed = testData.getFeedbackSessions().get("Third Feedback Session");
+        feedbackSessionPublished = testData.getFeedbackSessions().get("Fourth Feedback Session");
 
         // Remove entities created during test
         BackDoor.deleteCourse("newIns.wit-demo");
@@ -157,7 +157,7 @@ public class InstructorHomePageUiTest extends BaseUiTestCase {
 
     private void updateInstructorToCoownerPrivileges() {
         // update current instructor for CS1101 to have Co-owner privileges
-        InstructorAttributes instructor = testData.instructors.get("CHomeUiT.instr.CS1101");
+        InstructorAttributes instructor = testData.getInstructors().get("CHomeUiT.instr.CS1101");
         BackDoor.deleteInstructor(instructor.courseId, instructor.email);
         instructor.privileges.setDefaultPrivilegesForCoowner();
         BackDoor.createInstructor(instructor);
@@ -173,8 +173,8 @@ public class InstructorHomePageUiTest extends BaseUiTestCase {
     }
 
     private void testCourseLinks() {
-        String courseId = testData.courses.get("CHomeUiT.CS1101").getId();
-        String instructorId = testData.accounts.get("account").googleId;
+        String courseId = testData.getCourses().get("CHomeUiT.CS1101").getId();
+        String instructorId = testData.getAccounts().get("account").googleId;
 
         ______TS("link: course enroll");
         InstructorCourseEnrollPage enrollPage = homePage.clickCourseEnrollLink(courseId);
@@ -358,7 +358,7 @@ public class InstructorHomePageUiTest extends BaseUiTestCase {
     }
 
     private void testArchiveCourseAction() throws Exception {
-        String courseIdForCS1101 = testData.courses.get("CHomeUiT.CS1101").getId();
+        String courseIdForCS1101 = testData.getCourses().get("CHomeUiT.CS1101").getId();
 
         ______TS("archive course action: click and cancel");
 
@@ -384,7 +384,7 @@ public class InstructorHomePageUiTest extends BaseUiTestCase {
 
         ______TS("archive action failed");
 
-        String courseIdForCS2104 = testData.courses.get("CHomeUiT.CS2104").getId();
+        String courseIdForCS2104 = testData.getCourses().get("CHomeUiT.CS2104").getId();
 
         //delete the course, then submit archive request to it
         BackDoor.deleteCourse(courseIdForCS2104);
@@ -401,7 +401,7 @@ public class InstructorHomePageUiTest extends BaseUiTestCase {
 
     private void testCopyToFsAction() throws Exception {
         String feedbackSessionName = "First Feedback Session";
-        String courseId = testData.courses.get("CHomeUiT.CS2104").getId();
+        String courseId = testData.getCourses().get("CHomeUiT.CS2104").getId();
 
         ______TS("Submit empty course list: Home Page");
 
@@ -477,7 +477,7 @@ public class InstructorHomePageUiTest extends BaseUiTestCase {
 
         ______TS("delete course action");
 
-        String courseId = testData.courses.get("CHomeUiT.CS2104").getId();
+        String courseId = testData.getCourses().get("CHomeUiT.CS2104").getId();
         homePage.clickAndCancel(homePage.getDeleteCourseLink(courseId));
         assertNotNull(BackDoor.getCourse(courseId));
 
@@ -486,7 +486,7 @@ public class InstructorHomePageUiTest extends BaseUiTestCase {
         homePage.verifyHtmlMainContent("/instructorHomeCourseDeleteSuccessful.html");
 
         //delete the other course as well
-        courseId = testData.courses.get("CHomeUiT.CS1101").getId();
+        courseId = testData.getCourses().get("CHomeUiT.CS1101").getId();
         BackDoor.deleteCourse(courseId);
 
         homePage.loadInstructorHomeTab();

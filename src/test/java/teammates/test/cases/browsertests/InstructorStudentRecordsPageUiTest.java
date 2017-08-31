@@ -41,8 +41,8 @@ public class InstructorStudentRecordsPageUiTest extends BaseUiTestCase {
 
         ______TS("content: typical case, normal student records with comments");
 
-        instructor = testData.instructors.get("teammates.test.CS2104");
-        student = testData.students.get("benny.c.tmms@ISR.CS2104");
+        instructor = testData.getInstructors().get("teammates.test.CS2104");
+        student = testData.getStudents().get("benny.c.tmms@ISR.CS2104");
 
         instructorId = instructor.googleId;
         courseId = instructor.courseId;
@@ -54,7 +54,7 @@ public class InstructorStudentRecordsPageUiTest extends BaseUiTestCase {
 
         ______TS("content: typical case, normal student records with comments, helper view");
 
-        instructor = testData.instructors.get("teammates.test.CS2104.Helper");
+        instructor = testData.getInstructors().get("teammates.test.CS2104.Helper");
 
         instructorId = instructor.googleId;
         courseId = instructor.courseId;
@@ -65,8 +65,8 @@ public class InstructorStudentRecordsPageUiTest extends BaseUiTestCase {
 
         ______TS("content: normal student records with other instructor's comments, private feedback session");
 
-        instructor = testData.instructors.get("teammates.test.CS1101");
-        student = testData.students.get("teammates.test@ISR.CS1101");
+        instructor = testData.getInstructors().get("teammates.test.CS1101");
+        student = testData.getStudents().get("teammates.test@ISR.CS1101");
 
         instructorId = instructor.googleId;
         courseId = instructor.courseId;
@@ -77,8 +77,8 @@ public class InstructorStudentRecordsPageUiTest extends BaseUiTestCase {
 
         ______TS("content: no student records, no profiles");
 
-        instructor = testData.instructors.get("teammates.noeval");
-        student = testData.students.get("alice.b.tmms@ISR.NoEval");
+        instructor = testData.getInstructors().get("teammates.noeval");
+        student = testData.getStudents().get("alice.b.tmms@ISR.NoEval");
 
         instructorId = instructor.googleId;
         courseId = instructor.courseId;
@@ -92,8 +92,8 @@ public class InstructorStudentRecordsPageUiTest extends BaseUiTestCase {
         DataBundle testDataQuestionType = loadDataBundle("/FeedbackSessionQuestionTypeTest.json");
         removeAndRestoreDataBundle(testDataQuestionType);
 
-        instructor = testDataQuestionType.instructors.get("instructor1OfCourse1");
-        student = testDataQuestionType.students.get("student1InCourse1");
+        instructor = testDataQuestionType.getInstructors().get("instructor1OfCourse1");
+        student = testDataQuestionType.getStudents().get("student1InCourse1");
 
         instructorId = instructor.googleId;
         courseId = instructor.courseId;
@@ -104,8 +104,8 @@ public class InstructorStudentRecordsPageUiTest extends BaseUiTestCase {
 
         ______TS("content: profile with attemoted script and html injection with comment");
 
-        instructor = testData.instructors.get("instructor1OfTestingSanitizationCourse");
-        student = testData.students.get("student1InTestingSanitizationCourse");
+        instructor = testData.getInstructors().get("instructor1OfTestingSanitizationCourse");
+        student = testData.getStudents().get("student1InTestingSanitizationCourse");
 
         instructorId = instructor.googleId;
         courseId = instructor.courseId;
@@ -124,8 +124,8 @@ public class InstructorStudentRecordsPageUiTest extends BaseUiTestCase {
         InstructorAttributes instructor;
         StudentAttributes student;
 
-        instructor = testData.instructors.get("teammates.test.CS2104");
-        student = testData.students.get("benny.c.tmms@ISR.CS2104");
+        instructor = testData.getInstructors().get("teammates.test.CS2104");
+        student = testData.getStudents().get("benny.c.tmms@ISR.CS2104");
 
         instructorId = instructor.googleId;
         courseId = instructor.courseId;
@@ -173,8 +173,8 @@ public class InstructorStudentRecordsPageUiTest extends BaseUiTestCase {
     private void testPanelsCollapseExpand() {
 
         DataBundle testDataQuestionType = loadDataBundle("/FeedbackSessionQuestionTypeTest.json");
-        InstructorAttributes instructor = testDataQuestionType.instructors.get("instructor1OfCourse1");
-        StudentAttributes student = testDataQuestionType.students.get("student1InCourse1");
+        InstructorAttributes instructor = testDataQuestionType.getInstructors().get("instructor1OfCourse1");
+        StudentAttributes student = testDataQuestionType.getStudents().get("student1InCourse1");
 
         instructorId = instructor.googleId;
         courseId = instructor.courseId;

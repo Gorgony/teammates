@@ -23,8 +23,8 @@ public class StudentCourseJoinEmailWorkerActionTest extends BaseAutomatedActionT
     @Test
     public void allTests() {
 
-        CourseAttributes course1 = dataBundle.courses.get("typicalCourse1");
-        StudentAttributes stu1InCourse1 = dataBundle.students.get("student1InCourse1");
+        CourseAttributes course1 = dataBundle.getCourses().get("typicalCourse1");
+        StudentAttributes stu1InCourse1 = dataBundle.getStudents().get("student1InCourse1");
 
         ______TS("typical case: new student joining");
 

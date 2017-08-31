@@ -41,7 +41,7 @@ public class BackDoorTest extends BaseTestCaseWithBackDoorApiAccess {
     public void testDeletion() {
 
         // ----------deleting Instructor entities-------------------------
-        InstructorAttributes instructor1OfCourse1 = dataBundle.instructors.get("instructor2OfCourse2");
+        InstructorAttributes instructor1OfCourse1 = dataBundle.getInstructors().get("instructor2OfCourse2");
         verifyPresentInDatastore(instructor1OfCourse1);
         String status = BackDoor.deleteInstructor(instructor1OfCourse1.courseId, instructor1OfCourse1.email);
         assertEquals(Const.StatusCodes.BACKDOOR_STATUS_SUCCESS, status);
@@ -52,8 +52,8 @@ public class BackDoorTest extends BaseTestCaseWithBackDoorApiAccess {
         assertEquals(Const.StatusCodes.BACKDOOR_STATUS_SUCCESS, status);
 
         // ----------deleting Feedback Response entities-------------------------
-        FeedbackQuestionAttributes fq = dataBundle.feedbackQuestions.get("qn2InSession1InCourse1");
-        FeedbackResponseAttributes fr = dataBundle.feedbackResponses.get("response1ForQ2S1C1");
+        FeedbackQuestionAttributes fq = dataBundle.getFeedbackQuestions().get("qn2InSession1InCourse1");
+        FeedbackResponseAttributes fr = dataBundle.getFeedbackResponses().get("response1ForQ2S1C1");
         fq = BackDoor.getFeedbackQuestion(fq.courseId, fq.feedbackSessionName, fq.questionNumber);
         fr = BackDoor.getFeedbackResponse(fq.getId(), fr.giver, fr.recipient);
 
@@ -63,7 +63,7 @@ public class BackDoorTest extends BaseTestCaseWithBackDoorApiAccess {
         verifyAbsentInDatastore(fr);
 
         // ----------deleting Feedback Question entities-------------------------
-        fq = dataBundle.feedbackQuestions.get("qn5InSession1InCourse1");
+        fq = dataBundle.getFeedbackQuestions().get("qn5InSession1InCourse1");
         verifyPresentInDatastore(fq);
         status = BackDoor.deleteFeedbackQuestion(fq.getId());
         assertEquals(Const.StatusCodes.BACKDOOR_STATUS_SUCCESS, status);
@@ -71,31 +71,31 @@ public class BackDoorTest extends BaseTestCaseWithBackDoorApiAccess {
 
         // ----------deleting Course entities-------------------------
         // #COURSE 2
-        CourseAttributes course2 = dataBundle.courses.get("typicalCourse2");
+        CourseAttributes course2 = dataBundle.getCourses().get("typicalCourse2");
         verifyPresentInDatastore(course2);
         status = BackDoor.deleteCourse(course2.getId());
         assertEquals(Const.StatusCodes.BACKDOOR_STATUS_SUCCESS, status);
         verifyAbsentInDatastore(course2);
 
         // check if related student entities are also deleted
-        StudentAttributes student2InCourse2 = dataBundle.students
+        StudentAttributes student2InCourse2 = dataBundle.getStudents()
                 .get("student2InCourse2");
         verifyAbsentInDatastore(student2InCourse2);
 
         // #COURSE 1
-        CourseAttributes course1 = dataBundle.courses.get("typicalCourse1");
+        CourseAttributes course1 = dataBundle.getCourses().get("typicalCourse1");
         verifyPresentInDatastore(course1);
         status = BackDoor.deleteCourse(course1.getId());
         assertEquals(Const.StatusCodes.BACKDOOR_STATUS_SUCCESS, status);
         verifyAbsentInDatastore(course1);
 
         // check if related student entities are also deleted
-        StudentAttributes student1InCourse1 = dataBundle.students
+        StudentAttributes student1InCourse1 = dataBundle.getStudents()
                 .get("student1InCourse1");
         verifyAbsentInDatastore(student1InCourse1);
 
         // #COURSE NO EVALS
-        CourseAttributes courseNoEvals = dataBundle.courses.get("courseNoEvals");
+        CourseAttributes courseNoEvals = dataBundle.getCourses().get("courseNoEvals");
         verifyPresentInDatastore(courseNoEvals);
         status = BackDoor.deleteCourse(courseNoEvals.getId());
         assertEquals(Const.StatusCodes.BACKDOOR_STATUS_SUCCESS, status);
@@ -108,7 +108,7 @@ public class BackDoorTest extends BaseTestCaseWithBackDoorApiAccess {
 
     @Test
     public void testCreateAccount() {
-        AccountAttributes newAccount = dataBundle.accounts.get("instructor1OfCourse1");
+        AccountAttributes newAccount = dataBundle.getAccounts().get("instructor1OfCourse1");
 
         // Make sure not already inside
         BackDoor.deleteAccount(newAccount.googleId);
@@ -233,7 +233,7 @@ public class BackDoorTest extends BaseTestCaseWithBackDoorApiAccess {
     public void testEditStudent() {
 
         // check for successful edit
-        StudentAttributes student = dataBundle.students.get("student4InCourse1");
+        StudentAttributes student = dataBundle.getStudents().get("student4InCourse1");
         // try to create the entity in case it does not exist
         BackDoor.createStudent(student);
         verifyPresentInDatastore(student);
@@ -264,8 +264,8 @@ public class BackDoorTest extends BaseTestCaseWithBackDoorApiAccess {
     public void testCreateFeedbackResponse() {
 
         FeedbackResponseAttributes fr = new FeedbackResponseAttributes();
-        FeedbackQuestionAttributes fq = dataBundle.feedbackQuestions.get("qn1InSession1InCourse1");
-        StudentAttributes student = dataBundle.students.get("student3InCourse1");
+        FeedbackQuestionAttributes fq = dataBundle.getFeedbackQuestions().get("qn1InSession1InCourse1");
+        StudentAttributes student = dataBundle.getStudents().get("student3InCourse1");
 
         fq = BackDoor.getFeedbackQuestion(fq.courseId, fq.feedbackSessionName, fq.questionNumber);
 

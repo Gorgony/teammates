@@ -34,11 +34,11 @@ public class StudentProfilePageUiTest extends BaseUiTestCase {
 
         String student2GoogleId = TestProperties.TEST_STUDENT2_ACCOUNT;
         String student2Email = student2GoogleId + "@gmail.com";
-        testData.accounts.get("studentWithExistingProfile").googleId = student2GoogleId;
-        testData.accounts.get("studentWithExistingProfile").email = student2Email;
-        testData.accounts.get("studentWithExistingProfile").studentProfile.googleId = student2GoogleId;
-        testData.students.get("studentWithExistingProfile").googleId = student2GoogleId;
-        testData.students.get("studentWithExistingProfile").email = student2Email;
+        testData.getAccounts().get("studentWithExistingProfile").googleId = student2GoogleId;
+        testData.getAccounts().get("studentWithExistingProfile").email = student2Email;
+        testData.getAccounts().get("studentWithExistingProfile").studentProfile.googleId = student2GoogleId;
+        testData.getStudents().get("studentWithExistingProfile").googleId = student2GoogleId;
+        testData.getStudents().get("studentWithExistingProfile").email = student2Email;
 
         removeAndRestoreDataBundle(testData);
     }
@@ -74,7 +74,7 @@ public class StudentProfilePageUiTest extends BaseUiTestCase {
 
     private void testNavLinkToPage() {
         AppUrl profileUrl = createUrl(Const.ActionURIs.STUDENT_HOME_PAGE)
-                                   .withUserId(testData.accounts.get("studentWithEmptyProfile").googleId);
+                                   .withUserId(testData.getAccounts().get("studentWithEmptyProfile").googleId);
         StudentHomePage shp = loginAdminToPage(profileUrl, StudentHomePage.class);
         profilePage = shp.loadProfileTab();
     }
@@ -117,7 +117,7 @@ public class StudentProfilePageUiTest extends BaseUiTestCase {
     private void testActions() {
         // assumes it is run after NavLinks Test
         // (ie already logged in as studentWithExistingProfile
-        String studentGoogleId = testData.accounts.get("studentWithExistingProfile").googleId;
+        String studentGoogleId = testData.getAccounts().get("studentWithExistingProfile").googleId;
 
         ______TS("Typical case: no picture");
 
@@ -245,10 +245,10 @@ public class StudentProfilePageUiTest extends BaseUiTestCase {
         String studentId = "studentWithExistingProfile";
         String instructorId = "SHomeUiT.instr";
         String helperId = "SHomeUiT.helper";
-        String studentGoogleId = testData.accounts.get("studentWithExistingProfile").googleId;
+        String studentGoogleId = testData.getAccounts().get("studentWithExistingProfile").googleId;
         String currentPictureKey = BackDoor.getStudentProfile(studentGoogleId).pictureKey;
-        String email = testData.students.get("studentWithExistingProfile").email;
-        String courseId = testData.students.get("studentWithExistingProfile").course;
+        String email = testData.getStudents().get("studentWithExistingProfile").email;
+        String courseId = testData.getStudents().get("studentWithExistingProfile").course;
 
         email = StringHelper.encrypt(email);
         courseId = StringHelper.encrypt(courseId);
@@ -284,7 +284,7 @@ public class StudentProfilePageUiTest extends BaseUiTestCase {
     private <T extends AppPage> T getProfilePicturePage(String instructorId, String email, String courseId,
                                                         Class<T> typeOfPage) {
         AppUrl profileUrl = createUrl(Const.ActionURIs.STUDENT_PROFILE_PICTURE)
-                                   .withUserId(testData.accounts.get(instructorId).googleId)
+                                   .withUserId(testData.getAccounts().get(instructorId).googleId)
                                    .withParam(Const.ParamsNames.STUDENT_EMAIL, email)
                                    .withParam(Const.ParamsNames.COURSE_ID, courseId);
         return loginAdminToPage(profileUrl, typeOfPage);
@@ -292,7 +292,7 @@ public class StudentProfilePageUiTest extends BaseUiTestCase {
 
     private <T extends AppPage> T getProfilePicturePage(String studentId, String pictureKey, Class<T> typeOfPage) {
         AppUrl profileUrl = createUrl(Const.ActionURIs.STUDENT_PROFILE_PICTURE)
-                                   .withUserId(testData.accounts.get(studentId).googleId)
+                                   .withUserId(testData.getAccounts().get(studentId).googleId)
                                    .withParam(Const.ParamsNames.BLOB_KEY, pictureKey);
         return loginAdminToPage(profileUrl, typeOfPage);
     }
@@ -303,7 +303,7 @@ public class StudentProfilePageUiTest extends BaseUiTestCase {
 
     private StudentProfilePage getProfilePageForStudent(String studentId) {
         AppUrl profileUrl = createUrl(Const.ActionURIs.STUDENT_PROFILE_PAGE)
-                                   .withUserId(testData.accounts.get(studentId).googleId);
+                                   .withUserId(testData.getAccounts().get(studentId).googleId);
         return loginAdminToPage(profileUrl, StudentProfilePage.class);
     }
 

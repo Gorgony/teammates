@@ -36,14 +36,14 @@ public class InstructorCourseDetailsPageUiTest extends BaseUiTestCase {
         String student1Email = student1GoogleId + "@gmail.com";
         String student2GoogleId = TestProperties.TEST_STUDENT2_ACCOUNT;
         String student2Email = student2GoogleId + "@gmail.com";
-        testData.accounts.get("Alice").googleId = student1GoogleId;
-        testData.accounts.get("Charlie").googleId = student2GoogleId;
-        testData.students.get("CCDetailsUiT.alice.tmms@CCDetailsUiT.CS2104").googleId = student1GoogleId;
-        testData.students.get("CCDetailsUiT.alice.tmms@CCDetailsUiT.CS2104").email = student1Email;
-        testData.students.get("charlie.tmms@CCDetailsUiT.CS2104").email = student2Email;
-        testData.students.get("CCDetailsUiT.alice.tmms@CCDetailsUiT.CS2103").googleId = student1GoogleId;
-        testData.students.get("CCDetailsUiT.alice.tmms@CCDetailsUiT.CS2103").email = student1Email;
-        testData.students.get("charlie.tmms@CCDetailsUiT.CS2103").email = student2Email;
+        testData.getAccounts().get("Alice").googleId = student1GoogleId;
+        testData.getAccounts().get("Charlie").googleId = student2GoogleId;
+        testData.getStudents().get("CCDetailsUiT.alice.tmms@CCDetailsUiT.CS2104").googleId = student1GoogleId;
+        testData.getStudents().get("CCDetailsUiT.alice.tmms@CCDetailsUiT.CS2104").email = student1Email;
+        testData.getStudents().get("charlie.tmms@CCDetailsUiT.CS2104").email = student2Email;
+        testData.getStudents().get("CCDetailsUiT.alice.tmms@CCDetailsUiT.CS2103").googleId = student1GoogleId;
+        testData.getStudents().get("CCDetailsUiT.alice.tmms@CCDetailsUiT.CS2103").email = student1Email;
+        testData.getStudents().get("charlie.tmms@CCDetailsUiT.CS2103").email = student2Email;
 
         removeAndRestoreDataBundle(testData);
     }
@@ -64,8 +64,8 @@ public class InstructorCourseDetailsPageUiTest extends BaseUiTestCase {
 
         ______TS("content: no students");
 
-        instructorId = testData.instructors.get("CCDetailsUiT.instrForEmptyCourse").googleId;
-        courseId = testData.courses.get("CCDetailsUiT.CourseWithoutStudents").getId();
+        instructorId = testData.getInstructors().get("CCDetailsUiT.instrForEmptyCourse").googleId;
+        courseId = testData.getCourses().get("CCDetailsUiT.CourseWithoutStudents").getId();
         detailsPage = getCourseDetailsPage();
         detailsPage.verifyIsCorrectPage(courseId);
 
@@ -74,23 +74,23 @@ public class InstructorCourseDetailsPageUiTest extends BaseUiTestCase {
 
         ______TS("content: multiple students with sections");
 
-        instructorId = testData.instructors.get("CCDetailsUiT.instr2").googleId;
-        courseId = testData.courses.get("CCDetailsUiT.CS2103").getId();
+        instructorId = testData.getInstructors().get("CCDetailsUiT.instr2").googleId;
+        courseId = testData.getCourses().get("CCDetailsUiT.CS2103").getId();
 
         detailsPage = getCourseDetailsPage();
         detailsPage.verifyHtmlMainContent("/instructorCourseDetailsWithSections.html");
 
         ______TS("content: multiple students with sections with helper view");
 
-        instructorId = testData.instructors.get("CCDetailsUiT.instr2Helper").googleId;
+        instructorId = testData.getInstructors().get("CCDetailsUiT.instr2Helper").googleId;
 
         detailsPage = getCourseDetailsPage();
         detailsPage.verifyHtmlMainContent("/instructorCourseDetailsWithSectionsWithHelperView.html");
 
         ______TS("content: multiple students without sections");
 
-        instructorId = testData.instructors.get("CCDetailsUiT.instr").googleId;
-        courseId = testData.courses.get("CCDetailsUiT.CS2104").getId();
+        instructorId = testData.getInstructors().get("CCDetailsUiT.instr").googleId;
+        courseId = testData.getCourses().get("CCDetailsUiT.CS2104").getId();
 
         detailsPage = getCourseDetailsPage();
         detailsPage.verifyHtmlMainContent("/instructorCourseDetailsWithoutSections.html");
@@ -123,8 +123,8 @@ public class InstructorCourseDetailsPageUiTest extends BaseUiTestCase {
     }
 
     private void testLinks() {
-        StudentAttributes student1 = testData.students.get("CCDetailsUiT.alice.tmms@CCDetailsUiT.CS2104");
-        StudentAttributes student2 = testData.students.get("charlie.tmms@CCDetailsUiT.CS2104");
+        StudentAttributes student1 = testData.getStudents().get("CCDetailsUiT.alice.tmms@CCDetailsUiT.CS2104");
+        StudentAttributes student2 = testData.getStudents().get("charlie.tmms@CCDetailsUiT.CS2104");
 
         ______TS("link: view");
 
@@ -158,10 +158,10 @@ public class InstructorCourseDetailsPageUiTest extends BaseUiTestCase {
     }
 
     private void testRemindAction() throws Exception {
-        String courseId = testData.courses.get("CCDetailsUiT.CS2104").getId();
-        String courseName = testData.courses.get("CCDetailsUiT.CS2104").getName();
-        StudentAttributes student1 = testData.students.get("CCDetailsUiT.alice.tmms@CCDetailsUiT.CS2104");
-        StudentAttributes student2 = testData.students.get("charlie.tmms@CCDetailsUiT.CS2104");
+        String courseId = testData.getCourses().get("CCDetailsUiT.CS2104").getId();
+        String courseName = testData.getCourses().get("CCDetailsUiT.CS2104").getName();
+        StudentAttributes student1 = testData.getStudents().get("CCDetailsUiT.alice.tmms@CCDetailsUiT.CS2104");
+        StudentAttributes student2 = testData.getStudents().get("charlie.tmms@CCDetailsUiT.CS2104");
 
         // student2 is yet to register, student1 is already registered
         boolean isEmailEnabled = !TestProperties.isDevServer();
@@ -220,9 +220,9 @@ public class InstructorCourseDetailsPageUiTest extends BaseUiTestCase {
     }
 
     private void testDeleteAction() throws Exception {
-        String courseId = testData.courses.get("CCDetailsUiT.CS2104").getId();
-        StudentAttributes benny = testData.students.get("benny.tmms@CCDetailsUiT.CS2104");
-        StudentAttributes danny = testData.students.get("danny.tmms@CCDetailsUiT.CS2104");
+        String courseId = testData.getCourses().get("CCDetailsUiT.CS2104").getId();
+        StudentAttributes benny = testData.getStudents().get("benny.tmms@CCDetailsUiT.CS2104");
+        StudentAttributes danny = testData.getStudents().get("danny.tmms@CCDetailsUiT.CS2104");
 
         ______TS("action: delete");
 
@@ -238,8 +238,8 @@ public class InstructorCourseDetailsPageUiTest extends BaseUiTestCase {
     }
 
     private void testSanitization() throws IOException {
-        instructorId = testData.instructors.get("CCDetailsUiT.instructor1OfTSCourse").googleId;
-        courseId = testData.courses.get("CCDetailsUiT.TSCourse").getId();
+        instructorId = testData.getInstructors().get("CCDetailsUiT.instructor1OfTSCourse").googleId;
+        courseId = testData.getCourses().get("CCDetailsUiT.TSCourse").getId();
 
         detailsPage = getCourseDetailsPage();
         detailsPage.verifyHtmlMainContent("/instructorCourseDetailsTestingSanitization.html");

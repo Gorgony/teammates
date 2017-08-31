@@ -22,11 +22,11 @@ public class InstructorCourseJoinConfirmationPageUiTest extends BaseUiTestCase {
 
         // use the instructor account injected for this test
 
-        testData.instructors.get("ICJConfirmationUiT.instr.CS2104").googleId =
+        testData.getInstructors().get("ICJConfirmationUiT.instr.CS2104").googleId =
                                         TestProperties.TEST_INSTRUCTOR_ACCOUNT;
-        testData.instructors.get("ICJConfirmationUiT.instr.CS2104").email =
+        testData.getInstructors().get("ICJConfirmationUiT.instr.CS2104").email =
                                         TestProperties.TEST_INSTRUCTOR_ACCOUNT + "@gmail.com";
-        testData.instructors.get("ICJConfirmationUiT.instr.CS1101").email =
+        testData.getInstructors().get("ICJConfirmationUiT.instr.CS1101").email =
                                         TestProperties.TEST_INSTRUCTOR_ACCOUNT + "@gmail.com";
 
         removeAndRestoreDataBundle(testData);
@@ -83,8 +83,8 @@ public class InstructorCourseJoinConfirmationPageUiTest extends BaseUiTestCase {
 
         ______TS("Click join link then confirm: success: valid key");
 
-        String courseId = testData.courses.get("ICJConfirmationUiT.CS1101").getId();
-        String instructorEmail = testData.instructors.get("ICJConfirmationUiT.instr.CS1101").email;
+        String courseId = testData.getCourses().get("ICJConfirmationUiT.CS1101").getId();
+        String instructorEmail = testData.getInstructors().get("ICJConfirmationUiT.instr.CS1101").email;
 
         String regkey = BackDoor.getEncryptedKeyForInstructor(courseId, instructorEmail);
         joinLink = createUrl(Const.ActionURIs.INSTRUCTOR_COURSE_JOIN)

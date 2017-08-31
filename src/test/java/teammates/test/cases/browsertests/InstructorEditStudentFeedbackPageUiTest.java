@@ -123,9 +123,9 @@ public class InstructorEditStudentFeedbackPageUiTest extends BaseUiTestCase {
     private InstructorEditStudentFeedbackPage loginToInstructorEditStudentFeedbackPage(
             String instructorName, String moderatedStudentEmail, String fsName) {
         AppUrl editUrl = createUrl(Const.ActionURIs.INSTRUCTOR_EDIT_STUDENT_FEEDBACK_PAGE)
-                .withUserId(testData.instructors.get(instructorName).googleId)
-                .withCourseId(testData.feedbackSessions.get(fsName).getCourseId())
-                .withSessionName(testData.feedbackSessions.get(fsName).getFeedbackSessionName())
+                .withUserId(testData.getInstructors().get(instructorName).googleId)
+                .withCourseId(testData.getFeedbackSessions().get(fsName).getCourseId())
+                .withSessionName(testData.getFeedbackSessions().get(fsName).getFeedbackSessionName())
                 .withParam(Const.ParamsNames.FEEDBACK_SESSION_MODERATED_PERSON, moderatedStudentEmail);
 
         return loginAdminToPage(editUrl, InstructorEditStudentFeedbackPage.class);

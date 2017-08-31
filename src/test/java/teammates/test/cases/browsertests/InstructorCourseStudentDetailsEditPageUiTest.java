@@ -33,15 +33,15 @@ public class InstructorCourseStudentDetailsEditPageUiTest extends BaseUiTestCase
 
     private void testContent() throws Exception {
 
-        String instructorId = testData.instructors.get("CCSDEditUiT.instr").googleId;
-        String courseId = testData.courses.get("CCSDEditUiT.CS2104").getId();
+        String instructorId = testData.getInstructors().get("CCSDEditUiT.instr").googleId;
+        String courseId = testData.getCourses().get("CCSDEditUiT.CS2104").getId();
 
         ______TS("content: unregistered student");
 
         AppUrl editPageUrl = createUrl(Const.ActionURIs.INSTRUCTOR_COURSE_STUDENT_DETAILS_EDIT)
                                         .withUserId(instructorId)
                                         .withCourseId(courseId)
-                                        .withStudentEmail(testData.students.get("unregisteredStudent").email);
+                                        .withStudentEmail(testData.getStudents().get("unregisteredStudent").email);
 
         editPage = loginAdminToPage(editPageUrl, InstructorCourseStudentDetailsEditPage.class);
         editPage.verifyHtmlMainContent("/instructorCourseStudentEditUnregisteredPage.html");
@@ -51,7 +51,7 @@ public class InstructorCourseStudentDetailsEditPageUiTest extends BaseUiTestCase
         editPageUrl = createUrl(Const.ActionURIs.INSTRUCTOR_COURSE_STUDENT_DETAILS_EDIT)
             .withUserId(instructorId)
             .withCourseId(courseId)
-            .withStudentEmail(testData.students.get("registeredStudent").email);
+            .withStudentEmail(testData.getStudents().get("registeredStudent").email);
 
         editPage = loginAdminToPage(editPageUrl, InstructorCourseStudentDetailsEditPage.class);
 
@@ -103,7 +103,7 @@ public class InstructorCourseStudentDetailsEditPageUiTest extends BaseUiTestCase
 
         ______TS("Error case, invalid email parameter (email already taken by others)");
 
-        StudentAttributes anotherStudent = testData.students.get("unregisteredStudent");
+        StudentAttributes anotherStudent = testData.getStudents().get("unregisteredStudent");
 
         editPage = editPage.submitUnsuccessfully("New name2", "New team2", anotherStudent.email, "New comments2");
         editPage.verifyStatus(String.format(Const.StatusMessages.STUDENT_EMAIL_TAKEN_MESSAGE, anotherStudent.name,
@@ -111,11 +111,11 @@ public class InstructorCourseStudentDetailsEditPageUiTest extends BaseUiTestCase
         editPage.verifyIsCorrectPage("CCSDEditUiT.jose.tmms@gmail.tmt");
 
         // Verify data
-        StudentAttributes student = BackDoor.getStudent(testData.courses.get("CCSDEditUiT.CS2104").getId(),
+        StudentAttributes student = BackDoor.getStudent(testData.getCourses().get("CCSDEditUiT.CS2104").getId(),
                                                                              "CCSDEditUiT.jose.tmms@gmail.tmt");
         assertEquals("José Gómez</option></td></div>'\"", student.name);
         assertEquals("Team 1</td></div>'\"", student.team);
-        assertEquals(testData.students.get("registeredStudent").googleId, student.googleId);
+        assertEquals(testData.getStudents().get("registeredStudent").googleId, student.googleId);
         assertEquals("CCSDEditUiT.jose.tmms@gmail.tmt", student.email);
         assertEquals("This student's name is José Gómez</option></td></div>'\"", student.comments);
 
@@ -124,10 +124,10 @@ public class InstructorCourseStudentDetailsEditPageUiTest extends BaseUiTestCase
         InstructorCourseDetailsPage detailsPage =
                 editPage.submitSuccessfully("New name", "New team", "newemail@gmail.tmt", "New comments");
         detailsPage.verifyStatus(Const.StatusMessages.STUDENT_EDITED);
-        detailsPage.verifyIsCorrectPage(testData.courses.get("CCSDEditUiT.CS2104").getId());
+        detailsPage.verifyIsCorrectPage(testData.getCourses().get("CCSDEditUiT.CS2104").getId());
 
         // Verify data
-        student = BackDoor.getStudent(testData.courses.get("CCSDEditUiT.CS2104").getId(),
+        student = BackDoor.getStudent(testData.getCourses().get("CCSDEditUiT.CS2104").getId(),
                                       "newemail@gmail.tmt");
         assertEquals("New name", student.name);
         assertEquals("New team", student.team);
@@ -136,8 +136,8 @@ public class InstructorCourseStudentDetailsEditPageUiTest extends BaseUiTestCase
         assertTrue(student.googleId.isEmpty()); // Due to Google ID reset
 
         // Verify adding the original student again does not overwrite the edited entity
-        BackDoor.createStudent(testData.students.get("registeredStudent"));
-        student = BackDoor.getStudent(testData.courses.get("CCSDEditUiT.CS2104").getId(),
+        BackDoor.createStudent(testData.getStudents().get("registeredStudent"));
+        student = BackDoor.getStudent(testData.getCourses().get("CCSDEditUiT.CS2104").getId(),
                                       "newemail@gmail.tmt");
         assertNotNull(student);
     }

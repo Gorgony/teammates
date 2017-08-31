@@ -35,13 +35,13 @@ public class FeedbackResponsesDbTest extends BaseComponentTestCase {
     @BeforeClass
     public void classSetup() throws Exception {
         addResponsesToDb();
-        fras = dataBundle.feedbackResponses;
+        fras = dataBundle.getFeedbackResponses();
     }
 
     private void addResponsesToDb() throws Exception {
-        Set<String> keys = dataBundle.feedbackResponses.keySet();
+        Set<String> keys = dataBundle.getFeedbackResponses().keySet();
         for (String i : keys) {
-            frDb.createEntity(dataBundle.feedbackResponses.get(i));
+            frDb.createEntity(dataBundle.getFeedbackResponses().get(i));
         }
     }
 
@@ -853,9 +853,9 @@ public class FeedbackResponsesDbTest extends BaseComponentTestCase {
     }
 
     private void deleteResponsesFromDb() {
-        Set<String> keys = dataBundle.feedbackResponses.keySet();
+        Set<String> keys = dataBundle.getFeedbackResponses().keySet();
         for (String i : keys) {
-            frDb.deleteEntity(dataBundle.feedbackResponses.get(i));
+            frDb.deleteEntity(dataBundle.getFeedbackResponses().get(i));
         }
     }
 

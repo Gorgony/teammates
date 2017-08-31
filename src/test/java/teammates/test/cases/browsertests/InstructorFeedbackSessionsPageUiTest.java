@@ -63,7 +63,7 @@ public class InstructorFeedbackSessionsPageUiTest extends BaseUiTestCase {
     public void refreshTestData() {
         testData = loadDataBundle("/InstructorFeedbackSessionsPageUiTest.json");
         removeAndRestoreDataBundle(testData);
-        idOfInstructorWithSessions = testData.accounts.get("instructorWithSessions").googleId;
+        idOfInstructorWithSessions = testData.getAccounts().get("instructorWithSessions").googleId;
         feedbackPage = getFeedbackPageForInstructor(idOfInstructorWithSessions);
     }
 
@@ -111,19 +111,19 @@ public class InstructorFeedbackSessionsPageUiTest extends BaseUiTestCase {
 
         ______TS("no courses");
 
-        feedbackPage = getFeedbackPageForInstructor(testData.accounts.get("instructorWithoutCourses").googleId);
+        feedbackPage = getFeedbackPageForInstructor(testData.getAccounts().get("instructorWithoutCourses").googleId);
 
         // This is the full HTML verification for Instructor Feedbacks Page, the rest can all be verifyMainHtml
         feedbackPage.verifyHtml("/instructorFeedbackEmptyAll.html");
 
         ______TS("no sessions");
 
-        feedbackPage = getFeedbackPageForInstructor(testData.accounts.get("instructorWithoutSessions").googleId);
+        feedbackPage = getFeedbackPageForInstructor(testData.getAccounts().get("instructorWithoutSessions").googleId);
         feedbackPage.verifyHtmlMainContent("/instructorFeedbackEmptySession.html");
 
         ______TS("typical case with helper view");
 
-        String helperId = testData.accounts.get("helperWithSessions").googleId;
+        String helperId = testData.getAccounts().get("helperWithSessions").googleId;
 
         feedbackPage = getFeedbackPageForInstructor(helperId);
         feedbackPage.verifyHtmlMainContent("/instructorFeedbackAllSessionTypesWithHelperView.html");
@@ -580,16 +580,16 @@ public class InstructorFeedbackSessionsPageUiTest extends BaseUiTestCase {
 
         ______TS("PRIVATE: publish link unclickable");
 
-        String courseId = testData.feedbackSessions.get("privateSession").getCourseId();
-        String sessionName = testData.feedbackSessions.get("privateSession").getFeedbackSessionName();
+        String courseId = testData.getFeedbackSessions().get("privateSession").getCourseId();
+        String sessionName = testData.getFeedbackSessions().get("privateSession").getFeedbackSessionName();
 
         feedbackPage.verifyUnpublishLinkHidden(courseId, sessionName);
         assertTrue(feedbackPage.isSessionResultsOptionsCaretDisabled(courseId, sessionName));
 
         ______TS("MANUAL: publish link clickable");
 
-        courseId = testData.feedbackSessions.get("manualSession").getCourseId();
-        sessionName = testData.feedbackSessions.get("manualSession").getFeedbackSessionName();
+        courseId = testData.getFeedbackSessions().get("manualSession").getCourseId();
+        sessionName = testData.getFeedbackSessions().get("manualSession").getFeedbackSessionName();
 
         feedbackPage.clickAndCancel(feedbackPage.getPublishLink(courseId, sessionName));
         assertFalse(BackDoor.getFeedbackSession(courseId, sessionName).isPublished());
@@ -607,16 +607,16 @@ public class InstructorFeedbackSessionsPageUiTest extends BaseUiTestCase {
     private void testUnpublishAction() throws Exception {
         // refresh page
 
-        String courseId = testData.feedbackSessions.get("publishedSession").getCourseId();
-        String sessionName = testData.feedbackSessions.get("publishedSession").getFeedbackSessionName();
+        String courseId = testData.getFeedbackSessions().get("publishedSession").getCourseId();
+        String sessionName = testData.getFeedbackSessions().get("publishedSession").getFeedbackSessionName();
         feedbackPage.verifyPublishLinkHidden(courseId, sessionName);
 
         ______TS("PRIVATE: unpublish link unclickable");
 
-        feedbackPage = getFeedbackPageForInstructor(testData.accounts.get("instructorWithSessions2").googleId);
+        feedbackPage = getFeedbackPageForInstructor(testData.getAccounts().get("instructorWithSessions2").googleId);
 
-        courseId = testData.feedbackSessions.get("privateSession").getCourseId();
-        sessionName = testData.feedbackSessions.get("privateSession").getFeedbackSessionName();
+        courseId = testData.getFeedbackSessions().get("privateSession").getCourseId();
+        sessionName = testData.getFeedbackSessions().get("privateSession").getFeedbackSessionName();
         feedbackPage.verifyPublishLinkHidden(courseId, sessionName);
         feedbackPage.verifyUnpublishLinkHidden(courseId, sessionName);
 
@@ -624,8 +624,8 @@ public class InstructorFeedbackSessionsPageUiTest extends BaseUiTestCase {
 
         feedbackPage = getFeedbackPageForInstructor(idOfInstructorWithSessions);
 
-        courseId = testData.feedbackSessions.get("manualSession").getCourseId();
-        sessionName = testData.feedbackSessions.get("manualSession").getFeedbackSessionName();
+        courseId = testData.getFeedbackSessions().get("manualSession").getCourseId();
+        sessionName = testData.getFeedbackSessions().get("manualSession").getFeedbackSessionName();
 
         feedbackPage.clickAndCancel(feedbackPage.getUnpublishLink(courseId, sessionName));
         assertTrue(BackDoor.getFeedbackSession(courseId, sessionName).isPublished());
@@ -649,7 +649,7 @@ public class InstructorFeedbackSessionsPageUiTest extends BaseUiTestCase {
     }
 
     private void testJScripts() {
-        feedbackPage = getFeedbackPageForInstructor(testData.accounts.get("instructorWithoutCourses").googleId);
+        feedbackPage = getFeedbackPageForInstructor(testData.getAccounts().get("instructorWithoutCourses").googleId);
         testDefaultTimeZone();
         testSessionViewableTable();
         testDatePickerScripts();
@@ -787,7 +787,7 @@ public class InstructorFeedbackSessionsPageUiTest extends BaseUiTestCase {
 
         ______TS("view results clickable not creator, open session");
 
-        fsa = testData.feedbackSessions.get("openSession");
+        fsa = testData.getFeedbackSessions().get("openSession");
 
         feedbackResultsPage = feedbackPage.loadViewResultsLink(fsa.getCourseId(), fsa.getFeedbackSessionName());
         assertTrue(feedbackResultsPage.isCorrectPage(fsa.getCourseId(), fsa.getFeedbackSessionName()));
@@ -795,7 +795,7 @@ public class InstructorFeedbackSessionsPageUiTest extends BaseUiTestCase {
 
         ______TS("view results clickable creator, closed session");
 
-        fsa = testData.feedbackSessions.get("manualSession");
+        fsa = testData.getFeedbackSessions().get("manualSession");
 
         feedbackResultsPage = feedbackPage.loadViewResultsLink(fsa.getCourseId(), fsa.getFeedbackSessionName());
         assertTrue(feedbackResultsPage.isCorrectPage(fsa.getCourseId(), fsa.getFeedbackSessionName()));
@@ -808,7 +808,7 @@ public class InstructorFeedbackSessionsPageUiTest extends BaseUiTestCase {
 
         ______TS("edit link clickable when creator");
 
-        fsa = testData.feedbackSessions.get("privateSession");
+        fsa = testData.getFeedbackSessions().get("privateSession");
 
         feedbackResultsPage = feedbackPage.loadEditLink(fsa.getCourseId(), fsa.getFeedbackSessionName());
         assertTrue(feedbackResultsPage.isCorrectPage(fsa.getCourseId(), fsa.getFeedbackSessionName()));
@@ -822,7 +822,7 @@ public class InstructorFeedbackSessionsPageUiTest extends BaseUiTestCase {
 
         ______TS("submit link clickable when visible");
 
-        fsa = testData.feedbackSessions.get("awaitingSession");
+        fsa = testData.getFeedbackSessions().get("awaitingSession");
 
         feedbackResultsPage = feedbackPage.loadSubmitLink(fsa.getCourseId(), fsa.getFeedbackSessionName());
         assertTrue(feedbackResultsPage.isCorrectPage(fsa.getCourseId(), fsa.getFeedbackSessionName()));
@@ -830,7 +830,7 @@ public class InstructorFeedbackSessionsPageUiTest extends BaseUiTestCase {
 
         ______TS("submit link clickable when private (never visible)");
 
-        fsa = testData.feedbackSessions.get("privateSession");
+        fsa = testData.getFeedbackSessions().get("privateSession");
 
         feedbackResultsPage = feedbackPage.loadSubmitLink(fsa.getCourseId(), fsa.getFeedbackSessionName());
         assertTrue(feedbackResultsPage.isCorrectPage(fsa.getCourseId(), fsa.getFeedbackSessionName()));

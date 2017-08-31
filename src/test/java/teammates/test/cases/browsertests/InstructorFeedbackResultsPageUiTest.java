@@ -95,14 +95,14 @@ public class InstructorFeedbackResultsPageUiTest extends BaseUiTestCase {
         ______TS("Case where more than 1 question with same question number");
         // results page should be able to load incorrect data and still display it gracefully
 
-        FeedbackQuestionAttributes firstQuestion = testData.feedbackQuestions.get("qn1InSession4");
+        FeedbackQuestionAttributes firstQuestion = testData.getFeedbackQuestions().get("qn1InSession4");
         assertEquals(1, firstQuestion.questionNumber);
         FeedbackQuestionAttributes firstQuestionFromDatastore =
                                         BackDoor.getFeedbackQuestion(firstQuestion.courseId,
                                                                      firstQuestion.feedbackSessionName,
                                                                      firstQuestion.questionNumber);
 
-        FeedbackQuestionAttributes secondQuestion = testData.feedbackQuestions.get("qn2InSession4");
+        FeedbackQuestionAttributes secondQuestion = testData.getFeedbackQuestions().get("qn2InSession4");
         assertEquals(2, secondQuestion.questionNumber);
         // need to retrieve question from datastore to get its questionId
         FeedbackQuestionAttributes secondQuestionFromDatastore =
@@ -361,7 +361,7 @@ public class InstructorFeedbackResultsPageUiTest extends BaseUiTestCase {
             return;
         }
 
-        uploadPhotoForStudent(testData.students.get("Alice").googleId);
+        uploadPhotoForStudent(testData.getStudents().get("Alice").googleId);
 
         ______TS("Typical case: ajax for view by questions");
 
@@ -733,9 +733,9 @@ public class InstructorFeedbackResultsPageUiTest extends BaseUiTestCase {
 
     private InstructorFeedbackResultsPage loginToInstructorFeedbackResultsPage(String instructorName, String fsName) {
         AppUrl resultsUrl = createUrl(Const.ActionURIs.INSTRUCTOR_FEEDBACK_RESULTS_PAGE)
-                                .withUserId(testData.instructors.get(instructorName).googleId)
-                                .withCourseId(testData.feedbackSessions.get(fsName).getCourseId())
-                                .withSessionName(testData.feedbackSessions.get(fsName).getFeedbackSessionName());
+                                .withUserId(testData.getInstructors().get(instructorName).googleId)
+                                .withCourseId(testData.getFeedbackSessions().get(fsName).getCourseId())
+                                .withSessionName(testData.getFeedbackSessions().get(fsName).getFeedbackSessionName());
         return loginAdminToPage(resultsUrl, InstructorFeedbackResultsPage.class);
     }
 
@@ -743,9 +743,9 @@ public class InstructorFeedbackResultsPageUiTest extends BaseUiTestCase {
             loginToInstructorFeedbackResultsPageWithViewType(String instructorName, String fsName,
                                                              boolean needAjax, String viewType) {
         AppUrl resultsUrl = createUrl(Const.ActionURIs.INSTRUCTOR_FEEDBACK_RESULTS_PAGE)
-                                .withUserId(testData.instructors.get(instructorName).googleId)
-                                .withCourseId(testData.feedbackSessions.get(fsName).getCourseId())
-                                .withSessionName(testData.feedbackSessions.get(fsName).getFeedbackSessionName());
+                                .withUserId(testData.getInstructors().get(instructorName).googleId)
+                                .withCourseId(testData.getFeedbackSessions().get(fsName).getCourseId())
+                                .withSessionName(testData.getFeedbackSessions().get(fsName).getFeedbackSessionName());
 
         if (needAjax) {
             resultsUrl = resultsUrl.withParam(Const.ParamsNames.FEEDBACK_RESULTS_NEED_AJAX,

@@ -46,7 +46,7 @@ public class BackDoorLogicTest extends BaseLogicTest {
         ______TS("invalid parameters in an entity");
         CourseAttributes invalidCourse = new CourseAttributes("invalid id", "valid course name", "UTC");
         dataBundle = new DataBundle();
-        dataBundle.courses.put("invalid", invalidCourse);
+        dataBundle.getCourses().put("invalid", invalidCourse);
         try {
             backDoorLogic.persistDataBundle(dataBundle);
             signalFailureToDetectException();

@@ -329,7 +329,7 @@ public class AccountsLogicTest extends BaseLogicTest {
     @Test
     public void testJoinCourseForInstructor() throws Exception {
 
-        InstructorAttributes instructor = dataBundle.instructors.get("instructorNotYetJoinCourse");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructorNotYetJoinCourse");
         String loggedInGoogleId = "AccLogicT.instr.id";
         String encryptedKey = instructorsLogic.getEncryptedKeyForInstructor(instructor.courseId, instructor.email);
 
@@ -373,7 +373,7 @@ public class AccountsLogicTest extends BaseLogicTest {
 
         ______TS("success: instructor joined but account already exists");
 
-        AccountAttributes nonInstrAccount = dataBundle.accounts.get("student1InCourse1");
+        AccountAttributes nonInstrAccount = dataBundle.getAccounts().get("student1InCourse1");
         InstructorAttributes newIns = InstructorAttributes
                 .builder(null, instructor.courseId, nonInstrAccount.name, nonInstrAccount.email)
                 .build();
@@ -391,14 +391,14 @@ public class AccountsLogicTest extends BaseLogicTest {
 
         ______TS("success: instructor join and assigned institute when some instructors have not joined course");
 
-        instructor = dataBundle.instructors.get("instructor4");
+        instructor = dataBundle.getInstructors().get("instructor4");
         newIns = InstructorAttributes
                 .builder(null, instructor.courseId, "anInstructorWithoutGoogleId", "anInstructorWithoutGoogleId@gmail.com")
                 .build();
 
         instructorsLogic.createInstructor(newIns);
 
-        nonInstrAccount = dataBundle.accounts.get("student2InCourse1");
+        nonInstrAccount = dataBundle.getAccounts().get("student2InCourse1");
         nonInstrAccount.email = "newInstructor@gmail.com";
         nonInstrAccount.name = " newInstructor";
         nonInstrAccount.googleId = "newInstructorGoogleId";
@@ -421,8 +421,8 @@ public class AccountsLogicTest extends BaseLogicTest {
 
         ______TS("failure: instructor already joined");
 
-        nonInstrAccount = dataBundle.accounts.get("student1InCourse1");
-        instructor = dataBundle.instructors.get("instructorNotYetJoinCourse");
+        nonInstrAccount = dataBundle.getAccounts().get("student1InCourse1");
+        instructor = dataBundle.getInstructors().get("instructorNotYetJoinCourse");
 
         encryptedKey = instructorsLogic.getEncryptedKeyForInstructor(instructor.courseId, nonInstrAccount.email);
         joinedInstructor = instructorsLogic.getInstructorForEmail(instructor.courseId, nonInstrAccount.email);
@@ -471,8 +471,8 @@ public class AccountsLogicTest extends BaseLogicTest {
 
         ______TS("typical success case");
 
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor5");
-        AccountAttributes account = dataBundle.accounts.get("instructor5");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor5");
+        AccountAttributes account = dataBundle.getAccounts().get("instructor5");
 
         // Make instructor account id a student too.
         StudentAttributes student = StudentAttributes

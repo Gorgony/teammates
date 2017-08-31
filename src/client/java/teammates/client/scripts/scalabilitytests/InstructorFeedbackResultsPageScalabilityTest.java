@@ -53,9 +53,9 @@ public class InstructorFeedbackResultsPageScalabilityTest extends BaseUiTestCase
     private InstructorFeedbackResultsPage loginToInstructorFeedbackResultsPage(String instructorName, String fsName) {
         AppUrl resultsUrl =
                 createUrl(Const.ActionURIs.INSTRUCTOR_FEEDBACK_RESULTS_PAGE)
-                        .withUserId(testData.instructors.get(instructorName).googleId)
-                        .withCourseId(testData.feedbackSessions.get(fsName).getCourseId())
-                        .withSessionName(testData.feedbackSessions.get(fsName).getFeedbackSessionName());
+                        .withUserId(testData.getInstructors().get(instructorName).googleId)
+                        .withCourseId(testData.getFeedbackSessions().get(fsName).getCourseId())
+                        .withSessionName(testData.getFeedbackSessions().get(fsName).getFeedbackSessionName());
 
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.start();

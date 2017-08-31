@@ -33,8 +33,8 @@ public class InstructorSubmissionAdjustmentUiTest extends BaseUiTestCase {
 
         // use the instructor account injected for this test
 
-        testData.accounts.get("instructor1OfCourse1").googleId = TestProperties.TEST_INSTRUCTOR_ACCOUNT;
-        testData.accounts.get("instructor1OfCourse1").email = TestProperties.TEST_INSTRUCTOR_ACCOUNT + "@gmail.com";
+        testData.getAccounts().get("instructor1OfCourse1").googleId = TestProperties.TEST_INSTRUCTOR_ACCOUNT;
+        testData.getAccounts().get("instructor1OfCourse1").email = TestProperties.TEST_INSTRUCTOR_ACCOUNT + "@gmail.com";
 
         removeAndRestoreDataBundle(testData);
     }
@@ -64,8 +64,8 @@ public class InstructorSubmissionAdjustmentUiTest extends BaseUiTestCase {
         ______TS("typical case : existing student changes team");
         loadEnrollmentPage();
 
-        final FeedbackSessionAttributes session = testData.feedbackSessions.get("session2InCourse1");
-        final StudentAttributes student = testData.students.get("student1InCourse1");
+        final FeedbackSessionAttributes session = testData.getFeedbackSessions().get("session2InCourse1");
+        final StudentAttributes student = testData.getStudents().get("student1InCourse1");
 
         //Verify pre-existing submissions and responses
         List<FeedbackResponseAttributes> oldResponsesForSession =
@@ -98,8 +98,8 @@ public class InstructorSubmissionAdjustmentUiTest extends BaseUiTestCase {
 
     private void loadEnrollmentPage() {
         AppUrl enrollUrl = createUrl(Const.ActionURIs.INSTRUCTOR_COURSE_ENROLL_PAGE)
-                            .withUserId(testData.instructors.get("instructor1OfCourse1").googleId)
-                            .withCourseId(testData.courses.get("typicalCourse1").getId());
+                            .withUserId(testData.getInstructors().get("instructor1OfCourse1").googleId)
+                            .withCourseId(testData.getCourses().get("typicalCourse1").getId());
 
         enrollPage = loginAdminToPage(enrollUrl, InstructorCourseEnrollPage.class);
     }

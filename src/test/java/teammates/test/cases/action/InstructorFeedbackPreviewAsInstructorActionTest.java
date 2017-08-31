@@ -24,9 +24,9 @@ public class InstructorFeedbackPreviewAsInstructorActionTest extends BaseActionT
     @Override
     @Test
     public void testExecuteAndPostProcess() {
-        InstructorAttributes instructor1 = dataBundle.instructors.get("instructor1OfCourse1");
-        InstructorAttributes instructor2 = dataBundle.instructors.get("instructor2OfCourse1");
-        InstructorAttributes instructorHelper = dataBundle.instructors.get("helperOfCourse1");
+        InstructorAttributes instructor1 = dataBundle.getInstructors().get("instructor1OfCourse1");
+        InstructorAttributes instructor2 = dataBundle.getInstructors().get("instructor2OfCourse1");
+        InstructorAttributes instructorHelper = dataBundle.getInstructors().get("helperOfCourse1");
         String idOfInstructor1 = instructor1.googleId;
         String idOfInstructor2 = instructor2.googleId;
         String idOfInstructorHelper = instructorHelper.googleId;
@@ -147,8 +147,8 @@ public class InstructorFeedbackPreviewAsInstructorActionTest extends BaseActionT
     @Override
     @Test
     protected void testAccessControl() throws Exception {
-        FeedbackSessionAttributes session = dataBundle.feedbackSessions.get("session1InCourse1");
-        InstructorAttributes instructor = dataBundle.instructors.get("instructor1OfCourse1");
+        FeedbackSessionAttributes session = dataBundle.getFeedbackSessions().get("session1InCourse1");
+        InstructorAttributes instructor = dataBundle.getInstructors().get("instructor1OfCourse1");
 
         String[] submissionParams = new String[]{
                 Const.ParamsNames.COURSE_ID, session.getCourseId(),

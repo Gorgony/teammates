@@ -41,9 +41,9 @@ public class InstructorFeedbackQuestionEditActionTest extends BaseActionTest {
     @Override
     @Test
     public void testExecuteAndPostProcess() {
-        gaeSimulation.loginAsInstructor(dataBundle.instructors.get("instructor1OfCourse1").googleId);
+        gaeSimulation.loginAsInstructor(dataBundle.getInstructors().get("instructor1OfCourse1").googleId);
 
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("session1InCourse1");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("session1InCourse1");
         FeedbackQuestionAttributes fq = FeedbackQuestionsLogic
                                             .inst()
                                             .getFeedbackQuestion(fs.getFeedbackSessionName(), fs.getCourseId(), 1);
@@ -397,11 +397,11 @@ public class InstructorFeedbackQuestionEditActionTest extends BaseActionTest {
         DataBundle dataBundle = loadDataBundle("/FeedbackSessionQuestionTypeTest.json");
         removeAndRestoreDataBundle(dataBundle);
 
-        InstructorAttributes instructor1ofCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes instructor1ofCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
 
         gaeSimulation.loginAsInstructor(instructor1ofCourse1.googleId);
 
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("mcqSession");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("mcqSession");
         FeedbackQuestionAttributes fq = FeedbackQuestionsLogic
                                             .inst()
                                             .getFeedbackQuestion(fs.getFeedbackSessionName(), fs.getCourseId(), 1);
@@ -583,11 +583,11 @@ public class InstructorFeedbackQuestionEditActionTest extends BaseActionTest {
         DataBundle dataBundle = loadDataBundle("/FeedbackSessionQuestionTypeTest.json");
         removeAndRestoreDataBundle(dataBundle);
 
-        InstructorAttributes instructor1ofCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes instructor1ofCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
 
         gaeSimulation.loginAsInstructor(instructor1ofCourse1.googleId);
 
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("msqSession");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("msqSession");
         FeedbackQuestionAttributes fq = FeedbackQuestionsLogic
                                             .inst()
                                             .getFeedbackQuestion(fs.getFeedbackSessionName(), fs.getCourseId(), 1);
@@ -770,11 +770,11 @@ public class InstructorFeedbackQuestionEditActionTest extends BaseActionTest {
         DataBundle dataBundle = loadDataBundle("/FeedbackSessionQuestionTypeTest.json");
         removeAndRestoreDataBundle(dataBundle);
 
-        InstructorAttributes instructor1ofCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes instructor1ofCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
 
         gaeSimulation.loginAsInstructor(instructor1ofCourse1.googleId);
 
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("numscaleSession");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("numscaleSession");
         FeedbackQuestionAttributes fq = FeedbackQuestionsLogic
                                             .inst()
                                             .getFeedbackQuestion(fs.getFeedbackSessionName(), fs.getCourseId(), 1);
@@ -870,11 +870,11 @@ public class InstructorFeedbackQuestionEditActionTest extends BaseActionTest {
         DataBundle dataBundle = loadDataBundle("/FeedbackSessionQuestionTypeTest.json");
         removeAndRestoreDataBundle(dataBundle);
 
-        InstructorAttributes instructor1ofCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes instructor1ofCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
 
         gaeSimulation.loginAsInstructor(instructor1ofCourse1.googleId);
 
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("constSumSession");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("constSumSession");
         FeedbackQuestionAttributes fq = FeedbackQuestionsLogic
                                             .inst()
                                             .getFeedbackQuestion(fs.getFeedbackSessionName(), fs.getCourseId(), 1);
@@ -977,11 +977,11 @@ public class InstructorFeedbackQuestionEditActionTest extends BaseActionTest {
         DataBundle dataBundle = loadDataBundle("/FeedbackSessionQuestionTypeTest.json");
         removeAndRestoreDataBundle(dataBundle);
 
-        InstructorAttributes instructor1ofCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes instructor1ofCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
 
         gaeSimulation.loginAsInstructor(instructor1ofCourse1.googleId);
 
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("constSumSession");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("constSumSession");
         FeedbackQuestionAttributes fq = FeedbackQuestionsLogic
                                             .inst()
                                             .getFeedbackQuestion(fs.getFeedbackSessionName(), fs.getCourseId(), 2);
@@ -1086,11 +1086,11 @@ public class InstructorFeedbackQuestionEditActionTest extends BaseActionTest {
         DataBundle dataBundle = loadDataBundle("/FeedbackSessionQuestionTypeTest.json");
         removeAndRestoreDataBundle(dataBundle);
 
-        InstructorAttributes instructor1ofCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes instructor1ofCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
 
         gaeSimulation.loginAsInstructor(instructor1ofCourse1.googleId);
 
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("contribSession");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("contribSession");
         FeedbackQuestionAttributes fq = FeedbackQuestionsLogic
                                             .inst()
                                             .getFeedbackQuestion(fs.getFeedbackSessionName(), fs.getCourseId(), 1);
@@ -1184,11 +1184,11 @@ public class InstructorFeedbackQuestionEditActionTest extends BaseActionTest {
         DataBundle dataBundle = loadDataBundle("/FeedbackSessionQuestionTypeTest.json");
         removeAndRestoreDataBundle(dataBundle);
 
-        InstructorAttributes instructor1ofCourse1 = dataBundle.instructors.get("instructor1OfCourse1");
+        InstructorAttributes instructor1ofCourse1 = dataBundle.getInstructors().get("instructor1OfCourse1");
 
         gaeSimulation.loginAsInstructor(instructor1ofCourse1.googleId);
 
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("rubricSession");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("rubricSession");
         FeedbackQuestionAttributes fq = FeedbackQuestionsLogic
                                             .inst()
                                             .getFeedbackQuestion(fs.getFeedbackSessionName(), fs.getCourseId(), 1);
@@ -1410,7 +1410,7 @@ public class InstructorFeedbackQuestionEditActionTest extends BaseActionTest {
         dataBundle = loadDataBundle("/FeedbackSessionQuestionTypeTest.json");
         removeAndRestoreDataBundle(dataBundle);
 
-        fs = dataBundle.feedbackSessions.get("rubricSession");
+        fs = dataBundle.getFeedbackSessions().get("rubricSession");
         fq = FeedbackQuestionsLogic.inst().getFeedbackQuestion(fs.getFeedbackSessionName(), fs.getCourseId(), 1);
         fqd = (FeedbackRubricQuestionDetails) fq.getQuestionDetails();
 
@@ -1473,12 +1473,12 @@ public class InstructorFeedbackQuestionEditActionTest extends BaseActionTest {
 
         removeAndRestoreTypicalDataBundle();
 
-        gaeSimulation.loginAsInstructor(dataBundle.instructors.get("instructor1OfCourse1").googleId);
+        gaeSimulation.loginAsInstructor(dataBundle.getInstructors().get("instructor1OfCourse1").googleId);
 
         FeedbackSessionsLogic fsLogic = FeedbackSessionsLogic.inst();
         FeedbackQuestionsLogic fqLogic = FeedbackQuestionsLogic.inst();
 
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("session1InCourse1");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("session1InCourse1");
 
         int numStudentRespondents = 3;
         int numInstructorRespondents = 1;
@@ -1600,7 +1600,7 @@ public class InstructorFeedbackQuestionEditActionTest extends BaseActionTest {
     @Override
     @Test
     protected void testAccessControl() throws Exception {
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("session1InCourse1");
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("session1InCourse1");
         FeedbackQuestionAttributes fq =
                 FeedbackQuestionsLogic.inst().getFeedbackQuestion(fs.getFeedbackSessionName(), fs.getCourseId(), 4);
 

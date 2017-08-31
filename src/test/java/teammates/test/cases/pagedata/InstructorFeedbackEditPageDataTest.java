@@ -43,22 +43,22 @@ public class InstructorFeedbackEditPageDataTest extends BaseTestCase {
         ______TS("Typical case");
         // Setup
         InstructorFeedbackEditPageData data =
-                new InstructorFeedbackEditPageData(dataBundle.accounts.get("instructor1OfCourse1"), dummySessionToken);
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("session1InCourse1");
+                new InstructorFeedbackEditPageData(dataBundle.getAccounts().get("instructor1OfCourse1"), dummySessionToken);
+        FeedbackSessionAttributes fs = dataBundle.getFeedbackSessions().get("session1InCourse1");
 
         List<FeedbackQuestionAttributes> questions = new ArrayList<>();
-        questions.add(dataBundle.feedbackQuestions.get("qn1InSession1InCourse1"));
-        questions.add(dataBundle.feedbackQuestions.get("qn2InSession1InCourse1"));
-        questions.add(dataBundle.feedbackQuestions.get("qn3InSession1InCourse1"));
+        questions.add(dataBundle.getFeedbackQuestions().get("qn1InSession1InCourse1"));
+        questions.add(dataBundle.getFeedbackQuestions().get("qn2InSession1InCourse1"));
+        questions.add(dataBundle.getFeedbackQuestions().get("qn3InSession1InCourse1"));
 
         Map<String, Boolean> questionHasResponses = new HashMap<>();
-        questionHasResponses.put(dataBundle.feedbackQuestions.get("qn1InSession1InCourse1").getId(), true);
+        questionHasResponses.put(dataBundle.getFeedbackQuestions().get("qn1InSession1InCourse1").getId(), true);
 
         List<StudentAttributes> studentList = new ArrayList<>();
-        studentList.add(dataBundle.students.get("student1InCourse1"));
+        studentList.add(dataBundle.getStudents().get("student1InCourse1"));
 
         List<InstructorAttributes> instructorList = new ArrayList<>();
-        instructorList.add(dataBundle.instructors.get("instructor1OfCourse1"));
+        instructorList.add(dataBundle.getInstructors().get("instructor1OfCourse1"));
 
         InstructorAttributes instructor = getInstructorFromBundle("instructor1OfCourse1");
 
@@ -121,7 +121,7 @@ public class InstructorFeedbackEditPageDataTest extends BaseTestCase {
         assertEquals(fs.getCourseId(), questionForms.get(0).getCourseId());
         assertEquals(fs.getFeedbackSessionName(), questionForms.get(0).getFeedbackSessionName());
 
-        String questionTextOfFirstQuestion = dataBundle.feedbackQuestions
+        String questionTextOfFirstQuestion = dataBundle.getFeedbackQuestions()
                                                        .get("qn1InSession1InCourse1")
                                                        .getQuestionDetails().getQuestionText();
         assertEquals(questionTextOfFirstQuestion,
@@ -202,9 +202,9 @@ public class InstructorFeedbackEditPageDataTest extends BaseTestCase {
 
         ______TS("empty feedback session");
         // setup
-        data = new InstructorFeedbackEditPageData(dataBundle.accounts.get("instructor1OfCourse1"), dummySessionToken);
+        data = new InstructorFeedbackEditPageData(dataBundle.getAccounts().get("instructor1OfCourse1"), dummySessionToken);
 
-        fs = dataBundle.feedbackSessions.get("empty.session");
+        fs = dataBundle.getFeedbackSessions().get("empty.session");
         fs.setPublishedEmailEnabled(false);
         fs.setClosingEmailEnabled(false);
 
@@ -269,7 +269,7 @@ public class InstructorFeedbackEditPageDataTest extends BaseTestCase {
     }
 
     private InstructorAttributes getInstructorFromBundle(String instructor) {
-        return dataBundle.instructors.get(instructor);
+        return dataBundle.getInstructors().get(instructor);
     }
 
     private void verifyMapContains(Map<String, Boolean> map, List<FeedbackParticipantType> list) {

@@ -32,9 +32,9 @@ public class FeedbackSessionRemindParticularUsersEmailWorkerActionTest extends B
 
         ______TS("Send feedback session reminder email");
 
-        FeedbackSessionAttributes session1 = dataBundle.feedbackSessions.get("session1InCourse1");
-        StudentAttributes student1 = dataBundle.students.get("student1InCourse1");
-        InstructorAttributes instructor1 = dataBundle.instructors.get("instructor1OfCourse1");
+        FeedbackSessionAttributes session1 = dataBundle.getFeedbackSessions().get("session1InCourse1");
+        StudentAttributes student1 = dataBundle.getStudents().get("student1InCourse1");
+        InstructorAttributes instructor1 = dataBundle.getInstructors().get("instructor1OfCourse1");
 
         String[] submissionParams = new String[] {
                 ParamsNames.SUBMISSION_FEEDBACK, session1.getFeedbackSessionName(),

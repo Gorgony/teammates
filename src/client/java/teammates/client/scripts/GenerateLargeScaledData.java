@@ -35,7 +35,7 @@ public class GenerateLargeScaledData extends RemoteApiClient {
             }
             */
 
-            for (FeedbackResponseAttributes response : largeScaleBundle.feedbackResponses.values()) {
+            for (FeedbackResponseAttributes response : largeScaleBundle.getFeedbackResponses().values()) {
                 logic.createFeedbackResponse(injectRealIds(response));
                 index++;
                 if (index % 100 == 0) {
