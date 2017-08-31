@@ -27,6 +27,28 @@ public final class Templates {
     }
 
     /**
+     * Collection of identifiers used in templates
+     */
+    public static class EmailIdentifiers {
+
+        public static final String STATUS = "${status}";
+        public static final String JOIN_URL = "${joinUrl}";
+        public static final String COURSE_NAME = "${courseName}";
+        public static final String FEEDBACK_SESSION_NAME = "${feedbackSessionName}";
+        public static final String DEADLINE = "${deadline}";
+        public static final String SUBMIT_URL = "${submitUrl}";
+        public static final String REPORT_URL = "${reportUrl}";
+        public static final String USER_NAME = "${userName}";
+        public static final String USER_EMAIL = "${userEmail}";
+        public static final String COURSE_ID = "${courseId}";
+        public static final String JOIN_FRAGMENT = "${joinFragment}";
+        public static final String LINKS_FRAGMENT = "${linksFragment}";
+        public static final String CO_OWNERS_EMAILS = "${coOwnersEmails}";
+        public static final String SUPPORT_EMAIL = "${supportEmail}";
+        public static final String TIME_STAMP = "${timeStamp}";
+    }
+
+    /**
      * Collection of templates of emails to be sent by the system.
      */
     public static class EmailTemplates {

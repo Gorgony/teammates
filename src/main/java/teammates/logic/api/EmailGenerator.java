@@ -52,6 +52,7 @@ public class EmailGenerator {
     private static final FeedbackSessionsLogic fsLogic = FeedbackSessionsLogic.inst();
     private static final InstructorsLogic instructorsLogic = InstructorsLogic.inst();
     private static final StudentsLogic studentsLogic = StudentsLogic.inst();
+    public static final String STATUS = Templates.EmailIdentifiers.STATUS;
 
     /**
      * Generates the feedback session opening emails for the given {@code session}.
@@ -72,7 +73,7 @@ public class EmailGenerator {
         List<EmailWrapper> emails = generateFeedbackSessionEmailBases(course, session, students, instructors, template,
                                                                       EmailType.FEEDBACK_OPENING.getSubject());
         for (EmailWrapper email : emails) {
-            email.setContent(email.getContent().replace("${status}", FEEDBACK_STATUS_SESSION_OPENING));
+            email.setContent(email.getContent().replace(STATUS, FEEDBACK_STATUS_SESSION_OPENING));
         }
         return emails;
     }
@@ -86,7 +87,7 @@ public class EmailGenerator {
             List<InstructorAttributes> instructorsToRemind, List<InstructorAttributes> instructorsToNotify) {
 
         CourseAttributes course = coursesLogic.getCourse(session.getCourseId());
-        String template = EmailTemplates.USER_FEEDBACK_SESSION.replace("${status}", FEEDBACK_STATUS_SESSION_OPEN);
+        String template = EmailTemplates.USER_FEEDBACK_SESSION.replace(STATUS, FEEDBACK_STATUS_SESSION_OPEN);
         List<EmailWrapper> emails =
                 generateFeedbackSessionEmailBasesForInstructorReminders(course, session, instructorsToRemind, template,
                         EmailType.FEEDBACK_SESSION_REMINDER.getSubject());
@@ -120,8 +121,8 @@ public class EmailGenerator {
 
         String joinFragmentValue = isYetToJoinCourse(student)
                                    ? Templates.populateTemplate(EmailTemplates.FRAGMENT_STUDENT_COURSE_JOIN,
-                                           "${joinUrl}", joinUrl,
-                                           "${courseName}", SanitizationHelper.sanitizeForHtml(course.getName()))
+                Templates.EmailIdentifiers.JOIN_URL, joinUrl,
+                Templates.EmailIdentifiers.COURSE_NAME, SanitizationHelper.sanitizeForHtml(course.getName()))
                                    : "";
 
         for (FeedbackSessionAttributes fsa : sessions) {
@@ -151,21 +152,21 @@ public class EmailGenerator {
 
             linksFragmentValue.append(Templates.populateTemplate(
                     EmailTemplates.FRAGMENT_SINGLE_FEEDBACK_SESSION_LINKS,
-                    "${feedbackSessionName}", fsa.getFeedbackSessionName(),
-                    "${deadline}", TimeHelper.formatTime12H(fsa.getEndTime()) + (fsa.isClosed() ? " (Passed)" : ""),
-                    "${submitUrl}", submitUrlHtml,
-                    "${reportUrl}", reportUrlHtml));
+                    Templates.EmailIdentifiers.FEEDBACK_SESSION_NAME, fsa.getFeedbackSessionName(),
+                    Templates.EmailIdentifiers.DEADLINE, TimeHelper.formatTime12H(fsa.getEndTime()) + (fsa.isClosed() ? " (Passed)" : ""),
+                    Templates.EmailIdentifiers.SUBMIT_URL, submitUrlHtml,
+                    Templates.EmailIdentifiers.REPORT_URL, reportUrlHtml));
         }
 
         String emailBody = Templates.populateTemplate(EmailTemplates.USER_FEEDBACK_SESSION_RESEND_ALL_LINKS,
-                "${userName}", SanitizationHelper.sanitizeForHtml(student.name),
-                "${userEmail}", student.email,
-                "${courseName}", SanitizationHelper.sanitizeForHtml(course.getName()),
-                "${courseId}", course.getId(),
-                "${joinFragment}", joinFragmentValue,
-                "${linksFragment}", linksFragmentValue.toString(),
-                "${coOwnersEmails}", generateCoOwnersEmailsLine(courseId),
-                "${supportEmail}", Config.SUPPORT_EMAIL);
+                Templates.EmailIdentifiers.USER_NAME, SanitizationHelper.sanitizeForHtml(student.name),
+                Templates.EmailIdentifiers.USER_EMAIL, student.email,
+                Templates.EmailIdentifiers.COURSE_NAME, SanitizationHelper.sanitizeForHtml(course.getName()),
+                Templates.EmailIdentifiers.COURSE_ID, course.getId(),
+                Templates.EmailIdentifiers.JOIN_FRAGMENT, joinFragmentValue,
+                Templates.EmailIdentifiers.LINKS_FRAGMENT, linksFragmentValue.toString(),
+                Templates.EmailIdentifiers.CO_OWNERS_EMAILS, generateCoOwnersEmailsLine(courseId),
+                Templates.EmailIdentifiers.SUPPORT_EMAIL, Config.SUPPORT_EMAIL);
 
         EmailWrapper email = getEmptyEmailAddressedToEmail(student.email);
         email.setSubject(String.format(EmailType.STUDENT_EMAIL_CHANGED.getSubject(), course.getName(), course.getId()));
@@ -226,15 +227,15 @@ public class EmailGenerator {
         String subject = EmailType.FEEDBACK_SUBMISSION_CONFIRMATION.getSubject();
 
         String emailBody = Templates.populateTemplate(template,
-                "${userName}", SanitizationHelper.sanitizeForHtml(userName),
-                "${courseName}", SanitizationHelper.sanitizeForHtml(course.getName()),
-                "${courseId}", SanitizationHelper.sanitizeForHtml(course.getId()),
-                "${feedbackSessionName}", SanitizationHelper.sanitizeForHtml(session.getFeedbackSessionName()),
-                "${deadline}", SanitizationHelper.sanitizeForHtml(TimeHelper.formatTime12H(session.getEndTime())),
-                "${submitUrl}", submitUrl,
-                "${timeStamp}", SanitizationHelper.sanitizeForHtml(TimeHelper.formatTime12H(time.getTime())),
-                "${coOwnersEmails}", generateCoOwnersEmailsLine(course.getId()),
-                "${supportEmail}", Config.SUPPORT_EMAIL);
+                Templates.EmailIdentifiers.USER_NAME, SanitizationHelper.sanitizeForHtml(userName),
+                Templates.EmailIdentifiers.COURSE_NAME, SanitizationHelper.sanitizeForHtml(course.getName()),
+                Templates.EmailIdentifiers.COURSE_ID, SanitizationHelper.sanitizeForHtml(course.getId()),
+                Templates.EmailIdentifiers.FEEDBACK_SESSION_NAME, SanitizationHelper.sanitizeForHtml(session.getFeedbackSessionName()),
+                Templates.EmailIdentifiers.DEADLINE, SanitizationHelper.sanitizeForHtml(TimeHelper.formatTime12H(session.getEndTime())),
+                Templates.EmailIdentifiers.SUBMIT_URL, submitUrl,
+                Templates.EmailIdentifiers.TIME_STAMP, SanitizationHelper.sanitizeForHtml(TimeHelper.formatTime12H(time.getTime())),
+                Templates.EmailIdentifiers.CO_OWNERS_EMAILS, generateCoOwnersEmailsLine(course.getId()),
+                Templates.EmailIdentifiers.SUPPORT_EMAIL, Config.SUPPORT_EMAIL);
 
         EmailWrapper email = getEmptyEmailAddressedToEmail(userEmail);
         email.setSubject(String.format(subject, course.getName(), session.getFeedbackSessionName()));
@@ -258,17 +259,17 @@ public class EmailGenerator {
                                  .toAbsoluteString();
 
         String emailBody = Templates.populateTemplate(template,
-                "${userName}", SanitizationHelper.sanitizeForHtml(instructor.name),
-                "${courseName}", SanitizationHelper.sanitizeForHtml(course.getName()),
-                "${courseId}", SanitizationHelper.sanitizeForHtml(course.getId()),
-                "${feedbackSessionName}", SanitizationHelper.sanitizeForHtml(session.getFeedbackSessionName()),
-                "${deadline}", SanitizationHelper.sanitizeForHtml(TimeHelper.formatTime12H(session.getEndTime())),
+                Templates.EmailIdentifiers.USER_NAME, SanitizationHelper.sanitizeForHtml(instructor.name),
+                Templates.EmailIdentifiers.COURSE_NAME, SanitizationHelper.sanitizeForHtml(course.getName()),
+                Templates.EmailIdentifiers.COURSE_ID, SanitizationHelper.sanitizeForHtml(course.getId()),
+                Templates.EmailIdentifiers.FEEDBACK_SESSION_NAME, SanitizationHelper.sanitizeForHtml(session.getFeedbackSessionName()),
+                Templates.EmailIdentifiers.DEADLINE, SanitizationHelper.sanitizeForHtml(TimeHelper.formatTime12H(session.getEndTime())),
                 "${instructorFragment}", "",
                 "${sessionInstructions}", session.getInstructionsString(),
-                "${submitUrl}", submitUrl,
-                "${reportUrl}", reportUrl,
-                "${coOwnersEmails}", coOwnersLine,
-                "${supportEmail}", Config.SUPPORT_EMAIL,
+                Templates.EmailIdentifiers.SUBMIT_URL, submitUrl,
+                Templates.EmailIdentifiers.REPORT_URL, reportUrl,
+                Templates.EmailIdentifiers.CO_OWNERS_EMAILS,,, coOwnersLine,
+                Templates.EmailIdentifiers.SUPPORT_EMAIL, Config.SUPPORT_EMAIL,
                 "${additionalInstructions}", "",
                 "${feedbackAction}", FEEDBACK_ACTION_SUBMIT);
 
@@ -306,7 +307,7 @@ public class EmailGenerator {
         }
 
         String template = EmailTemplates.USER_FEEDBACK_SESSION_CLOSING
-                .replace("${status}", FEEDBACK_STATUS_SESSION_CLOSING);
+                .replace(STATUS, FEEDBACK_STATUS_SESSION_CLOSING);
         CourseAttributes course = coursesLogic.getCourse(session.getCourseId());
         List<InstructorAttributes> instructors = isEmailNeeded
                                                  ? instructorsLogic.getInstructorsForCourse(session.getCourseId())
@@ -340,7 +341,7 @@ public class EmailGenerator {
                                            : new ArrayList<StudentAttributes>();
 
         String template = EmailTemplates.USER_FEEDBACK_SESSION
-                .replace("${status}", FEEDBACK_STATUS_SESSION_CLOSED);
+                .replace(Templates.EmailIdentifiers.STATUS, FEEDBACK_STATUS_SESSION_CLOSED);
 
         return generateFeedbackSessionEmailBases(course, session, students, instructors, template,
                 EmailType.FEEDBACK_CLOSED.getSubject(), EmailTemplates.FRAGMENT_CLOSED_SESSION_ADDITIONAL_INSTRUCTIONS,
@@ -431,17 +432,17 @@ public class EmailGenerator {
                                  .toAbsoluteString();
 
         String emailBody = Templates.populateTemplate(template,
-                "${userName}", SanitizationHelper.sanitizeForHtml(student.name),
-                "${courseName}", SanitizationHelper.sanitizeForHtml(course.getName()),
-                "${courseId}", SanitizationHelper.sanitizeForHtml(course.getId()),
-                "${feedbackSessionName}", SanitizationHelper.sanitizeForHtml(session.getFeedbackSessionName()),
-                "${deadline}", SanitizationHelper.sanitizeForHtml(TimeHelper.formatTime12H(session.getEndTime())),
+                Templates.EmailIdentifiers.USER_NAME, SanitizationHelper.sanitizeForHtml(student.name),
+                Templates.EmailIdentifiers.COURSE_NAME, SanitizationHelper.sanitizeForHtml(course.getName()),
+                Templates.EmailIdentifiers.COURSE_ID, SanitizationHelper.sanitizeForHtml(course.getId()),
+                Templates.EmailIdentifiers.FEEDBACK_SESSION_NAME, SanitizationHelper.sanitizeForHtml(session.getFeedbackSessionName()),
+                Templates.EmailIdentifiers.DEADLINE, SanitizationHelper.sanitizeForHtml(TimeHelper.formatTime12H(session.getEndTime())),
                 "${instructorFragment}", "",
                 "${sessionInstructions}", session.getInstructionsString(),
-                "${submitUrl}", submitUrl,
-                "${reportUrl}", reportUrl,
-                "${coOwnersEmails}", coOwnersLine,
-                "${supportEmail}", Config.SUPPORT_EMAIL,
+                Templates.EmailIdentifiers.SUBMIT_URL, submitUrl,
+                Templates.EmailIdentifiers.REPORT_URL, reportUrl,
+                Templates.EmailIdentifiers.CO_OWNERS_EMAILS,,, coOwnersLine,
+                Templates.EmailIdentifiers.SUPPORT_EMAIL, Config.SUPPORT_EMAIL,
                 "${additionalInstructions}", additionalInstructions,
                 "${feedbackAction}", feedbackAction);
 
@@ -474,17 +475,17 @@ public class EmailGenerator {
         String instructorFragment = generateInstructorPreamble(course.getId(), course.getName());
 
         String emailBody = Templates.populateTemplate(template,
-                "${userName}", SanitizationHelper.sanitizeForHtml(instructor.name),
-                "${courseName}", SanitizationHelper.sanitizeForHtml(course.getName()),
-                "${courseId}", SanitizationHelper.sanitizeForHtml(course.getId()),
-                "${feedbackSessionName}", SanitizationHelper.sanitizeForHtml(session.getFeedbackSessionName()),
-                "${deadline}", SanitizationHelper.sanitizeForHtml(TimeHelper.formatTime12H(session.getEndTime())),
+                Templates.EmailIdentifiers.USER_NAME, SanitizationHelper.sanitizeForHtml(instructor.name),
+                Templates.EmailIdentifiers.COURSE_NAME, SanitizationHelper.sanitizeForHtml(course.getName()),
+                Templates.EmailIdentifiers.COURSE_ID, SanitizationHelper.sanitizeForHtml(course.getId()),
+                Templates.EmailIdentifiers.FEEDBACK_SESSION_NAME, SanitizationHelper.sanitizeForHtml(session.getFeedbackSessionName()),
+                Templates.EmailIdentifiers.DEADLINE, SanitizationHelper.sanitizeForHtml(TimeHelper.formatTime12H(session.getEndTime())),
                 "${instructorFragment}", instructorFragment,
                 "${sessionInstructions}", session.getInstructionsString(),
-                "${submitUrl}", "{in the actual email sent to the students, this will be the unique link}",
-                "${reportUrl}", "{in the actual email sent to the students, this will be the unique link}",
-                "${coOwnersEmails}", coOwnersLine,
-                "${supportEmail}", Config.SUPPORT_EMAIL,
+                Templates.EmailIdentifiers.SUBMIT_URL, "{in the actual email sent to the students, this will be the unique link}",
+                Templates.EmailIdentifiers.REPORT_URL, "{in the actual email sent to the students, this will be the unique link}",
+                Templates.EmailIdentifiers.CO_OWNERS_EMAILS,,, coOwnersLine,
+                Templates.EmailIdentifiers.SUPPORT_EMAIL, Config.SUPPORT_EMAIL,
                 "${additionalInstructions}", additionalInstructions,
                 "${feedbackAction}", feedbackAction);
 
@@ -505,8 +506,8 @@ public class EmailGenerator {
             String instructorEmail, String instructorShortName, String joinUrl) {
 
         String emailBody = Templates.populateTemplate(EmailTemplates.NEW_INSTRUCTOR_ACCOUNT_WELCOME,
-                "${userName}", SanitizationHelper.sanitizeForHtml(instructorShortName),
-                "${joinUrl}", joinUrl);
+                Templates.EmailIdentifiers.USER_NAME, SanitizationHelper.sanitizeForHtml(instructorShortName),
+                Templates.EmailIdentifiers.JOIN_URL, joinUrl);
 
         EmailWrapper email = getEmptyEmailAddressedToEmail(instructorEmail);
         email.setBcc(Config.SUPPORT_EMAIL);
@@ -522,10 +523,10 @@ public class EmailGenerator {
 
         String emailBody = Templates.populateTemplate(
                 fillUpStudentJoinFragment(student, EmailTemplates.USER_COURSE_JOIN),
-                "${userName}", SanitizationHelper.sanitizeForHtml(student.name),
-                "${courseName}", SanitizationHelper.sanitizeForHtml(course.getName()),
-                "${coOwnersEmails}", generateCoOwnersEmailsLine(course.getId()),
-                "${supportEmail}", Config.SUPPORT_EMAIL);
+                Templates.EmailIdentifiers.USER_NAME, SanitizationHelper.sanitizeForHtml(student.name),
+                Templates.EmailIdentifiers.COURSE_NAME, SanitizationHelper.sanitizeForHtml(course.getName()),
+                Templates.EmailIdentifiers.CO_OWNERS_EMAILS,,, generateCoOwnersEmailsLine(course.getId()),
+                Templates.EmailIdentifiers.SUPPORT_EMAIL, Config.SUPPORT_EMAIL);
 
         EmailWrapper email = getEmptyEmailAddressedToEmail(student.email);
         email.setSubject(String.format(EmailType.STUDENT_COURSE_JOIN.getSubject(),
@@ -542,10 +543,10 @@ public class EmailGenerator {
 
         String emailBody = Templates.populateTemplate(
                 fillUpStudentRejoinAfterGoogleIdResetFragment(student, EmailTemplates.USER_COURSE_JOIN),
-                "${userName}", SanitizationHelper.sanitizeForHtml(student.name),
-                "${courseName}", SanitizationHelper.sanitizeForHtml(course.getName()),
-                "${coOwnersEmails}", generateCoOwnersEmailsLine(course.getId()),
-                "${supportEmail}", Config.SUPPORT_EMAIL);
+                Templates.EmailIdentifiers.USER_NAME, SanitizationHelper.sanitizeForHtml(student.name),
+                Templates.EmailIdentifiers.COURSE_NAME, SanitizationHelper.sanitizeForHtml(course.getName()),
+                Templates.EmailIdentifiers.CO_OWNERS_EMAILS,,, generateCoOwnersEmailsLine(course.getId()),
+                Templates.EmailIdentifiers.SUPPORT_EMAIL, Config.SUPPORT_EMAIL);
 
         EmailWrapper email = getEmptyEmailAddressedToEmail(student.email);
         email.setSubject(String.format(EmailType.STUDENT_COURSE_REJOIN_AFTER_GOOGLE_ID_RESET.getSubject(),
@@ -563,11 +564,11 @@ public class EmailGenerator {
 
         String emailBody = Templates.populateTemplate(
                 fillUpInstructorJoinFragment(instructor, EmailTemplates.USER_COURSE_JOIN),
-                "${userName}", SanitizationHelper.sanitizeForHtml(instructor.getName()),
-                "${courseName}", SanitizationHelper.sanitizeForHtml(course.getName()),
+                Templates.EmailIdentifiers.USER_NAME, SanitizationHelper.sanitizeForHtml(instructor.getName()),
+                Templates.EmailIdentifiers.COURSE_NAME, SanitizationHelper.sanitizeForHtml(course.getName()),
                 "${inviterName}", SanitizationHelper.sanitizeForHtml(inviter.getName()),
                 "${inviterEmail}", SanitizationHelper.sanitizeForHtml(inviter.getEmail()),
-                "${supportEmail}", Config.SUPPORT_EMAIL);
+                Templates.EmailIdentifiers.SUPPORT_EMAIL, Config.SUPPORT_EMAIL);
 
         EmailWrapper email = getEmptyEmailAddressedToEmail(instructor.getEmail());
         email.setSubject(String.format(EmailType.INSTRUCTOR_COURSE_JOIN.getSubject(),
@@ -581,12 +582,12 @@ public class EmailGenerator {
      */
     public EmailWrapper generateUserCourseRegisterEmail(AccountAttributes user, CourseAttributes course) {
         String emailBody = Templates.populateTemplate(EmailTemplates.USER_COURSE_REGISTER,
-                "${userName}", SanitizationHelper.sanitizeForHtml(user.getName()),
+                Templates.EmailIdentifiers.USER_NAME, SanitizationHelper.sanitizeForHtml(user.getName()),
                 "${userType}", user.isInstructor() ? "an instructor" : "a student",
-                "${courseId}", SanitizationHelper.sanitizeForHtml(course.getId()),
-                "${courseName}", SanitizationHelper.sanitizeForHtml(course.getName()),
+                Templates.EmailIdentifiers.COURSE_ID, SanitizationHelper.sanitizeForHtml(course.getId()),
+                Templates.EmailIdentifiers.COURSE_NAME, SanitizationHelper.sanitizeForHtml(course.getName()),
                 "${googleId}", SanitizationHelper.sanitizeForHtml(user.getGoogleId()),
-                "${supportEmail}", Config.SUPPORT_EMAIL);
+                Templates.EmailIdentifiers.SUPPORT_EMAIL, Config.SUPPORT_EMAIL);
 
         EmailWrapper email = getEmptyEmailAddressedToEmail(user.getEmail());
         email.setSubject(String.format(EmailType.USER_COURSE_REGISTER.getSubject(),
@@ -599,17 +600,17 @@ public class EmailGenerator {
         String joinUrl = Config.getAppUrl(student.getRegistrationUrl()).toAbsoluteString();
 
         return Templates.populateTemplate(emailBody,
-                "${joinFragment}", EmailTemplates.FRAGMENT_STUDENT_COURSE_JOIN,
-                "${joinUrl}", joinUrl);
+                Templates.EmailIdentifiers.JOIN_FRAGMENT, EmailTemplates.FRAGMENT_STUDENT_COURSE_JOIN,
+                Templates.EmailIdentifiers.JOIN_URL, joinUrl);
     }
 
     private String fillUpStudentRejoinAfterGoogleIdResetFragment(StudentAttributes student, String emailBody) {
         String joinUrl = Config.getAppUrl(student.getRegistrationUrl()).toAbsoluteString();
 
         return Templates.populateTemplate(emailBody,
-                "${joinFragment}", EmailTemplates.FRAGMENT_STUDENT_COURSE_REJOIN_AFTER_GOOGLE_ID_RESET,
-                "${joinUrl}", joinUrl,
-                "${supportEmail}", Config.SUPPORT_EMAIL);
+                Templates.EmailIdentifiers.JOIN_FRAGMENT, EmailTemplates.FRAGMENT_STUDENT_COURSE_REJOIN_AFTER_GOOGLE_ID_RESET,
+                Templates.EmailIdentifiers.JOIN_URL, joinUrl,
+                Templates.EmailIdentifiers.SUPPORT_EMAIL, Config.SUPPORT_EMAIL);
     }
 
     private String fillUpInstructorJoinFragment(InstructorAttributes instructor, String emailBody) {
@@ -618,8 +619,8 @@ public class EmailGenerator {
                                .toAbsoluteString();
 
         return Templates.populateTemplate(emailBody,
-                "${joinFragment}", EmailTemplates.FRAGMENT_INSTRUCTOR_COURSE_JOIN,
-                "${joinUrl}", joinUrl);
+                Templates.EmailIdentifiers.JOIN_FRAGMENT, EmailTemplates.FRAGMENT_INSTRUCTOR_COURSE_JOIN,
+                Templates.EmailIdentifiers.JOIN_URL, joinUrl);
     }
 
     /**
